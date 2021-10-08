@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Chunks;
 using Eiram;
 using Registers;
 using UnityEngine;
@@ -11,6 +13,8 @@ namespace Tilemaps
         public static EiramTilemap Instance = null;
 
         private Tilemap tilemap;
+        private readonly List<TileBase> tileBaseCache = new List<TileBase>();
+        private readonly List<Vector3Int> positionsCache = new List<Vector3Int>();
 
         public void Awake()
         {
@@ -18,9 +22,32 @@ namespace Tilemaps
             tilemap = GetComponent<Tilemap>();
         }
 
+        public void Update()
+        {
+            if (tileBaseCache.Count > 0)
+            {
+                tilemap.SetTiles(positionsCache.ToArray(), tileBaseCache.ToArray());
+                positionsCache.Clear();
+                tileBaseCache.Clear();
+            }
+        }
+
+        public void DrawChunk(Chunk chunk)
+        {
+            for (int i = 0; i < EiramTypes.CHUNK_WIDTH; i++)
+            {
+                for (int j = 0; j < EiramTypes.CHUNK_HEIGHT; j++)
+                {
+                    var worldPos = new Vector3Int((chunk.ChunkX * EiramTypes.CHUNK_WIDTH) + i, j, 0);
+                    SetTile(worldPos, chunk.GetTileAt(worldPos));
+                }
+            }
+        }
+
         public void SetTile(Vector3Int worldPosition, TileId tileId)
         {
-            tilemap.SetTile(worldPosition, Register.GetTileById(tileId).TileBase());
+            positionsCache.Add(worldPosition);
+            tileBaseCache.Add(Register.GetTileById(tileId).TileBase());
         }
     }
 }
