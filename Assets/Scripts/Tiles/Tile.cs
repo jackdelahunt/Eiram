@@ -34,4 +34,19 @@ namespace Tiles
     {
         public Dirt(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
+    
+    public class Grass : Tile
+    {
+        public Grass(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class Stone : Tile
+    {
+        public Stone(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class Bedrock : Tile
+    {
+        public Bedrock(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
 }

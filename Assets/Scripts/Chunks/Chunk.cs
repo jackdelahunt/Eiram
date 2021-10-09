@@ -4,6 +4,7 @@ using Registers;
 using Tilemaps;
 using UnityEngine;
 using Utils;
+using TerrainGeneration;
 
 namespace Chunks
 {
@@ -15,13 +16,7 @@ namespace Chunks
         public Chunk(int chunkX)
         {
             this.ChunkX = chunkX;
-            for (int i = 0; i < tileIds.GetLength(0); i++)
-            {
-                for (int j = 0; j < tileIds.GetLength(1); j++)
-                {
-                    tileIds[i, j] = TileId.DIRT;
-                }
-            }
+            tileIds = TerrainGenerator.GenerateChunkData(this);
             
             EiramTilemap.Instance.DrawChunk(this);
         }
