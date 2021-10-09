@@ -11,7 +11,7 @@ namespace Players
         [Range(0, 0.1f)][SerializeField]private float groundedRadius = 0.01f;
         [SerializeField] private bool isAirControlling = false;
         [SerializeField] private LayerMask whatIsGround = new LayerMask();
-        [SerializeField] private Transform groundCheck = null;
+        [SerializeField] private Transform[] groundChecks = null;
         
         private bool isGrounded;
         private Rigidbody2D thisRigidbody;
@@ -27,17 +27,25 @@ namespace Players
         {
             isGrounded = false;
 
+            foreach (var groundCheck in groundChecks)
+            {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround);
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    if (colliders[i].gameObject != gameObject)
+                    {
+                        isGrounded = true;
+                        break;
+                    }
+                }
+                
+                if(isGrounded)
+                    break;
+            }
+
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundedRadius, whatIsGround);
-            for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i].gameObject != gameObject)
-                {
-                    isGrounded = true;
-                    break;
-                }
-            }
+            
         }
 
 
