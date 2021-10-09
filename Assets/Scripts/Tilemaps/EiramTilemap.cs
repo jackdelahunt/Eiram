@@ -43,6 +43,18 @@ namespace Tilemaps
                 }
             }
         }
+        
+        public void RemoveChunk(Chunk chunk)
+        {
+            for (int i = 0; i < EiramTypes.CHUNK_WIDTH; i++)
+            {
+                for (int j = 0; j < EiramTypes.CHUNK_HEIGHT; j++)
+                {
+                    var worldPos = new Vector3Int((chunk.ChunkX * EiramTypes.CHUNK_WIDTH) + i, j, 0);
+                    SetTile(worldPos, TileId.AIR);
+                }
+            }
+        }
 
         public void SetTile(Vector3Int worldPosition, TileId tileId)
         {

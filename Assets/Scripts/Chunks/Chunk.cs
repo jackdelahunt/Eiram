@@ -12,9 +12,9 @@ namespace Chunks
         public int ChunkX;
         private TileId[,] tileIds = new TileId[EiramTypes.CHUNK_WIDTH, EiramTypes.CHUNK_HEIGHT];
 
-        public Chunk()
+        public Chunk(int chunkX)
         {
-            ChunkX = 0;
+            this.ChunkX = chunkX;
             for (int i = 0; i < tileIds.GetLength(0); i++)
             {
                 for (int j = 0; j < tileIds.GetLength(1); j++)
@@ -26,12 +26,20 @@ namespace Chunks
             EiramTilemap.Instance.DrawChunk(this);
         }
 
+        public void Die()
+        {
+            EiramTilemap.Instance.RemoveChunk(this);
+        }
+        
         public TileId GetTileAt(Vector3Int worldPosition)
         {
-            var chunkPos = Convert.WorldPositionToChunkPosition(worldPosition);
-            Debug.Assert(chunkPos.x >= 0 && chunkPos.x < EiramTypes.CHUNK_WIDTH, "Converted X result is out of bounds");
-            Debug.Assert(chunkPos.y>= 0 && chunkPos.x < EiramTypes.CHUNK_HEIGHT, "Converted Y result is out of bounds");
+            var chunkPos = WorldCoordToChunkCoord(worldPosition);
             return tileIds[chunkPos.x, chunkPos.y];
+        }
+        
+        public Vector3Int WorldCoordToChunkCoord(Vector3Int worldPosition)
+        {
+            return new Vector3Int(worldPosition.x - (ChunkX * EiramTypes.CHUNK_WIDTH), worldPosition.y, 0);
         }
     }
 }
