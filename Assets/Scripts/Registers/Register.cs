@@ -12,10 +12,6 @@ namespace Registers
 
         public static Tile GetTileById(TileId tileId)
         {
-            if ((int)tileId < 0 || (int)tileId > (int)TileId.GRASS_FOLIAGE)
-            {
-                print("");
-            }
             return tiles[(int)tileId];
         }
         

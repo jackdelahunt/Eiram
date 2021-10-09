@@ -5,6 +5,11 @@ namespace Utils
 {
     public static class Utils
     {
+        public static Vector3Int ChunkPositionToWorldPosition(int x, int y, int chunkX)
+        {
+            return new Vector3Int(x + (EiramTypes.CHUNK_WIDTH * chunkX), y, 0);
+        }
+        
         public static int GetChunkXFromPosition(Vector3Int pos)
         {
             int remain = (pos.x % EiramTypes.CHUNK_WIDTH + EiramTypes.CHUNK_WIDTH) % EiramTypes.CHUNK_WIDTH;
