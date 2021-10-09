@@ -35,32 +35,44 @@ namespace TerrainGeneration
 
         private static void CavePass(TileId[,] tileIds, Chunk chunk, int caveHeight)
         {
-            for (int y = 1; y < caveHeight; y++)
+            int xOffset = 0;
+            int yOffset = 1;
+            var firstTileWorldPos =
+                Utils.Utils.ChunkPositionToWorldPosition(xOffset, yOffset, chunk.ChunkX);
+            
+            while (yOffset < caveHeight)
             {
-                for (int x = 0; x < EiramTypes.CHUNK_WIDTH; x++)
+                while (xOffset < EiramTypes.CHUNK_WIDTH)
                 {
-                    var worldPos =
-                        Utils.Utils.ChunkPositionToWorldPosition(x, y, chunk.ChunkX);
-                    tileIds[x, y] = Noise.CaveNoise(worldPos.x, worldPos.y, 0.4f, 0) ? TileId.STONE : TileId.AIR;
+                    tileIds[xOffset, yOffset] = Noise.CaveNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y + yOffset, 0.4f, 0) ? TileId.STONE : TileId.AIR;
+                    xOffset++;
                 }
+
+                yOffset++;
+                xOffset = 0;
             }
         }
 
         private static void TerrainPass(TileId[,] tileIds, Chunk chunk, int caveHeight,
             int maxTerrainHeight)
         {
-            for (int x = 0; x < EiramTypes.CHUNK_WIDTH; x++)
+            int xOffset = 0;
+            var firstTileWorldPos =
+                Utils.Utils.ChunkPositionToWorldPosition(xOffset, caveHeight, chunk.ChunkX);
+            
+            while (xOffset < EiramTypes.CHUNK_WIDTH)
             {
-                var worldPos =
-                    Utils.Utils.ChunkPositionToWorldPosition(x, caveHeight, chunk.ChunkX);
-                var multiplier = Noise.TerrainNoise(worldPos.x, worldPos.y, 0, 0.1f);
+                var multiplier = Noise.TerrainNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y, 0, 0.1f);
                 int actualHeight = Mathf.RoundToInt(maxTerrainHeight * multiplier);
                 int highestPoint = (caveHeight + actualHeight) - 1;
 
                 for (int y = caveHeight; y < caveHeight + actualHeight; y++)
                 {
-                    tileIds[x, y] = y == highestPoint ? TileId.GRASS : TileId.DIRT;
+                    // xOffset is equal to the local x of the tile aswell
+                    tileIds[xOffset, y] = y == highestPoint ? TileId.GRASS : TileId.DIRT;
                 }
+
+                xOffset++;
             }
         }
     }
