@@ -10,7 +10,7 @@ namespace Tilemaps
 {
     public class EiramTilemap : MonoBehaviour
     {
-        public static EiramTilemap Instance = null;
+        public static EiramTilemap Foreground = null;
 
         private Tilemap tilemap;
         private readonly List<TileBase> tileBaseCache = new List<TileBase>();
@@ -18,7 +18,7 @@ namespace Tilemaps
 
         public void Awake()
         {
-            Instance = this;
+            Foreground = this;
             tilemap = GetComponent<Tilemap>();
         }
 

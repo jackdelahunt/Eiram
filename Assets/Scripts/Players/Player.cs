@@ -1,5 +1,4 @@
-using System;
-using Tiles;
+using Eiram;
 using UnityEngine;
 using Worlds;
 
@@ -11,20 +10,20 @@ namespace Players
     {
         [SerializeField] private float jumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
-        private Camera camera;
+        
+        private Camera mainCamera = null;
+        private CharacterController controller = null;
+        // private Animator animator = null;
 
         private bool isPlayerIdle = true;
 
-
-        private CharacterController controller;
-        private Animator animator;
         // private static readonly int IsWalking = Animator.StringToHash("IsWalking");
         // private static readonly int IsJumping = Animator.StringToHash("IsJumping");
 
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
-            camera = Camera.main;
+            mainCamera = Camera.main;
             //animator = GetComponent<Animator>();
         }
 
@@ -56,14 +55,14 @@ namespace Players
             {
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
-                Debug.LogFormat("Left click at -> ({0}, {1})", tilePos.x, tilePos.y);
+                World.Current.RemoveTileAt(tilePos);
             }
 
             if (Input.GetButtonDown("Fire2"))
             {
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
-                Debug.LogFormat("Right click at -> ({0}, {1})", tilePos.x, tilePos.y);
+                World.Current.PlaceTileAt(tilePos, TileId.BEDROCK);
             }
         }
 
@@ -107,8 +106,8 @@ namespace Players
          */
         private Vector3 GetMousePosition()
         {
-            return camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
-                Input.mousePosition.y, -camera.transform.position.z));
+            return mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                Input.mousePosition.y, -mainCamera.transform.position.z));
         }
     }
 }
