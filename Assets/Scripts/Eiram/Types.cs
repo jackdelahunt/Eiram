@@ -4,7 +4,7 @@ namespace Eiram
     {
         public static readonly int CHUNK_WIDTH = 64;
         public static readonly int CHUNK_HEIGHT = 192;
-        public static readonly int RENDER_DISTANCE = 2;
+        public static readonly int RENDER_DISTANCE = 3;
     }
     public enum TileId
     {
