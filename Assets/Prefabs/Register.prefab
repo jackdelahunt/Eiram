@@ -46,3 +46,18 @@ MonoBehaviour:
   concreteTileDataArray:
   - {fileID: 11400000, guid: 8d047cd0ae4edcb1f8deb3f28900af63, type: 2}
   - {fileID: 11400000, guid: 3ded9a8df413430cc90d95ca13fa0df4, type: 2}
+  - {fileID: 11400000, guid: db2714cfca0a082cdad2601c7f03a7e0, type: 2}
+  - {fileID: 11400000, guid: 60c0a3c6fdd6b2fb6b28e3d3b24dd101, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 11400000, guid: 87bd91e06982449c2ab1edac22d0b7f6, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
