@@ -26,6 +26,12 @@ namespace Registers
            // verify every tile and item are indexed correctly
            for (int i = 0; i < tiles.Length; i++)
            {
+               if (tiles[i] == null)
+               {
+                   Debug.LogFormat("Register has null entry at index {}", i);
+                   continue;
+               }
+
                Debug.Assert(i == (int)tiles[i].TileId(), $"{i} != {tiles[i].TileId()}");
            }
         }
