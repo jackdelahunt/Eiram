@@ -11,6 +11,7 @@ namespace Players
     {
         [SerializeField] private float jumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
+        private Camera camera;
 
         private bool isPlayerIdle = true;
 
@@ -23,6 +24,7 @@ namespace Players
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
+            camera = Camera.main;
             //animator = GetComponent<Animator>();
         }
 
@@ -30,6 +32,7 @@ namespace Players
         {
             isPlayerIdle = true;
             CheckPlayerMovement();
+            CheckForMouseInput();
             CheckPlayerJump();
             CheckPlayerIdle();
         }
@@ -44,6 +47,23 @@ namespace Players
             {
                 isPlayerIdle = false;
                 controller.Move(Input.GetAxisRaw("Horizontal") * movementSpeed);
+            }
+        }
+        
+        private void CheckForMouseInput()
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                var mousePos = GetMousePosition();
+                var tilePos = ConvertPositionToTile(mousePos);
+                Debug.LogFormat("Left click at -> ({0}, {1})", tilePos.x, tilePos.y);
+            }
+
+            if (Input.GetButtonDown("Fire2"))
+            {
+                var mousePos = GetMousePosition();
+                var tilePos = ConvertPositionToTile(mousePos);
+                Debug.LogFormat("Right click at -> ({0}, {1})", tilePos.x, tilePos.y);
             }
         }
 
@@ -71,6 +91,24 @@ namespace Players
                 // animator.SetBool(IsWalking, false);
                 // animator.SetBool(IsJumping, false);
             }
+        }
+        
+        /*
+         * returns a position of a the tile
+         * where the players mouse is
+         */
+        private Vector3Int ConvertPositionToTile(Vector3 position)
+        {
+            return new Vector3Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y), 0);
+        }
+
+        /*
+         * returns the coords of the players mouse
+         */
+        private Vector3 GetMousePosition()
+        {
+            return camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+                Input.mousePosition.y, -camera.transform.position.z));
         }
     }
 }
