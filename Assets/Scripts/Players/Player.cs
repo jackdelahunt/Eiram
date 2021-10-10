@@ -1,4 +1,5 @@
 using Eiram;
+using Inventories;
 using UnityEngine;
 using Worlds;
 
@@ -13,6 +14,7 @@ namespace Players
         
         private Camera mainCamera = null;
         private CharacterController controller = null;
+        private PlayerInventory inventory = new PlayerInventory();
         // private Animator animator = null;
 
         private bool isPlayerIdle = true;
@@ -60,6 +62,8 @@ namespace Players
 
             if (Input.GetButtonDown("Fire2"))
             {
+                inventory.AddItem(ItemId.DIRT, 10);
+                
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
                 World.Current.PlaceTileAt(tilePos, TileId.BEDROCK);

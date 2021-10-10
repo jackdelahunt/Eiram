@@ -9,13 +9,13 @@ namespace Registers
 {
     public class Register : MonoBehaviour
     {
-        private static Tile[] tiles;
+        private static AbstractTile[] tiles;
         private static Item[] items;
         
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
         [SerializeField] private Item[] itemArray;
 
-        public static Tile GetTileById(TileId tileId)
+        public static AbstractTile GetTileById(TileId tileId)
         {
             return tiles[(int)tileId];
         }
@@ -27,7 +27,7 @@ namespace Registers
         
         public void Awake()
         {
-            tiles = new Tile[] {
+            tiles = new AbstractTile[] {
                 new Air(concreteTileDataArray[0]),
                 new Dirt(concreteTileDataArray[1]),
                 new Grass(concreteTileDataArray[2]),
