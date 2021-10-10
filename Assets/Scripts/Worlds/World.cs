@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Chunks;
 using Eiram;
+using Events;
+using Items;
+using Registers;
 using UnityEngine;
 
 namespace Worlds
@@ -8,12 +12,15 @@ namespace Worlds
     public class World : MonoBehaviour
     {
         public static World Current = null;
+
+        [SerializeField] private GameObject itemEntityPrefab = null;
         
         private GameObject playerObject;
         private Dictionary<int, Chunk> activeChunks = new Dictionary<int, Chunk>();
 
         private void Awake()
         {
+            EiramEvents.TileBreakEvent += OnTileBreak;
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
         }
@@ -21,6 +28,11 @@ namespace Worlds
         void Start()
         {
             InvokeRepeating(nameof(ChunkRefresh), 0.0f, 1.0f);
+        }
+
+        private void OnDestroy()
+        {
+            EiramEvents.TileBreakEvent -= OnTileBreak;
         }
 
         void ChunkRefresh()
@@ -82,6 +94,17 @@ namespace Worlds
             {
                 chunk.RemoveTileAt(worldPosition);
             }
+        }
+
+        private void OnTileBreak(Vector3Int worldPosition, TileId tileId)
+        {
+            if (Register.GetTileById(tileId) is IItemEntityProvider itemEntityProvider)
+            {
+                var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);
+                var newItemEntity = Instantiate(itemEntityPrefab, worldPosition + spawnOffset, new Quaternion()).GetComponent<ItemEntity>();
+                newItemEntity.Init(itemEntityProvider.ItemId());
+            }
+            
         }
         
     }

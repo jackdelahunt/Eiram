@@ -1,4 +1,5 @@
 using Eiram;
+using Events;
 using Tilemaps;
 using UnityEngine;
 using TerrainGeneration;
@@ -14,10 +15,9 @@ namespace Chunks
         {
             this.ChunkX = chunkX;
             tileIds = TerrainGenerator.GenerateChunkData(this);
-            
             EiramTilemap.Foreground.DrawChunk(this);
         }
-
+        
         public void Die()
         {
             EiramTilemap.Foreground.RemoveChunk(this);
@@ -42,8 +42,10 @@ namespace Chunks
         public void RemoveTileAt(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            var tileIdAt = tileIds[chunkPosition.x, chunkPosition.y];
             tileIds[chunkPosition.x, chunkPosition.y] = TileId.AIR;
             EiramTilemap.Foreground.SetTile(worldPosition, TileId.AIR);
+            EiramEvents.OnTileBreak(worldPosition, tileIdAt);
         }
         
         public Vector3Int WorldCoordToChunkCoord(Vector3Int worldPosition)
