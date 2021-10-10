@@ -74,7 +74,7 @@ namespace Registers
                    continue;
                }
 
-               Debug.Assert(i == (int)items[i].itemId, $"{i} != {tiles[i].TileId()}");
+               Debug.Assert(i == (int)items[i].itemId, $"{i} != {items[i].itemId}");
            }
         }
     }

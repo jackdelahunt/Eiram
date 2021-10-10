@@ -41,9 +41,14 @@ namespace Tiles
         }
     }
     
-    public class Grass : AbstractTile
+    public class Grass : AbstractTile, IItemEntityProvider
     {
         public Grass(ConcreteTileData concreteTileData) : base(concreteTileData){}
+        
+        public ItemId ItemId()
+        {
+            return Eiram.ItemId.GRASS;
+        }
     }
     
     public class Stone : AbstractTile

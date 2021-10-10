@@ -32,5 +32,6 @@ namespace Eiram
     {
         UNKNOWN = -1,
         DIRT = 0,
+        GRASS = 1,
     }
 }

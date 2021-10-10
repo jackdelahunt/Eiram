@@ -127,8 +127,11 @@ namespace Players
             {
                 var go = other.gameObject;
                 var entity = go.GetComponent<ItemEntity>();
-                playerInventory.AddItem(entity.ItemId, entity.Size);
-                Destroy(go);
+                int remainingSize = playerInventory.TryAddItem(entity.ItemId, entity.Size);
+                if (remainingSize > 0)
+                    entity.Size = remainingSize;
+                else
+                    Destroy(go);
             }
         }
     }
