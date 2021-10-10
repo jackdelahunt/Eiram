@@ -27,4 +27,10 @@ namespace Eiram
         DEADBUSH = 15,
         GRASS_FOLIAGE = 16
     }
+    
+    public enum ItemId
+    {
+        UNKNOWN = -1,
+        DIRT = 0,
+    }
 }

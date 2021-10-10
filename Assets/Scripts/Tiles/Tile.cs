@@ -1,4 +1,5 @@
 using Eiram;
+using Items;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -30,9 +31,14 @@ namespace Tiles
         public Air(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
 
-    public class Dirt : Tile
+    public class Dirt : Tile, IItemEntityProvider
     {
         public Dirt(ConcreteTileData concreteTileData) : base(concreteTileData){}
+
+        public ItemId ItemId()
+        {
+            return Eiram.ItemId.DIRT;
+        }
     }
     
     public class Grass : Tile
