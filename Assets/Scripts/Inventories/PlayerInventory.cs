@@ -9,12 +9,14 @@ namespace Inventories
 {
     public class PlayerInventory
     {
-        public const int Slots = 9;
+        public const int Slots = 5;
         public readonly List<ItemStack> ItemStacks;
 
         public PlayerInventory()
         {
             ItemStacks = Enumerable.Repeat(ItemStack.Empty, Slots).ToList();
+
+            AddItem(ItemId.DIRT, 20);
         }
 
         public bool AddItem(ItemId itemId, int size)

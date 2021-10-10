@@ -1,4 +1,5 @@
 using Eiram;
+using Events;
 using Inventories;
 using UnityEngine;
 using Worlds;
@@ -14,7 +15,7 @@ namespace Players
         
         private Camera mainCamera = null;
         private CharacterController controller = null;
-        private PlayerInventory inventory = new PlayerInventory();
+        private PlayerInventory playerInventory = new PlayerInventory();
         // private Animator animator = null;
 
         private bool isPlayerIdle = true;
@@ -49,6 +50,11 @@ namespace Players
                 isPlayerIdle = false;
                 controller.Move(Input.GetAxisRaw("Horizontal") * movementSpeed);
             }
+            
+            if (Input.GetButtonDown("ToggleInventory"))
+            {
+                EiramEvents.OnPlayerToggleInventory(playerInventory);
+            }
         }
         
         private void CheckForMouseInput()
@@ -62,8 +68,6 @@ namespace Players
 
             if (Input.GetButtonDown("Fire2"))
             {
-                inventory.AddItem(ItemId.DIRT, 10);
-                
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
                 World.Current.PlaceTileAt(tilePos, TileId.BEDROCK);
