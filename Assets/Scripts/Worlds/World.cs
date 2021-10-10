@@ -1,20 +1,20 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Chunks;
 using Eiram;
 using UnityEngine;
-using Utils;
 
 namespace Worlds
 {
     public class World : MonoBehaviour
     {
+        public static World Current = null;
+        
         private GameObject playerObject;
         private Dictionary<int, Chunk> activeChunks = new Dictionary<int, Chunk>();
 
         private void Awake()
         {
+            Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
         }
 
@@ -66,6 +66,24 @@ namespace Worlds
                 activeChunks.Remove(chunk.ChunkX);
             }
         }
+        public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.PlaceTileAt(worldPosition, tileId);
+            }
+        }
+
+        public void RemoveTileAt(Vector3Int worldPosition)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.RemoveTileAt(worldPosition);
+            }
+        }
+        
     }
 }
         
