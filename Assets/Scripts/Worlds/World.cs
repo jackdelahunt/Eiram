@@ -94,7 +94,7 @@ namespace Worlds
             {
                 chunk.RemoveTileAt(worldPosition);
             }
-        }
+        }   
 
         private void OnTileBreak(Vector3Int worldPosition, TileId tileId)
         {
