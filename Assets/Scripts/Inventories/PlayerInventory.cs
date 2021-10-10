@@ -15,8 +15,6 @@ namespace Inventories
         public PlayerInventory()
         {
             ItemStacks = Enumerable.Repeat(ItemStack.Empty, Slots).ToList();
-
-            AddItem(ItemId.DIRT, 20);
         }
 
         public bool AddItem(ItemId itemId, int size)

@@ -1,6 +1,9 @@
+using System;
 using Eiram;
 using Events;
 using Inventories;
+using Items;
+using Registers;
 using UnityEngine;
 using Worlds;
 
@@ -116,6 +119,17 @@ namespace Players
         {
             return mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y, -mainCamera.transform.position.z));
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("ItemEntity"))
+            {
+                var go = other.gameObject;
+                var entity = go.GetComponent<ItemEntity>();
+                playerInventory.AddItem(entity.ItemId, entity.Size);
+                Destroy(go);
+            }
         }
     }
 }
