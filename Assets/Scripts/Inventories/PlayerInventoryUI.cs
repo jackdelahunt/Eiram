@@ -15,7 +15,8 @@ namespace Inventories
         [SerializeField] private GameObject playerInventoryUIContainer = null;
         [SerializeField] private List<Image> itemSprites = null;
         [SerializeField] private List<TMP_Text> itemCounts = null;
-
+        [SerializeField] private Sprite emptySlotSprite = null;
+        
         private bool toggled = false;
 
         private void Awake()
@@ -38,7 +39,7 @@ namespace Inventories
 
         private void OpenInventory(PlayerInventory playerInventory)
         {
-            playerInventoryUIContainer.SetActive(true);
+            LeanTween.moveX(gameObject, transform.position.x + 850.0f, 0.4f);
             
             for (int i = 0; i < playerInventory.ItemStacks.Count; i++)
             {
@@ -47,19 +48,21 @@ namespace Inventories
                 {
                     var item = Register.GetItemById(currentItemStack.ItemId);
                     itemSprites[i].sprite = item.sprite;
+                    itemCounts[i].gameObject.SetActive(true);
                     itemCounts[i].text = currentItemStack.Size.ToString();
                 }
                 else
                 {
-                    itemSprites[i].sprite = null;
+                    itemSprites[i].sprite = emptySlotSprite;
                     itemCounts[i].text = "0";
+                    itemCounts[i].gameObject.SetActive(false);
                 }
             }
         }
         
         private void CloseInventory()
         {
-            playerInventoryUIContainer.SetActive(false);
+            LeanTween.moveX(gameObject, transform.position.x - 850.0f, 0.4f);
         }
     }
 }
