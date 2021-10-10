@@ -5,13 +5,14 @@ using Items;
 using Registers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Inventories
 {
     public class PlayerInventoryUI : MonoBehaviour
     {
-        [SerializeField] private GameObject PlayerInventoryUIContainer = null;
+        [SerializeField] private GameObject playerInventoryUIContainer = null;
         [SerializeField] private List<Image> itemSprites = null;
         [SerializeField] private List<TMP_Text> itemCounts = null;
 
@@ -28,15 +29,16 @@ namespace Inventories
 
         }
         
-        public void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
+        private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
         {
+            Debug.Assert(playerInventory.Slots == itemSprites.Count && playerInventory.Slots == itemCounts.Count);
             if(toggled) CloseInventory(); else OpenInventory(playerInventory);
             toggled = !toggled;
         }
 
         private void OpenInventory(PlayerInventory playerInventory)
         {
-            PlayerInventoryUIContainer.SetActive(true);
+            playerInventoryUIContainer.SetActive(true);
             
             for (int i = 0; i < playerInventory.ItemStacks.Count; i++)
             {
@@ -57,7 +59,7 @@ namespace Inventories
         
         private void CloseInventory()
         {
-            PlayerInventoryUIContainer.SetActive(false);
+            playerInventoryUIContainer.SetActive(false);
         }
     }
 }

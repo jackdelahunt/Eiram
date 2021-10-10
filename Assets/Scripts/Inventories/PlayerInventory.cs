@@ -10,7 +10,7 @@ namespace Inventories
 {
     public class PlayerInventory
     {
-        public const int Slots = 5;
+        public readonly int Slots = 9;
         public readonly List<ItemStack> ItemStacks;
 
         public PlayerInventory()
