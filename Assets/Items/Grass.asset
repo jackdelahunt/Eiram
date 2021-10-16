@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Grass
   itemId: 1
-  maxStack: 64
+  maxStack: 1
   sprite: {fileID: 3386662938922423588, guid: d83a8b847e03180a193b8cc07a8f0c48, type: 3}

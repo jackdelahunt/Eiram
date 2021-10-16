@@ -12,7 +12,7 @@ namespace Inventories
 {
     public class PlayerInventory
     {
-        public readonly int Slots = 9;
+        public readonly int Slots = 69;
         public readonly List<ItemStack> ItemStacks;
         public bool IsDirty = false;
 
