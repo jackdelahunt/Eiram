@@ -40,6 +40,12 @@ namespace Players
             CheckForMouseInput();
             CheckPlayerJump();
             CheckPlayerIdle();
+
+            if (playerInventory.IsDirty)
+            {
+                EiramEvents.OnPlayerInventoryIsDirty(playerInventory);
+                playerInventory.IsDirty = false;
+            }
         }
 
         /*

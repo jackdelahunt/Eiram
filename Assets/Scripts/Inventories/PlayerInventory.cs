@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eiram;
+using Events;
 using Items;
 using Items.Items;
 using Registers;
@@ -12,6 +14,7 @@ namespace Inventories
     {
         public readonly int Slots = 9;
         public readonly List<ItemStack> ItemStacks;
+        public bool IsDirty = false;
 
         public PlayerInventory()
         {
@@ -20,6 +23,16 @@ namespace Inventories
 
         public int TryAddItem(ItemId itemId, int size)
         {
+            void _addToStack(ItemId id, int slot, int newSize)
+            {
+                if(id == ItemId.UNKNOWN)
+                    ItemStacks[slot].Size = newSize;
+                else
+                    ItemStacks[slot] = new ItemStack(id, newSize);
+                
+                IsDirty = true;
+            }
+
             var item = Register.GetItemById(itemId);
             for (int i = 0; i < ItemStacks.Count; i++)
             {
@@ -31,13 +44,13 @@ namespace Inventories
                         int total = ItemStacks[i].Size + size;
                         if (total > item.maxStack)
                         {
-                            ItemStacks[i].Size = item.maxStack;
+                            _addToStack(ItemId.UNKNOWN, i, item.maxStack);
                             int remainder = total - item.maxStack;
                             return TryAddItem(itemId, remainder);
                         }
                         else
                         {
-                            ItemStacks[i].Size = total;
+                            _addToStack(ItemId.UNKNOWN, i, total);
                             return 0;
                         }
                     }
@@ -49,7 +62,7 @@ namespace Inventories
                 // check for empty slot
                 if (ItemStacks[i] == ItemStack.Empty)
                 {
-                    ItemStacks[i] = new ItemStack(itemId, size);
+                    _addToStack(itemId, i, size);
                     return 0;
                 }
             }

@@ -20,5 +20,12 @@ namespace Events
         {
             PlayerToggleInventoryEvent?.Invoke(playerInventory);
         }
+        
+        public static event Action<PlayerInventory> PlayerInventoryIsDirtyEvent;
+
+        public static void OnPlayerInventoryIsDirty(PlayerInventory playerInventory)
+        {
+            PlayerInventoryIsDirtyEvent?.Invoke(playerInventory);
+        }
     }
 }
