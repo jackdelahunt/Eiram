@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: dirt
+  m_Name: spritesheet_1
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: e5ad104a1d4d3b84bab7010968c4901f, type: 3}
+  m_Sprite: {fileID: -6251682230944352461, guid: c7c3c177a4492b3408aabd834bd2d2b3,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
