@@ -13,9 +13,12 @@ namespace Inventories
 {
     public class PlayerInventoryUI : MonoBehaviour
     {
-        [SerializeField] private List<Image> itemSprites = null;
-        [SerializeField] private List<TMP_Text> itemCounts = null;
+        [SerializeField] private GameObject slotPrefab;
+        [SerializeField] private RectTransform contentTransform;
         [SerializeField] private Sprite emptySlotSprite = null;
+        
+        private List<Image> itemSprites = new List<Image>(PlayerInventory.Slots);
+        private List<TMP_Text> itemCounts = new List<TMP_Text>(PlayerInventory.Slots);
         
         private bool toggled = false;
 
@@ -23,6 +26,7 @@ namespace Inventories
         {
             EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
             EiramEvents.PlayerInventoryIsDirtyEvent += OnPlayerInventoryIsDirty;
+            GenerateUI();
         }
 
         private void OnDestroy()
@@ -31,9 +35,19 @@ namespace Inventories
             EiramEvents.PlayerInventoryIsDirtyEvent -= OnPlayerInventoryIsDirty;
         }
 
+        private void GenerateUI()
+        {
+            for (int i = 0; i < PlayerInventory.Slots; i++)
+            {
+                var go = Instantiate(slotPrefab, contentTransform);
+                itemSprites.Add(go.GetComponentInChildren<Image>());
+                itemCounts.Add(go.GetComponentInChildren<TMP_Text>());
+            }
+        }
+
         private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
         {
-            Debug.Assert(playerInventory.Slots == itemSprites.Count && playerInventory.Slots == itemCounts.Count);
+            Debug.Assert(PlayerInventory.Slots == itemSprites.Count && PlayerInventory.Slots == itemCounts.Count);
             if(toggled) CloseInventory(); else OpenInventory(playerInventory);
             toggled = !toggled;
         }
