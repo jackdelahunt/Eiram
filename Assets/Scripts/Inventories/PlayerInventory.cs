@@ -16,6 +16,9 @@ namespace Inventories
         public readonly List<ItemStack> ItemStacks;
         public bool IsDirty = false;
 
+        private int selectedSlot = 0;
+        private const int hotbarSlotsCount = 10;
+        
         public PlayerInventory()
         {
             ItemStacks = Enumerable.Repeat(ItemStack.Empty, Slots).ToList();
@@ -70,6 +73,27 @@ namespace Inventories
             return size;
         }
 
+        public ItemStack RemoveFromItemStack(int slotIndex, int amount = 1)
+        {
+            var stack = ItemStacks[slotIndex];
+            if (ItemStacks[slotIndex] != ItemStack.Empty)
+            {
+                IsDirty = true;
+                if (amount > stack.Size)
+                {
+                    ItemStacks[slotIndex] = ItemStack.Empty;
+                    return stack;
+                }
+                
+                stack.Size -= amount;
+                if(stack.Size == 0)
+                    ItemStacks[slotIndex] = ItemStack.Empty;
+                return new ItemStack(stack.ItemId, amount);
+            }
+
+            return ItemStack.Empty;
+        }
+
         public int Contains(ItemId itemId)
         {
             for (int i = 0; i < ItemStacks.Count; i++)
@@ -101,6 +125,25 @@ namespace Inventories
             }
             
             return -1;
+        }
+
+        public void SelectNext()
+        {
+            selectedSlot++;
+            if (selectedSlot >= hotbarSlotsCount) selectedSlot = 0;
+            EiramEvents.SelectedSlotChanged(this, selectedSlot);
+        }
+        
+        public void SelectPrevious()
+        {
+            selectedSlot--;
+            if (selectedSlot < 0) selectedSlot = hotbarSlotsCount - 1;
+            EiramEvents.SelectedSlotChanged(this, selectedSlot);
+        }
+
+        public ItemStack PopSelectedItem()
+        {
+            return RemoveFromItemStack(selectedSlot, 1);
         }
     }
 }

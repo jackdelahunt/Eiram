@@ -15,5 +15,9 @@ namespace Items
             this.Size = size;
         }
 
+        public override string ToString()
+        {
+            return $"{Size} : {ItemId}";
+        }
     }
 }

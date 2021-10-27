@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Dirt
   itemId: 0
-  maxStack: 1
+  maxStack: 64
   sprite: {fileID: 6128299156075563123, guid: d83a8b847e03180a193b8cc07a8f0c48, type: 3}

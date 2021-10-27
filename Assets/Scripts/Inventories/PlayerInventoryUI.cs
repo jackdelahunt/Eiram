@@ -13,9 +13,11 @@ namespace Inventories
 {
     public class PlayerInventoryUI : MonoBehaviour
     {
+        [SerializeField] private Vector3 pointerOffset = new Vector3();
         [SerializeField] private GameObject slotPrefab;
         [SerializeField] private RectTransform contentTransform;
         [SerializeField] private Sprite emptySlotSprite = null;
+        [SerializeField] private GameObject slotPointer = null;
         
         private List<Image> itemSprites = new List<Image>(PlayerInventory.Slots);
         private List<TMP_Text> itemCounts = new List<TMP_Text>(PlayerInventory.Slots);
@@ -26,6 +28,7 @@ namespace Inventories
         {
             EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
             EiramEvents.PlayerInventoryIsDirtyEvent += OnPlayerInventoryIsDirty;
+            EiramEvents.SelectedSlotChangedEvent += OnSelectedSlotChanged;
             GenerateUI();
         }
 
@@ -33,6 +36,7 @@ namespace Inventories
         {
             EiramEvents.PlayerToggleInventoryEvent -= OnPlayerToggleInventoryEvent;
             EiramEvents.PlayerInventoryIsDirtyEvent -= OnPlayerInventoryIsDirty;
+            EiramEvents.SelectedSlotChangedEvent -= OnSelectedSlotChanged;
         }
 
         private void GenerateUI()
@@ -43,6 +47,14 @@ namespace Inventories
                 itemSprites.Add(go.GetComponentInChildren<Image>());
                 itemCounts.Add(go.GetComponentInChildren<TMP_Text>());
             }
+            
+        }
+
+        private void MovePointer(int slotIndex)
+        {
+            var pos = itemSprites[slotIndex].gameObject.transform.position;
+            Debug.Log(pos);
+            slotPointer.transform.position = pos + pointerOffset;
         }
 
         private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
@@ -55,6 +67,11 @@ namespace Inventories
         private void OnPlayerInventoryIsDirty(PlayerInventory playerInventory)
         {
             Refresh(playerInventory);
+        }
+
+        private void OnSelectedSlotChanged(PlayerInventory playerInventory, int slotIndex)
+        {
+            MovePointer(slotIndex);
         }
 
         private void Refresh(PlayerInventory playerInventory)
@@ -80,13 +97,13 @@ namespace Inventories
 
         private void OpenInventory(PlayerInventory playerInventory)
         {
-            LeanTween.moveX(gameObject, transform.position.x + 850.0f, 0.4f);
+            LeanTween.moveY(gameObject, transform.position.y - 460.0f, 0.4f);
             Refresh(playerInventory);
         }
         
         private void CloseInventory()
         {
-            LeanTween.moveX(gameObject, transform.position.x - 850.0f, 0.4f);
+            LeanTween.moveY(gameObject, transform.position.y + 460.0f, 0.4f);
         }
     }
 }

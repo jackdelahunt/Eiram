@@ -27,5 +27,12 @@ namespace Events
         {
             PlayerInventoryIsDirtyEvent?.Invoke(playerInventory);
         }
+        
+        public static event Action<PlayerInventory, int> SelectedSlotChangedEvent;
+
+        public static void SelectedSlotChanged(PlayerInventory playerInventory, int slotIndex)
+        {
+            SelectedSlotChangedEvent?.Invoke(playerInventory, slotIndex);
+        }
     }
 }

@@ -41,6 +41,7 @@ namespace Players
             CheckPlayerJump();
             CheckPlayerIdle();
 
+            // TODO: the player should not need to handle this
             if (playerInventory.IsDirty)
             {
                 EiramEvents.OnPlayerInventoryIsDirty(playerInventory);
@@ -77,10 +78,20 @@ namespace Players
 
             if (Input.GetButtonDown("Fire2"))
             {
-                var mousePos = GetMousePosition();
-                var tilePos = ConvertPositionToTile(mousePos);
-                World.Current.PlaceTileAt(tilePos, TileId.BEDROCK);
+                var inHandStack = playerInventory.PopSelectedItem();
+                if (inHandStack != ItemStack.Empty)
+                {
+                    var mousePos = GetMousePosition();
+                    var tilePos = ConvertPositionToTile(mousePos);
+                    World.Current.PlaceTileAt(tilePos, TileId.BEDROCK);
+                }
             }
+
+            float scrollAmount = Input.GetAxisRaw("Scroll"); 
+            if (scrollAmount > 0)
+                playerInventory.SelectPrevious();
+            else if (scrollAmount < 0)
+                playerInventory.SelectNext();
         }
 
         /*
