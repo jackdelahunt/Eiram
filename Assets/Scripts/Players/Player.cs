@@ -1,4 +1,9 @@
+using System;
 using Eiram;
+using Events;
+using Inventories;
+using Items;
+using Registers;
 using UnityEngine;
 using Worlds;
 
@@ -13,6 +18,7 @@ namespace Players
         
         private Camera mainCamera = null;
         private CharacterController controller = null;
+        private PlayerInventory playerInventory = new PlayerInventory();
         // private Animator animator = null;
 
         private bool isPlayerIdle = true;
@@ -34,6 +40,13 @@ namespace Players
             CheckForMouseInput();
             CheckPlayerJump();
             CheckPlayerIdle();
+
+            // TODO: the player should not need to handle this
+            if (playerInventory.IsDirty)
+            {
+                EiramEvents.OnPlayerInventoryIsDirty(playerInventory);
+                playerInventory.IsDirty = false;
+            }
         }
 
         /*
@@ -46,6 +59,11 @@ namespace Players
             {
                 isPlayerIdle = false;
                 controller.Move(Input.GetAxisRaw("Horizontal") * movementSpeed);
+            }
+            
+            if (Input.GetButtonDown("ToggleInventory"))
+            {
+                EiramEvents.OnPlayerToggleInventory(playerInventory);
             }
         }
         
@@ -60,10 +78,20 @@ namespace Players
 
             if (Input.GetButtonDown("Fire2"))
             {
-                var mousePos = GetMousePosition();
-                var tilePos = ConvertPositionToTile(mousePos);
-                World.Current.PlaceTileAt(tilePos, TileId.BEDROCK);
+                var inHandStack = playerInventory.PopSelectedItem();
+                if (inHandStack != ItemStack.Empty && inHandStack.ItemId != ItemId.UNKNOWN)
+                {
+                    var mousePos = GetMousePosition();
+                    var tilePos = ConvertPositionToTile(mousePos);
+                    World.Current.PlaceTileAt(tilePos, Register.GetTileByItemId(inHandStack.ItemId).TileId());
+                }
             }
+
+            float scrollAmount = Input.GetAxisRaw("Scroll"); 
+            if (scrollAmount > 0)
+                playerInventory.SelectPrevious();
+            else if (scrollAmount < 0)
+                playerInventory.SelectNext();
         }
 
         /*
@@ -108,6 +136,20 @@ namespace Players
         {
             return mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y, -mainCamera.transform.position.z));
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("ItemEntity"))
+            {
+                var go = other.gameObject;
+                var entity = go.GetComponent<ItemEntity>();
+                int remainingSize = playerInventory.TryAddItem(entity.ItemId, entity.Size);
+                if (remainingSize > 0)
+                    entity.Size = remainingSize;
+                else
+                    Destroy(go);
+            }
         }
     }
 }

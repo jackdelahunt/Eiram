@@ -1,5 +1,6 @@
 using Eiram;
 using Items.Items;
+using JetBrains.Annotations;
 using Tiles;
 using UnityEditor;
 using UnityEngine;
@@ -9,15 +10,29 @@ namespace Registers
 {
     public class Register : MonoBehaviour
     {
-        private static Tile[] tiles;
+        private static AbstractTile[] tiles;
         private static Item[] items;
         
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
         [SerializeField] private Item[] itemArray;
 
-        public static Tile GetTileById(TileId tileId)
+        public static AbstractTile GetTileByTileId(TileId tileId)
         {
             return tiles[(int)tileId];
+        }
+
+        [CanBeNull]
+        public static AbstractTile GetTileByItemId(ItemId itemId)
+        {
+            Debug.Assert(itemId != ItemId.UNKNOWN);
+            
+            foreach (var tile in tiles)
+            {
+                if (tile.ItemId() == itemId)
+                    return tile;
+            }
+
+            return null;
         }
         
         public static Item GetItemById(ItemId itemId)
@@ -27,7 +42,7 @@ namespace Registers
         
         public void Awake()
         {
-            tiles = new Tile[] {
+            tiles = new AbstractTile[] {
                 new Air(concreteTileDataArray[0]),
                 new Dirt(concreteTileDataArray[1]),
                 new Grass(concreteTileDataArray[2]),
@@ -74,7 +89,7 @@ namespace Registers
                    continue;
                }
 
-               Debug.Assert(i == (int)items[i].itemId, $"{i} != {tiles[i].TileId()}");
+               Debug.Assert(i == (int)(items[i].itemId), $"{i} != {items[i].itemId}");
            }
         }
     }

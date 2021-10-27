@@ -6,11 +6,11 @@ using UnityEngine.Tilemaps;
 
 namespace Tiles
 {
-    public abstract class Tile
+    public abstract class AbstractTile
     {
         private ConcreteTileData concreteTileData;
 
-        public Tile(ConcreteTileData concreteTileData)
+        public AbstractTile(ConcreteTileData concreteTileData)
         {
             this.concreteTileData = concreteTileData;
         }
@@ -24,34 +24,34 @@ namespace Tiles
         {
             return concreteTileData.TileBase;
         }
+
+        public ItemId ItemId()
+        {
+            return concreteTileData.ItemId;
+        }
     }
     
-    public class Air : Tile
+    public class Air : AbstractTile
     {
         public Air(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
 
-    public class Dirt : Tile, IItemEntityProvider
+    public class Dirt : AbstractTile
     {
         public Dirt(ConcreteTileData concreteTileData) : base(concreteTileData){}
-
-        public ItemId ItemId()
-        {
-            return Eiram.ItemId.DIRT;
-        }
     }
     
-    public class Grass : Tile
+    public class Grass : AbstractTile
     {
         public Grass(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
     
-    public class Stone : Tile
+    public class Stone : AbstractTile
     {
         public Stone(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
     
-    public class Bedrock : Tile
+    public class Bedrock : AbstractTile
     {
         public Bedrock(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }

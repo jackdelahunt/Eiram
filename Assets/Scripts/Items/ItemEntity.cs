@@ -10,17 +10,19 @@ namespace Items
     public class ItemEntity : MonoBehaviour
     {
         private SpriteRenderer spriteRenderer = null;
-        private Item item;
+        public ItemId ItemId = ItemId.UNKNOWN;
+        public int Size = 0;
         
         public void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        public void Init(ItemId itemId)
+        public void Init(ItemId itemId, int size = 1)
         {
-            item = Register.GetItemById(itemId);
-            spriteRenderer.sprite = item.sprite;
+            this.ItemId = itemId;
+            this.Size = size;
+            spriteRenderer.sprite = Register.GetItemById(itemId).sprite;
         }
     }
 }

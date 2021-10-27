@@ -98,15 +98,14 @@ namespace Worlds
 
         private void OnTileBreak(Vector3Int worldPosition, TileId tileId)
         {
-            if (Register.GetTileById(tileId) is IItemEntityProvider itemEntityProvider)
+            ItemId itemId = Register.GetTileByTileId(tileId).ItemId();
+            if (itemId != ItemId.UNKNOWN)
             {
                 var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);
                 var newItemEntity = Instantiate(itemEntityPrefab, worldPosition + spawnOffset, new Quaternion()).GetComponent<ItemEntity>();
-                newItemEntity.Init(itemEntityProvider.ItemId());
+                newItemEntity.Init(itemId);
             }
-            
         }
-        
     }
 }
         
