@@ -53,7 +53,6 @@ namespace Inventories
         private void MovePointer(int slotIndex)
         {
             var pos = itemSprites[slotIndex].gameObject.transform.position;
-            Debug.Log(pos);
             slotPointer.transform.position = pos + pointerOffset;
         }
 

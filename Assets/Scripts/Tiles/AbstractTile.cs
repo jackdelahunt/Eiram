@@ -24,6 +24,11 @@ namespace Tiles
         {
             return concreteTileData.TileBase;
         }
+
+        public ItemId ItemId()
+        {
+            return concreteTileData.ItemId;
+        }
     }
     
     public class Air : AbstractTile
@@ -31,24 +36,14 @@ namespace Tiles
         public Air(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
 
-    public class Dirt : AbstractTile, IItemEntityProvider
+    public class Dirt : AbstractTile
     {
         public Dirt(ConcreteTileData concreteTileData) : base(concreteTileData){}
-
-        public ItemId ItemId()
-        {
-            return Eiram.ItemId.DIRT;
-        }
     }
     
-    public class Grass : AbstractTile, IItemEntityProvider
+    public class Grass : AbstractTile
     {
         public Grass(ConcreteTileData concreteTileData) : base(concreteTileData){}
-        
-        public ItemId ItemId()
-        {
-            return Eiram.ItemId.GRASS;
-        }
     }
     
     public class Stone : AbstractTile

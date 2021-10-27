@@ -1,5 +1,6 @@
 using Eiram;
 using Items.Items;
+using JetBrains.Annotations;
 using Tiles;
 using UnityEditor;
 using UnityEngine;
@@ -15,9 +16,23 @@ namespace Registers
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
         [SerializeField] private Item[] itemArray;
 
-        public static AbstractTile GetTileById(TileId tileId)
+        public static AbstractTile GetTileByTileId(TileId tileId)
         {
             return tiles[(int)tileId];
+        }
+
+        [CanBeNull]
+        public static AbstractTile GetTileByItemId(ItemId itemId)
+        {
+            Debug.Assert(itemId != ItemId.UNKNOWN);
+            
+            foreach (var tile in tiles)
+            {
+                if (tile.ItemId() == itemId)
+                    return tile;
+            }
+
+            return null;
         }
         
         public static Item GetItemById(ItemId itemId)

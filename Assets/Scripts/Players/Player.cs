@@ -79,11 +79,11 @@ namespace Players
             if (Input.GetButtonDown("Fire2"))
             {
                 var inHandStack = playerInventory.PopSelectedItem();
-                if (inHandStack != ItemStack.Empty)
+                if (inHandStack != ItemStack.Empty && inHandStack.ItemId != ItemId.UNKNOWN)
                 {
                     var mousePos = GetMousePosition();
                     var tilePos = ConvertPositionToTile(mousePos);
-                    World.Current.PlaceTileAt(tilePos, TileId.BEDROCK);
+                    World.Current.PlaceTileAt(tilePos, Register.GetTileByItemId(inHandStack.ItemId).TileId());
                 }
             }
 
