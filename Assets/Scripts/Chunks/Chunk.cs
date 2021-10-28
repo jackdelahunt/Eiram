@@ -53,6 +53,13 @@ namespace Chunks
             tileIds[chunkPosition.x, chunkPosition.y] = tileId;
             EiramTilemap.Foreground.SetTile(worldPosition, tileId);
         }
+        
+        public void UpdateTileAt(Vector3Int worldPosition)
+        {
+            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            var tileId = tileIds[chunkPosition.x, chunkPosition.y];
+            Register.GetTileByTileId(tileId).OnUpdate(worldPosition, GetTileData(worldPosition));
+        }
 
         public SerialTileData GetTileData(Vector3Int worldPosition)
         {

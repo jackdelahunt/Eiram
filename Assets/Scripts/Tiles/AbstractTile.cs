@@ -23,13 +23,26 @@ namespace Tiles
             };
         }
 
-        public virtual void OnUpdate(Vector3Int worldPosition, SerialTileData serialTileData) {}
+        public virtual void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
 
         public void OnPlace(Vector3Int worldPosition, SerialTileData serialTileData)
         {
             OnUpdate(worldPosition, serialTileData);
+            UpdateNeighbours(worldPosition);
         }
-        public void OnBreak(Vector3Int worldPosition, SerialTileData serialTileData) {}
+
+        public void OnBreak(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            UpdateNeighbours(worldPosition);
+        }
+
+        private void UpdateNeighbours(Vector3Int worldPosition)
+        {
+            World.Current.UpdateTileAt(worldPosition.Up());
+            World.Current.UpdateTileAt(worldPosition.Right());
+            World.Current.UpdateTileAt(worldPosition.Down());
+            World.Current.UpdateTileAt(worldPosition.Left());
+        }
 
         public SerialTileData DefaultTileData()
         {
@@ -66,9 +79,9 @@ namespace Tiles
     {
         public Grass(ConcreteTileData concreteTileData) : base(concreteTileData) {}
 
-        public override void OnUpdate(Vector3Int worldPosition, SerialTileData serialTileData)
+        public override void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData)
         {
-            base.OnUpdate(worldPosition, serialTileData);
+            base.OnUpdate(worldPosition, currentTileData);
             var above = World.Current.GetTileData(new Vector3Int(worldPosition.x, worldPosition.y + 1, 0)).Unwrap();
             if (World.Current.GetTileData(new Vector3Int(worldPosition.x, worldPosition.y + 1, 0)).Unwrap().TileId != Eiram.TileId.AIR)
             {

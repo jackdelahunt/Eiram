@@ -108,6 +108,15 @@ namespace Worlds
             }
         }
         
+        public void UpdateTileAt(Vector3Int worldPosition)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.UpdateTileAt(worldPosition);
+            }
+        }
+        
         /*
          * Returns a tile in a given location
          */
