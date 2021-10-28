@@ -5,7 +5,9 @@ using Eiram;
 using Events;
 using Items;
 using Registers;
+using Tiles;
 using UnityEngine;
+using static Eiram.Handles;
 
 namespace Worlds
 {
@@ -84,6 +86,7 @@ namespace Worlds
             if (activeChunks.TryGetValue(chunkX, out var chunk))
             {
                 chunk.PlaceTileAt(worldPosition, tileId);
+                Register.GetTileByTileId(tileId).OnPlace(worldPosition, chunk.GetTileData(worldPosition));
             }
         }
 
@@ -94,7 +97,54 @@ namespace Worlds
             {
                 chunk.RemoveTileAt(worldPosition);
             }
-        }   
+        }
+
+        public void ReplaceTileAt(Vector3Int worldPosition, TileId tileId)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.ReplaceTileAt(worldPosition, tileId);
+            }
+        }
+        
+        /*
+         * Returns a tile in a given location
+         */
+        public Some<SerialTileData> GetTileData(Vector3Int worldPosition)
+        {
+            var chunkResult = ChunkWithPosition(worldPosition);
+            if (chunkResult.IsSome(out var chunk))
+            {
+                return chunk.GetTileData(worldPosition);
+            }
+            
+            return None;
+        }
+        
+        /*
+         * returns a chunks that is loaded that contains
+         * the position, returns none if it is not loaded
+         * or an invalid position
+         */
+        private Some<Chunk> ChunkWithPosition(Vector3Int worldPosition)
+        {
+            if (worldPosition.y < 0 || worldPosition.y >= EiramTypes.CHUNK_HEIGHT)
+                return None;
+
+            // verify chunk is loaded 
+            return IsChunkLoaded(Utils.Utils.GetChunkXFromPosition(worldPosition));
+        }
+
+        /*
+         * returns a chunk if the chunk 
+         * with the given x position is loaded
+         */
+        private Some<Chunk> IsChunkLoaded(int chunkX)
+        {
+            var exists = activeChunks.TryGetValue(chunkX, out Chunk chunk);
+            return exists ? new Some<Chunk>(chunk) : None;
+        }
 
         private void OnTileBreak(Vector3Int worldPosition, TileId tileId)
         {

@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Bedrock
   TileId: 8
+  ItemId: -1
   TileBase: {fileID: 11400000, guid: f949a73a63435c2cead3ce15ea34fd29, type: 2}

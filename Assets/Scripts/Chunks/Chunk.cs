@@ -1,8 +1,10 @@
 using Eiram;
 using Events;
+using Registers;
 using Tilemaps;
 using UnityEngine;
 using TerrainGeneration;
+using Tiles;
 
 namespace Chunks
 {
@@ -32,11 +34,8 @@ namespace Chunks
         public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-
-            if (tileIds[chunkPosition.x, chunkPosition.y] == TileId.AIR)
-            {
-                EiramTilemap.Foreground.SetTile(worldPosition, tileId);
-            }
+            tileIds[chunkPosition.x, chunkPosition.y] = tileId;
+            EiramTilemap.Foreground.SetTile(worldPosition, tileId);
         }
 
         public void RemoveTileAt(Vector3Int worldPosition)
@@ -46,6 +45,20 @@ namespace Chunks
             tileIds[chunkPosition.x, chunkPosition.y] = TileId.AIR;
             EiramTilemap.Foreground.SetTile(worldPosition, TileId.AIR);
             EiramEvents.OnTileBreak(worldPosition, tileIdAt);
+        }
+        
+        public void ReplaceTileAt(Vector3Int worldPosition, TileId tileId)
+        {
+            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            tileIds[chunkPosition.x, chunkPosition.y] = tileId;
+            EiramTilemap.Foreground.SetTile(worldPosition, tileId);
+        }
+
+        public SerialTileData GetTileData(Vector3Int worldPosition)
+        {
+            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            var tileIdAt = tileIds[chunkPosition.x, chunkPosition.y];
+            return Register.GetTileByTileId(tileIdAt).DefaultTileData();
         }
         
         public Vector3Int WorldCoordToChunkCoord(Vector3Int worldPosition)
