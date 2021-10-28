@@ -15,4 +15,4 @@ MonoBehaviour:
   TileName: Stone
   TileId: 3
   ItemId: -1
-  TileBase: {fileID: 11400000, guid: fb9826648dfd7814ab45999b828295cf, type: 2}
+  TileBase: {fileID: 11400000, guid: b09803d74d32da446abc674cbaeddf68, type: 2}

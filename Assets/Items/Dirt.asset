@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Dirt
   itemId: 0
   maxStack: 64
-  sprite: {fileID: 6128299156075563123, guid: d83a8b847e03180a193b8cc07a8f0c48, type: 3}
+  sprite: {fileID: -5962389079421231736, guid: c7c3c177a4492b3408aabd834bd2d2b3, type: 3}
