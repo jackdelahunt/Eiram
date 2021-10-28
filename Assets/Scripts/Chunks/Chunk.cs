@@ -36,15 +36,22 @@ namespace Chunks
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
             tileIds[chunkPosition.x, chunkPosition.y] = tileId;
             EiramTilemap.Foreground.SetTile(worldPosition, tileId);
+
+            var data = Register.GetTileByTileId(tileId).DefaultTileData();
+            
+            EiramEvents.OnTilePlace(worldPosition, data);
         }
 
         public void RemoveTileAt(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            var tileIdAt = tileIds[chunkPosition.x, chunkPosition.y];
+            var tileId = tileIds[chunkPosition.x, chunkPosition.y];
             tileIds[chunkPosition.x, chunkPosition.y] = TileId.AIR;
             EiramTilemap.Foreground.SetTile(worldPosition, TileId.AIR);
-            EiramEvents.OnTileBreak(worldPosition, tileIdAt);
+            
+            var data = Register.GetTileByTileId(tileId).DefaultTileData();
+            
+            EiramEvents.OnTileBreak(worldPosition, data);
         }
         
         public void ReplaceTileAt(Vector3Int worldPosition, TileId tileId)

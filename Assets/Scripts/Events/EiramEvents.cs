@@ -1,17 +1,25 @@
 ﻿using System;
 using Eiram;
 using Inventories;
+using Tiles;
 using UnityEngine;
 
 namespace Events
 {
     public static class EiramEvents
     {
-        public static event Action<Vector3Int, TileId> TileBreakEvent;
+        public static event Action<Vector3Int, SerialTileData> TilePlaceEvent;
 
-        public static void OnTileBreak(Vector3Int worldPosition, TileId tileId)
+        public static void OnTilePlace(Vector3Int worldPosition, SerialTileData serialTileData)
         {
-            TileBreakEvent?.Invoke(worldPosition, tileId);
+            TilePlaceEvent?.Invoke(worldPosition, serialTileData);
+        }
+        
+        public static event Action<Vector3Int, SerialTileData> TileBreakEvent;
+
+        public static void OnTileBreak(Vector3Int worldPosition, SerialTileData serialTileData)
+        {
+            TileBreakEvent?.Invoke(worldPosition, serialTileData);
         }
         
         public static event Action<PlayerInventory> PlayerToggleInventoryEvent;

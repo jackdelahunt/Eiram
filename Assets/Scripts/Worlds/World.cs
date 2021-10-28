@@ -22,6 +22,7 @@ namespace Worlds
 
         private void Awake()
         {
+            EiramEvents.TilePlaceEvent += OnTilePlace;
             EiramEvents.TileBreakEvent += OnTileBreak;
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -34,6 +35,7 @@ namespace Worlds
 
         private void OnDestroy()
         {
+            EiramEvents.TilePlaceEvent -= OnTilePlace;
             EiramEvents.TileBreakEvent -= OnTileBreak;
         }
 
@@ -86,7 +88,6 @@ namespace Worlds
             if (activeChunks.TryGetValue(chunkX, out var chunk))
             {
                 chunk.PlaceTileAt(worldPosition, tileId);
-                Register.GetTileByTileId(tileId).OnPlace(worldPosition, chunk.GetTileData(worldPosition));
             }
         }
 
@@ -154,16 +155,24 @@ namespace Worlds
             var exists = activeChunks.TryGetValue(chunkX, out Chunk chunk);
             return exists ? new Some<Chunk>(chunk) : None;
         }
-
-        private void OnTileBreak(Vector3Int worldPosition, TileId tileId)
+        
+        // TODO: at some point these two need to receive the serial tile data
+        private void OnTilePlace(Vector3Int worldPosition, SerialTileData serialTileData)
         {
-            ItemId itemId = Register.GetTileByTileId(tileId).ItemId();
+            Register.GetTileByTileId(serialTileData.TileId).OnPlace(worldPosition, serialTileData);
+        }
+        
+        private void OnTileBreak(Vector3Int worldPosition, SerialTileData serialTileData)
+        {
+            ItemId itemId = Register.GetTileByTileId(serialTileData.TileId).ItemId();
             if (itemId != ItemId.UNKNOWN)
             {
                 var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);
                 var newItemEntity = Instantiate(itemEntityPrefab, worldPosition + spawnOffset, new Quaternion()).GetComponent<ItemEntity>();
                 newItemEntity.Init(itemId);
             }
+            
+            Register.GetTileByTileId(serialTileData.TileId).OnBreak(worldPosition, serialTileData);
         }
     }
 }
