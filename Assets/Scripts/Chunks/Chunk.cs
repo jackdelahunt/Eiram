@@ -1,8 +1,10 @@
 using Eiram;
 using Events;
+using Registers;
 using Tilemaps;
 using UnityEngine;
 using TerrainGeneration;
+using Tiles;
 
 namespace Chunks
 {
@@ -32,20 +34,45 @@ namespace Chunks
         public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            tileIds[chunkPosition.x, chunkPosition.y] = tileId;
+            EiramTilemap.Foreground.SetTile(worldPosition, tileId);
 
-            if (tileIds[chunkPosition.x, chunkPosition.y] == TileId.AIR)
-            {
-                EiramTilemap.Foreground.SetTile(worldPosition, tileId);
-            }
+            var data = Register.GetTileByTileId(tileId).DefaultTileData();
+            
+            EiramEvents.OnTilePlace(worldPosition, data);
         }
 
         public void RemoveTileAt(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            var tileIdAt = tileIds[chunkPosition.x, chunkPosition.y];
+            var tileId = tileIds[chunkPosition.x, chunkPosition.y];
             tileIds[chunkPosition.x, chunkPosition.y] = TileId.AIR;
             EiramTilemap.Foreground.SetTile(worldPosition, TileId.AIR);
-            EiramEvents.OnTileBreak(worldPosition, tileIdAt);
+            
+            var data = Register.GetTileByTileId(tileId).DefaultTileData();
+            
+            EiramEvents.OnTileBreak(worldPosition, data);
+        }
+        
+        public void ReplaceTileAt(Vector3Int worldPosition, TileId tileId)
+        {
+            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            tileIds[chunkPosition.x, chunkPosition.y] = tileId;
+            EiramTilemap.Foreground.SetTile(worldPosition, tileId);
+        }
+        
+        public void UpdateTileAt(Vector3Int worldPosition)
+        {
+            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            var tileId = tileIds[chunkPosition.x, chunkPosition.y];
+            Register.GetTileByTileId(tileId).OnUpdate(worldPosition, GetTileData(worldPosition));
+        }
+
+        public SerialTileData GetTileData(Vector3Int worldPosition)
+        {
+            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            var tileIdAt = tileIds[chunkPosition.x, chunkPosition.y];
+            return Register.GetTileByTileId(tileIdAt).DefaultTileData();
         }
         
         public Vector3Int WorldCoordToChunkCoord(Vector3Int worldPosition)

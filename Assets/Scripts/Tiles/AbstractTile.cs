@@ -1,18 +1,52 @@
 using Eiram;
 using Items;
+using Tags;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Worlds;
 
 namespace Tiles
 {
     public abstract class AbstractTile
     {
         private ConcreteTileData concreteTileData;
+        protected SerialTileData defaultTileData;
 
         public AbstractTile(ConcreteTileData concreteTileData)
         {
             this.concreteTileData = concreteTileData;
+            defaultTileData = new SerialTileData
+            {
+                TileId = concreteTileData.TileId,
+                Tag = new Tag()
+            };
+        }
+
+        public virtual void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
+
+        public void OnPlace(Vector3Int worldPosition, SerialTileData serialTileData)
+        {
+            OnUpdate(worldPosition, serialTileData);
+            UpdateNeighbours(worldPosition);
+        }
+
+        public void OnBreak(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            UpdateNeighbours(worldPosition);
+        }
+
+        private void UpdateNeighbours(Vector3Int worldPosition)
+        {
+            World.Current.UpdateTileAt(worldPosition.Up());
+            World.Current.UpdateTileAt(worldPosition.Right());
+            World.Current.UpdateTileAt(worldPosition.Down());
+            World.Current.UpdateTileAt(worldPosition.Left());
+        }
+
+        public SerialTileData DefaultTileData()
+        {
+            return this.defaultTileData;
         }
 
         public TileId TileId()
@@ -43,7 +77,17 @@ namespace Tiles
     
     public class Grass : AbstractTile
     {
-        public Grass(ConcreteTileData concreteTileData) : base(concreteTileData){}
+        public Grass(ConcreteTileData concreteTileData) : base(concreteTileData) {}
+
+        public override void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            base.OnUpdate(worldPosition, currentTileData);
+            var above = World.Current.GetTileData(new Vector3Int(worldPosition.x, worldPosition.y + 1, 0)).Unwrap();
+            if (World.Current.GetTileData(new Vector3Int(worldPosition.x, worldPosition.y + 1, 0)).Unwrap().TileId != Eiram.TileId.AIR)
+            {
+                World.Current.ReplaceTileAt(worldPosition, Eiram.TileId.DIRT);
+            }
+        }
     }
     
     public class Stone : AbstractTile

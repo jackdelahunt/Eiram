@@ -5,7 +5,9 @@ using Eiram;
 using Events;
 using Items;
 using Registers;
+using Tiles;
 using UnityEngine;
+using static Eiram.Handles;
 
 namespace Worlds
 {
@@ -20,6 +22,7 @@ namespace Worlds
 
         private void Awake()
         {
+            EiramEvents.TilePlaceEvent += OnTilePlace;
             EiramEvents.TileBreakEvent += OnTileBreak;
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
@@ -32,6 +35,7 @@ namespace Worlds
 
         private void OnDestroy()
         {
+            EiramEvents.TilePlaceEvent -= OnTilePlace;
             EiramEvents.TileBreakEvent -= OnTileBreak;
         }
 
@@ -94,17 +98,81 @@ namespace Worlds
             {
                 chunk.RemoveTileAt(worldPosition);
             }
-        }   
+        }
 
-        private void OnTileBreak(Vector3Int worldPosition, TileId tileId)
+        public void ReplaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
-            ItemId itemId = Register.GetTileByTileId(tileId).ItemId();
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.ReplaceTileAt(worldPosition, tileId);
+            }
+        }
+        
+        public void UpdateTileAt(Vector3Int worldPosition)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.UpdateTileAt(worldPosition);
+            }
+        }
+        
+        /*
+         * Returns a tile in a given location
+         */
+        public Some<SerialTileData> GetTileData(Vector3Int worldPosition)
+        {
+            var chunkResult = ChunkWithPosition(worldPosition);
+            if (chunkResult.IsSome(out var chunk))
+            {
+                return chunk.GetTileData(worldPosition);
+            }
+            
+            return None;
+        }
+        
+        /*
+         * returns a chunks that is loaded that contains
+         * the position, returns none if it is not loaded
+         * or an invalid position
+         */
+        private Some<Chunk> ChunkWithPosition(Vector3Int worldPosition)
+        {
+            if (worldPosition.y < 0 || worldPosition.y >= EiramTypes.CHUNK_HEIGHT)
+                return None;
+
+            // verify chunk is loaded 
+            return IsChunkLoaded(Utils.Utils.GetChunkXFromPosition(worldPosition));
+        }
+
+        /*
+         * returns a chunk if the chunk 
+         * with the given x position is loaded
+         */
+        private Some<Chunk> IsChunkLoaded(int chunkX)
+        {
+            var exists = activeChunks.TryGetValue(chunkX, out Chunk chunk);
+            return exists ? new Some<Chunk>(chunk) : None;
+        }
+        
+        // TODO: at some point these two need to receive the serial tile data
+        private void OnTilePlace(Vector3Int worldPosition, SerialTileData serialTileData)
+        {
+            Register.GetTileByTileId(serialTileData.TileId).OnPlace(worldPosition, serialTileData);
+        }
+        
+        private void OnTileBreak(Vector3Int worldPosition, SerialTileData serialTileData)
+        {
+            ItemId itemId = Register.GetTileByTileId(serialTileData.TileId).ItemId();
             if (itemId != ItemId.UNKNOWN)
             {
                 var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);
                 var newItemEntity = Instantiate(itemEntityPrefab, worldPosition + spawnOffset, new Quaternion()).GetComponent<ItemEntity>();
                 newItemEntity.Init(itemId);
             }
+            
+            Register.GetTileByTileId(serialTileData.TileId).OnBreak(worldPosition, serialTileData);
         }
     }
 }
