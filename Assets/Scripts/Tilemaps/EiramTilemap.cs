@@ -39,7 +39,7 @@ namespace Tilemaps
                 for (int j = 0; j < EiramTypes.CHUNK_HEIGHT; j++)
                 {
                     var worldPos = new Vector3Int((chunk.ChunkX * EiramTypes.CHUNK_WIDTH) + i, j, 0);
-                    SetTile(worldPos, chunk.GetTileAt(worldPos));
+                    SetTile(worldPos, chunk.GetTileAt(worldPos).TileId);
                 }
             }
         }

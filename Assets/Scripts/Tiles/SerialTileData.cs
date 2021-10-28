@@ -1,14 +1,24 @@
-﻿using Eiram;
+﻿using System;
+using Eiram;
 using Tags;
 
 namespace Tiles
 {
-    public class SerialTileData
+    public class SerialTileData : ICloneable
     {
         public SerialTileData()
         {
             TileId = TileId.UNKNOWN;
             Tag = new Tag();
+        }
+        
+        public object Clone()
+        {
+            return new SerialTileData
+            {
+                TileId = this.TileId,
+                Tag = Tag
+            };
         }
         
         public TileId TileId;

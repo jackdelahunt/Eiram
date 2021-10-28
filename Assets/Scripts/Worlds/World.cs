@@ -156,7 +156,6 @@ namespace Worlds
             return exists ? new Some<Chunk>(chunk) : None;
         }
         
-        // TODO: at some point these two need to receive the serial tile data
         private void OnTilePlace(Vector3Int worldPosition, SerialTileData serialTileData)
         {
             Register.GetTileByTileId(serialTileData.TileId).OnPlace(worldPosition, serialTileData);

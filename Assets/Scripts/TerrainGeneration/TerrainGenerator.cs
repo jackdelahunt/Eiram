@@ -3,6 +3,7 @@ using System.Linq;
 using Chunks;
 using Eiram;
 using Registers;
+using Tiles;
 using UnityEngine;
 using Utils;
 
@@ -10,30 +11,37 @@ namespace TerrainGeneration
 {
     public class TerrainGenerator
     {
-        public static TileId[,] GenerateChunkData(Chunk chunk)
+        public static SerialTileData[,] GenerateChunkData(Chunk chunk)
         {
-            var tileIds = new TileId[EiramTypes.CHUNK_WIDTH, EiramTypes.CHUNK_HEIGHT];
+            var tileDataArray = new SerialTileData[EiramTypes.CHUNK_WIDTH, EiramTypes.CHUNK_HEIGHT];
+            for (int i = 0; i < tileDataArray.GetLength(0); i++)
+            {
+                for (int j = 0; j < tileDataArray.GetLength(1); j++)
+                {
+                    tileDataArray[i, j] = Register.GetTileByTileId(TileId.AIR).DefaultTileData();
+                }
+            }
             
             // TODO: find out what to do with these hard coded values
             int caveHeight = Mathf.RoundToInt(EiramTypes.CHUNK_HEIGHT * 0.5f);
             int maxTerrainHeight = Mathf.RoundToInt(EiramTypes.CHUNK_HEIGHT * 0.1f);
 
-            BedrockPass(tileIds);
-            CavePass(tileIds, chunk, caveHeight);
-            TerrainPass(tileIds, chunk, caveHeight, maxTerrainHeight);
-
-            return tileIds;
+            BedrockPass(tileDataArray);
+            CavePass(tileDataArray, chunk, caveHeight);
+            TerrainPass(tileDataArray, chunk, caveHeight, maxTerrainHeight);
+    
+            return tileDataArray;
         }
 
-        private static void BedrockPass(TileId[,] tileIds)
+        private static void BedrockPass(SerialTileData[,] tileDataArray)
         {
             for (int x = 0; x < EiramTypes.CHUNK_WIDTH; x++)
             {
-                tileIds[x, 0] = TileId.BEDROCK;
+                tileDataArray[x, 0] = Register.GetTileByTileId(TileId.BEDROCK).DefaultTileData();
             }
         }
 
-        private static void CavePass(TileId[,] tileIds, Chunk chunk, int caveHeight)
+        private static void CavePass(SerialTileData[,] tileDataArray, Chunk chunk, int caveHeight)
         {
             int xOffset = 0;
             int yOffset = 1;
@@ -44,7 +52,9 @@ namespace TerrainGeneration
             {
                 while (xOffset < EiramTypes.CHUNK_WIDTH)
                 {
-                    tileIds[xOffset, yOffset] = Noise.CaveNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y + yOffset, 0.4f, 0) ? TileId.STONE : TileId.AIR;
+                    tileDataArray[xOffset, yOffset] = Noise.CaveNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y + yOffset, 0.4f, 0) 
+                        ? Register.GetTileByTileId(TileId.STONE).DefaultTileData() 
+                        : Register.GetTileByTileId(TileId.AIR).DefaultTileData();
                     xOffset++;
                 }
 
@@ -53,7 +63,7 @@ namespace TerrainGeneration
             }
         }
 
-        private static void TerrainPass(TileId[,] tileIds, Chunk chunk, int caveHeight,
+        private static void TerrainPass(SerialTileData[,] tileDataArray, Chunk chunk, int caveHeight,
             int maxTerrainHeight)
         {
             int xOffset = 0;
@@ -69,7 +79,9 @@ namespace TerrainGeneration
                 for (int y = caveHeight; y < caveHeight + actualHeight; y++)
                 {
                     // xOffset is equal to the local x of the tile aswell
-                    tileIds[xOffset, y] = y == highestPoint ? TileId.GRASS : TileId.DIRT;
+                    tileDataArray[xOffset, y] = y == highestPoint 
+                        ? Register.GetTileByTileId(TileId.GRASS).DefaultTileData() 
+                        : Register.GetTileByTileId(TileId.DIRT).DefaultTileData();
                 }
 
                 xOffset++;
