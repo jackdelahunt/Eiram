@@ -11,12 +11,12 @@ namespace Chunks
     public class Chunk
     {
         public readonly int ChunkX;
-        private readonly TileId[,] tileIds;
+        private readonly SerialTileData[,] tileDataArray;
 
         public Chunk(int chunkX)
         {
             this.ChunkX = chunkX;
-            tileIds = TerrainGenerator.GenerateChunkData(this);
+            tileDataArray = TerrainGenerator.GenerateChunkData(this);
             EiramTilemap.Foreground.DrawChunk(this);
         }
         
@@ -25,54 +25,49 @@ namespace Chunks
             EiramTilemap.Foreground.RemoveChunk(this);
         }
         
-        public TileId GetTileAt(Vector3Int worldPosition)
+        public SerialTileData GetTileAt(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            return tileIds[chunkPosition.x, chunkPosition.y];
+            return tileDataArray[chunkPosition.x, chunkPosition.y];
         }
         
         public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
-        {
+        {   
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            tileIds[chunkPosition.x, chunkPosition.y] = tileId;
+            var data = Register.GetTileByTileId(tileId).DefaultTileData();
+            tileDataArray[chunkPosition.x, chunkPosition.y] = data;
             EiramTilemap.Foreground.SetTile(worldPosition, tileId);
 
-            var data = Register.GetTileByTileId(tileId).DefaultTileData();
-            
             EiramEvents.OnTilePlace(worldPosition, data);
         }
 
         public void RemoveTileAt(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            var tileId = tileIds[chunkPosition.x, chunkPosition.y];
-            tileIds[chunkPosition.x, chunkPosition.y] = TileId.AIR;
+            var data = GetTileData(worldPosition);
+            
+            tileDataArray[chunkPosition.x, chunkPosition.y] = Register.GetTileByTileId(TileId.AIR).DefaultTileData();
             EiramTilemap.Foreground.SetTile(worldPosition, TileId.AIR);
-            
-            var data = Register.GetTileByTileId(tileId).DefaultTileData();
-            
             EiramEvents.OnTileBreak(worldPosition, data);
         }
         
         public void ReplaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            tileIds[chunkPosition.x, chunkPosition.y] = tileId;
+            tileDataArray[chunkPosition.x, chunkPosition.y] = Register.GetTileByTileId(tileId).DefaultTileData();
             EiramTilemap.Foreground.SetTile(worldPosition, tileId);
         }
         
         public void UpdateTileAt(Vector3Int worldPosition)
         {
-            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            var tileId = tileIds[chunkPosition.x, chunkPosition.y];
-            Register.GetTileByTileId(tileId).OnUpdate(worldPosition, GetTileData(worldPosition));
+            var data = GetTileData(worldPosition);
+            Register.GetTileByTileId(data.TileId).OnUpdate(worldPosition, data);
         }
 
         public SerialTileData GetTileData(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            var tileIdAt = tileIds[chunkPosition.x, chunkPosition.y];
-            return Register.GetTileByTileId(tileIdAt).DefaultTileData();
+            return tileDataArray[chunkPosition.x, chunkPosition.y];
         }
         
         public Vector3Int WorldCoordToChunkCoord(Vector3Int worldPosition)

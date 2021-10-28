@@ -4,9 +4,9 @@ using Eiram;
 
 namespace Tags
 {
-    public class Tag
+    public class Tag : ICloneable
     {
-        private readonly Dictionary<string, object> dictionary = new Dictionary<string, object>();
+        private Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
         public bool HasKey(string tag)
         {
@@ -64,6 +64,14 @@ namespace Tags
         {
             var contains = dictionary.TryGetValue(tag, out object value);
             return contains ? Convert.ToInt32(value) : throw new NotFoundException(tag); 
+        }
+        
+        public object Clone()
+        {
+            return new Tag
+            {
+                dictionary = new Dictionary<string, object>(dictionary)
+            };
         }
 
         public int Count => dictionary.Count;

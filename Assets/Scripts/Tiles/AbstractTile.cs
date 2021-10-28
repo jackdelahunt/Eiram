@@ -46,7 +46,7 @@ namespace Tiles
 
         public SerialTileData DefaultTileData()
         {
-            return this.defaultTileData;
+            return this.defaultTileData.Clone() as SerialTileData;
         }
 
         public TileId TileId()
@@ -67,7 +67,7 @@ namespace Tiles
     
     public class Air : AbstractTile
     {
-        public Air(ConcreteTileData concreteTileData) : base(concreteTileData){}
+        public Air(ConcreteTileData concreteTileData) : base(concreteTileData) {}
     }
 
     public class Dirt : AbstractTile
