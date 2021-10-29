@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Dirt
   TileId: 1
-  TileBase: {fileID: 11400000, guid: 77f8e88fc7751ba05a624a6bc403629e, type: 2}
+  ItemId: 0
+  TileBase: {fileID: 11400000, guid: 66e5e9ce7dc9e8546aab9b9a21ffc036, type: 2}
