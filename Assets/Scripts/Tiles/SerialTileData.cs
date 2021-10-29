@@ -4,6 +4,7 @@ using Tags;
 
 namespace Tiles
 {
+    [Serializable]
     public class SerialTileData : ICloneable
     {
         public SerialTileData()

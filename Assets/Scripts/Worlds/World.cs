@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Chunks;
 using Eiram;
 using Events;
+using IO;
 using Items;
 using Registers;
 using Tiles;
@@ -19,6 +20,7 @@ namespace Worlds
         
         private GameObject playerObject;
         private Dictionary<int, Chunk> activeChunks = new Dictionary<int, Chunk>();
+        public Save Save;
 
         private void Awake()
         {
@@ -26,6 +28,7 @@ namespace Worlds
             EiramEvents.TileBreakEvent += OnTileBreak;
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
+            Save = Filesystem.CreateSave("DEBUG_SAVE");
         }
 
         void Start()
@@ -37,6 +40,11 @@ namespace Worlds
         {
             EiramEvents.TilePlaceEvent -= OnTilePlace;
             EiramEvents.TileBreakEvent -= OnTileBreak;
+
+            foreach (var chunk in activeChunks.Values)
+            {
+                chunk.Die();
+            }
         }
 
         void ChunkRefresh()
@@ -78,8 +86,8 @@ namespace Worlds
             // remove all entries of the chunks that are off-loaded to disk
             foreach (var chunk in toBeUnLoaded)
             {
-                chunk.Die();
                 activeChunks.Remove(chunk.ChunkX);
+                chunk.Die();
             }
         }
         public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)

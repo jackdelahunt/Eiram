@@ -1,13 +1,17 @@
+using System;
 using Eiram;
 using Events;
+using IO;
 using Registers;
 using Tilemaps;
 using UnityEngine;
 using TerrainGeneration;
 using Tiles;
+using Worlds;
 
 namespace Chunks
 {
+    [Serializable]
     public class Chunk
     {
         public readonly int ChunkX;
@@ -16,13 +20,31 @@ namespace Chunks
         public Chunk(int chunkX)
         {
             this.ChunkX = chunkX;
-            tileDataArray = TerrainGenerator.GenerateChunkData(this);
+            if (World.Current.Save.Region.GetFile($"{ChunkX}.chunk").IsSome(out var file))
+            {
+                var loadResult = Filesystem.LoadFrom<Chunk>($"{ChunkX}.chunk", World.Current.Save.Region);
+                if (loadResult.IsNone())
+                {
+                    // delete bad data
+                    file.Delete();
+                    tileDataArray = TerrainGenerator.GenerateChunkData(this);
+                }
+                else
+                {
+                    tileDataArray = loadResult.Value.tileDataArray;
+                }
+            }
+            else
+            {
+                tileDataArray = TerrainGenerator.GenerateChunkData(this);
+            }
             EiramTilemap.Foreground.DrawChunk(this);
         }
         
         public void Die()
         {
             EiramTilemap.Foreground.RemoveChunk(this);
+            Filesystem.SaveTo(this, $"{ChunkX}.chunk", World.Current.Save.Region);
         }
         
         public SerialTileData GetTileAt(Vector3Int worldPosition)

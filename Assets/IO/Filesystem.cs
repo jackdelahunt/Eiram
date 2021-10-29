@@ -1,16 +1,17 @@
 ﻿using System.IO;
 using Eiram;
+using UnityEngine.WSA;
 using static Eiram.Handles;
+using UnityEngine;
+using Application = UnityEngine.Application;
 
 namespace IO
 {
     public static class Filesystem
     {
-        public static readonly string PersistantDataPath = "C:/Users/liamd/AppData/LocalLow/JackDelahunt/";
-
         public static Save CreateSave(string saveName)
         {
-            var savePath = $"{PersistantDataPath}/{saveName}";
+            var savePath = $"{Application.persistentDataPath}/{saveName}";
             return new Save
             {
                 Data = new EiarmDirectory($"{savePath}/Data"),
@@ -36,7 +37,7 @@ namespace IO
 
         public static bool SaveExists(string saveName)
         {
-            return Directory.Exists($"{PersistantDataPath}/{saveName}");
+            return Directory.Exists($"{Application.persistentDataPath}/{saveName}");
         }
     }
     
