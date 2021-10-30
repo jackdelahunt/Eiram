@@ -20,31 +20,20 @@ namespace Chunks
         public Chunk(int chunkX)
         {
             this.ChunkX = chunkX;
-            if (World.Current.Save.Region.GetFile($"{ChunkX}.chunk").IsSome(out var file))
-            {
-                var loadResult = Filesystem.LoadFrom<Chunk>($"{ChunkX}.chunk", World.Current.Save.Region);
-                if (loadResult.IsNone())
-                {
-                    // delete bad data
-                    file.Delete();
-                    tileDataArray = TerrainGenerator.GenerateChunkData(this);
-                }
-                else
-                {
-                    tileDataArray = loadResult.Value.tileDataArray;
-                }
-            }
-            else
-            {
-                tileDataArray = TerrainGenerator.GenerateChunkData(this);
-            }
+            tileDataArray = TerrainGenerator.GenerateChunkData(this);
+            EiramTilemap.Foreground.DrawChunk(this);
+        }
+
+        public Chunk(ChunkData loadedData)
+        {
+            this.ChunkX = loadedData.ChunkX;
+            this.tileDataArray = loadedData.TileDataArray;
             EiramTilemap.Foreground.DrawChunk(this);
         }
         
         public void Die()
         {
             EiramTilemap.Foreground.RemoveChunk(this);
-            Filesystem.SaveTo(this, $"{ChunkX}.chunk", World.Current.Save.Region);
         }
         
         public SerialTileData GetTileAt(Vector3Int worldPosition)
@@ -96,5 +85,21 @@ namespace Chunks
         {
             return new Vector3Int(worldPosition.x - (ChunkX * EiramTypes.CHUNK_WIDTH), worldPosition.y, 0);
         }
+
+        public ChunkData SerializableData()
+        {
+            return new ChunkData
+            {
+                ChunkX = this.ChunkX,
+                TileDataArray = this.tileDataArray
+            };
+        }
+    }
+
+    [Serializable]
+    public class ChunkData
+    {
+        public int ChunkX;
+        public SerialTileData[,] TileDataArray; 
     }
 }

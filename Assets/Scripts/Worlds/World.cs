@@ -41,55 +41,9 @@ namespace Worlds
             EiramEvents.TilePlaceEvent -= OnTilePlace;
             EiramEvents.TileBreakEvent -= OnTileBreak;
 
-            foreach (var chunk in activeChunks.Values)
-            {
-                chunk.Die();
-            }
+            SaveWorld();
         }
-
-        void ChunkRefresh()
-        {
-            if (playerObject == null)
-                return;
-
-            // TODO: remove this Utils.Utils
-            int playerChunk = Utils.Utils.GetChunkXFromPosition(playerObject.transform.position);
-            List<int> inRangeOfPlayer = new List<int>();   // chunks that will be loaded based on player pos
-            HashSet<Chunk> toBeUnLoaded = new HashSet<Chunk>();     // chunk x coords that will be unloaded based on player pos   
-
-            for (int i = playerChunk - EiramTypes.RENDER_DISTANCE; i <= playerChunk + EiramTypes.RENDER_DISTANCE; i++)
-            {
-                inRangeOfPlayer.Add(i);
-            }
-
-            // if the chunks in the active chunk pool are no longer in range
-            // then set them to be inactive
-            foreach (var chunk in activeChunks.Values)
-            {
-                if (!inRangeOfPlayer.Contains(chunk.ChunkX))
-                {
-                    toBeUnLoaded.Add(chunk);
-                }
-            }
-
-            // then generate a chunk for each chunkX that is in range
-            // of the player but not is not loaded
-            foreach (var chunkXInRage in inRangeOfPlayer)
-            {
-                if (!activeChunks.TryGetValue(chunkXInRage, out Chunk _))
-                {
-                    var chunk = new Chunk(chunkXInRage);
-                    activeChunks.Add(chunkXInRage, chunk);
-                }
-            }
-
-            // remove all entries of the chunks that are off-loaded to disk
-            foreach (var chunk in toBeUnLoaded)
-            {
-                activeChunks.Remove(chunk.ChunkX);
-                chunk.Die();
-            }
-        }
+        
         public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
@@ -140,11 +94,79 @@ namespace Worlds
             return None;
         }
         
-        /*
-         * returns a chunks that is loaded that contains
-         * the position, returns none if it is not loaded
-         * or an invalid position
-         */
+        private void ChunkRefresh()
+        {
+            if (playerObject == null)
+                return;
+
+            // TODO: remove this Utils.Utils
+            int playerChunk = Utils.Utils.GetChunkXFromPosition(playerObject.transform.position);
+            List<int> inRangeOfPlayer = new List<int>();   // chunks that will be loaded based on player pos
+            HashSet<Chunk> toBeUnLoaded = new HashSet<Chunk>();     // chunk x coords that will be unloaded based on player pos   
+
+            for (int i = playerChunk - EiramTypes.RENDER_DISTANCE; i <= playerChunk + EiramTypes.RENDER_DISTANCE; i++)
+            {
+                inRangeOfPlayer.Add(i);
+            }
+
+            // if the chunks in the active chunk pool are no longer in range
+            // then set them to be inactive
+            foreach (var chunk in activeChunks.Values)
+            {
+                if (!inRangeOfPlayer.Contains(chunk.ChunkX))
+                {
+                    toBeUnLoaded.Add(chunk);
+                }
+            }
+
+            // then generate a chunk for each chunkX that is in range
+            // of the player but not is not loaded
+            foreach (var chunkXInRage in inRangeOfPlayer)
+            {
+                if (!activeChunks.TryGetValue(chunkXInRage, out Chunk _))
+                {
+                    var chunk = CreateChunk(chunkXInRage);
+                    activeChunks.Add(chunkXInRage, chunk);
+                }
+            }
+
+            // remove all entries of the chunks that are off-loaded to disk
+            foreach (var chunk in toBeUnLoaded)
+            {
+                activeChunks.Remove(chunk.ChunkX);
+                chunk.Die();
+            }
+        }
+
+        private Chunk CreateChunk(int chunkX)
+        {
+            if (Save.Region.GetFile($"{chunkX}.chunk").IsSome(out var file))
+            {
+                var loadResult = Filesystem.LoadFrom<ChunkData>($"{chunkX}.chunk", Save.Region);
+                if (loadResult.IsNone())
+                {
+                    // delete bad data
+                    file.Delete();
+                }
+                else
+                {
+                    return new Chunk(loadResult.Value);
+                }
+            }
+            
+            return new Chunk(chunkX);
+        }
+
+        private void SaveWorld()
+        {
+            foreach (var chunk in activeChunks.Values)
+            {
+                chunk.Die();
+                var data = chunk.SerializableData();
+                Filesystem.SaveTo(data, $"{data.ChunkX}.chunk", Current.Save.Region);
+            }   
+        }
+        
         private Some<Chunk> ChunkWithPosition(Vector3Int worldPosition)
         {
             if (worldPosition.y < 0 || worldPosition.y >= EiramTypes.CHUNK_HEIGHT)
@@ -154,10 +176,6 @@ namespace Worlds
             return IsChunkLoaded(Utils.Utils.GetChunkXFromPosition(worldPosition));
         }
 
-        /*
-         * returns a chunk if the chunk 
-         * with the given x position is loaded
-         */
         private Some<Chunk> IsChunkLoaded(int chunkX)
         {
             var exists = activeChunks.TryGetValue(chunkX, out Chunk chunk);
