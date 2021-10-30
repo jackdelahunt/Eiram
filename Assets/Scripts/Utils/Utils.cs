@@ -1,3 +1,5 @@
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Eiram;
 using UnityEngine;
 
@@ -20,6 +22,18 @@ namespace Utils
         {
             int remain = ((int)pos.x % EiramTypes.CHUNK_WIDTH + EiramTypes.CHUNK_WIDTH) % EiramTypes.CHUNK_WIDTH;
             return ((int)pos.x - remain) / EiramTypes.CHUNK_WIDTH;
+        }
+        
+        public static T DeepClone<T>(this T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T) formatter.Deserialize(ms);
+            }
         }
     }
 }

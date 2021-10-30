@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eiram;
 using Items;
@@ -6,6 +7,7 @@ using Registers;
 
 namespace Inventories
 {
+    [Serializable]
     public abstract class Inventory
     {
         private readonly int numberOfSlots;
@@ -14,18 +16,20 @@ namespace Inventories
         public Inventory(int numberOfSlots)
         {
             this.numberOfSlots = numberOfSlots;
-            ItemStacks = Enumerable.Repeat(ItemStack.Empty, numberOfSlots).ToList();
+            ItemStacks = new List<ItemStack>(numberOfSlots);
+            for (int i = 0; i < numberOfSlots; i++)
+            {
+                ItemStacks.Add(new ItemStack());
+            }
+            IsDirty = true;
         }
         
         public int TryAddItem(ItemId itemId, int size)
         {
-            void _addToStack(ItemId id, int slot, int newSize)
+            void _setStack(ItemId id, int slot, int newSize)
             {
-                if(id == ItemId.UNKNOWN)
-                    ItemStacks[slot].Size = newSize;
-                else
-                    ItemStacks[slot] = new ItemStack(id, newSize);
-                
+                ItemStacks[slot].ItemId = id;
+                ItemStacks[slot].Size = newSize;
                 IsDirty = true;
             }
 
@@ -40,13 +44,13 @@ namespace Inventories
                         int total = ItemStacks[i].Size + size;
                         if (total > item.maxStack)
                         {
-                            _addToStack(ItemId.UNKNOWN, i, item.maxStack);
+                            _setStack(itemId, i, item.maxStack);
                             int remainder = total - item.maxStack;
                             return TryAddItem(itemId, remainder);
                         }
                         else
                         {
-                            _addToStack(ItemId.UNKNOWN, i, total);
+                            _setStack(itemId, i, total);
                             return 0;
                         }
                     }
@@ -56,9 +60,9 @@ namespace Inventories
             for (int i = 0; i < ItemStacks.Count; i++)
             {
                 // check for empty slot
-                if (ItemStacks[i] == ItemStack.Empty)
+                if (ItemStacks[i].IsEmpty())
                 {
-                    _addToStack(itemId, i, size);
+                    _setStack(itemId, i, size);
                     return 0;
                 }
             }
@@ -67,30 +71,31 @@ namespace Inventories
         }
         public ItemStack RemoveFromItemStack(int slotIndex, int amount = 1)
         {
-            var stack = ItemStacks[slotIndex];
-            if (ItemStacks[slotIndex] != ItemStack.Empty)
+            var stack = ItemStacks[slotIndex]; 
+            if (!stack.IsEmpty())
             {
                 IsDirty = true;
                 if (amount > stack.Size)
                 {
-                    ItemStacks[slotIndex] = ItemStack.Empty;
+                    ItemStacks[slotIndex].Empty();
                     return stack;
                 }
                 
                 stack.Size -= amount;
                 if(stack.Size == 0)
-                    ItemStacks[slotIndex] = ItemStack.Empty;
+                    ItemStacks[slotIndex].Empty();
                 return new ItemStack(stack.ItemId, amount);
             }
 
-            return ItemStack.Empty;
+            return new ItemStack();
         }
-        
+
         public int Contains(ItemId itemId)
         {
             for (int i = 0; i < ItemStacks.Count; i++)
             {
-                if (ItemStacks[i].ItemId == itemId) 
+                var currentStack = ItemStacks[i];
+                if (currentStack.ItemId == itemId) 
                     return i;
             }
 
@@ -101,7 +106,8 @@ namespace Inventories
         {
             for(int i = 0; i < ItemStacks.Count; i++)
             {
-                if (ItemStacks[i] == ItemStack.Empty || (ItemStacks[i].ItemId == itemId && ItemStacks[i].Size < maxStack)) 
+                var currentStack = ItemStacks[i];
+                if (currentStack.IsEmpty() || (currentStack.ItemId == itemId && currentStack.Size < maxStack)) 
                     return i;
             }
             
@@ -112,7 +118,7 @@ namespace Inventories
         {
             for(int i = 0; i < ItemStacks.Count; i++)
             {
-                if (ItemStacks[i] == ItemStack.Empty) 
+                if (ItemStacks[i].IsEmpty()) 
                     return i;
             }
             

@@ -5,6 +5,7 @@ using Eiram;
 using Events;
 using IO;
 using Items;
+using Players;
 using Registers;
 using Tiles;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Worlds
         [SerializeField] private GameObject itemEntityPrefab = null;
         
         private GameObject playerObject;
+        private Player player;
         private Dictionary<int, Chunk> activeChunks = new Dictionary<int, Chunk>();
         public Save Save;
 
@@ -28,20 +30,20 @@ namespace Worlds
             EiramEvents.TileBreakEvent += OnTileBreak;
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
+            player = playerObject.GetComponent<Player>();
             Save = Filesystem.CreateSave("DEBUG_SAVE");
         }
 
         void Start()
         {
             InvokeRepeating(nameof(ChunkRefresh), 0.0f, 1.0f);
-        }
+            LoadWorld();
+        }   
 
         private void OnDestroy()
         {
             EiramEvents.TilePlaceEvent -= OnTilePlace;
             EiramEvents.TileBreakEvent -= OnTileBreak;
-
-            SaveWorld();
         }
         
         public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
@@ -78,6 +80,28 @@ namespace Worlds
             {
                 chunk.UpdateTileAt(worldPosition);
             }
+        }
+        
+        public void LoadWorld()
+        {
+            var loadResult = Filesystem.LoadFrom<PlayerData>("player.data", Save.Data);
+            if (loadResult.IsSome(out var playerData))
+            {
+                player.ApplyPlayerData(playerData);
+            }
+        }
+
+        public void SaveWorld()
+        {
+            foreach (var chunk in activeChunks.Values)
+            {
+                var chunkData = chunk.SerializableData();
+                Filesystem.SaveTo(chunkData, $"{chunkData.ChunkX}.chunk", Save.Region);
+            }
+
+            var playerData = player.SerializableData();
+            Filesystem.SaveTo(playerData, "player.data", Save.Data);
+
         }
         
         /*
@@ -157,16 +181,6 @@ namespace Worlds
             return new Chunk(chunkX);
         }
 
-        private void SaveWorld()
-        {
-            foreach (var chunk in activeChunks.Values)
-            {
-                chunk.Die();
-                var data = chunk.SerializableData();
-                Filesystem.SaveTo(data, $"{data.ChunkX}.chunk", Current.Save.Region);
-            }   
-        }
-        
         private Some<Chunk> ChunkWithPosition(Vector3Int worldPosition)
         {
             if (worldPosition.y < 0 || worldPosition.y >= EiramTypes.CHUNK_HEIGHT)

@@ -78,7 +78,7 @@ namespace Inventories
             for (int i = 0; i < playerInventory.ItemStacks.Count; i++)
             {
                 var currentItemStack = playerInventory.ItemStacks[i];
-                if (currentItemStack != ItemStack.Empty)
+                if (!currentItemStack.IsEmpty())
                 {
                     var item = Register.GetItemById(currentItemStack.ItemId);
                     itemSprites[i].sprite = item.sprite;
