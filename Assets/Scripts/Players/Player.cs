@@ -49,6 +49,13 @@ namespace Players
             }
         }
 
+        public void ApplyPlayerData(PlayerData playerData)
+        {
+            transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
+            this.playerInventory = playerData.PlayerInventory;
+            this.playerInventory.IsDirty = true;
+        }
+
         /*
          * checks for player movement an invokes the
          * player movement event or
@@ -79,7 +86,7 @@ namespace Players
             if (Input.GetButtonDown("Fire2"))
             {
                 var inHandStack = playerInventory.PopSelectedItem();
-                if (inHandStack != ItemStack.Empty && inHandStack.ItemId != ItemId.UNKNOWN)
+                if (!inHandStack.IsEmpty() && inHandStack.ItemId != ItemId.UNKNOWN)
                 {
                     var mousePos = GetMousePosition();
                     var tilePos = ConvertPositionToTile(mousePos);
@@ -151,5 +158,26 @@ namespace Players
                     Destroy(go);
             }
         }
+        
+        public PlayerData SerializableData()
+        {
+            var position = transform.position;
+            return new PlayerData
+            {
+                X = position.x,
+                Y = position.y,
+                Z = position.z,
+                PlayerInventory = playerInventory
+            };
+        }
+    }
+
+    [Serializable]
+    public class PlayerData
+    {
+        public float X;
+        public float Y;
+        public float Z;
+        public PlayerInventory PlayerInventory;
     }
 }

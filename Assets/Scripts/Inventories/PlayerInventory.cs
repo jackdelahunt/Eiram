@@ -10,6 +10,7 @@ using UnityEngine;
 
 namespace Inventories
 {
+    [Serializable]
     public class PlayerInventory : Inventory
     {
         public static readonly int Slots = 70;

@@ -1,13 +1,17 @@
+using System;
 using Eiram;
 using Events;
+using IO;
 using Registers;
 using Tilemaps;
 using UnityEngine;
 using TerrainGeneration;
 using Tiles;
+using Worlds;
 
 namespace Chunks
 {
+    [Serializable]
     public class Chunk
     {
         public readonly int ChunkX;
@@ -17,6 +21,13 @@ namespace Chunks
         {
             this.ChunkX = chunkX;
             tileDataArray = TerrainGenerator.GenerateChunkData(this);
+            EiramTilemap.Foreground.DrawChunk(this);
+        }
+
+        public Chunk(ChunkData loadedData)
+        {
+            this.ChunkX = loadedData.ChunkX;
+            this.tileDataArray = loadedData.TileDataArray;
             EiramTilemap.Foreground.DrawChunk(this);
         }
         
@@ -74,5 +85,21 @@ namespace Chunks
         {
             return new Vector3Int(worldPosition.x - (ChunkX * EiramTypes.CHUNK_WIDTH), worldPosition.y, 0);
         }
+
+        public ChunkData SerializableData()
+        {
+            return new ChunkData
+            {
+                ChunkX = this.ChunkX,
+                TileDataArray = this.tileDataArray
+            };
+        }
+    }
+
+    [Serializable]
+    public class ChunkData
+    {
+        public int ChunkX;
+        public SerialTileData[,] TileDataArray; 
     }
 }

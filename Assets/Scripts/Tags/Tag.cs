@@ -4,6 +4,7 @@ using Eiram;
 
 namespace Tags
 {
+    [Serializable]
     public class Tag : ICloneable
     {
         private Dictionary<string, object> dictionary = new Dictionary<string, object>();
