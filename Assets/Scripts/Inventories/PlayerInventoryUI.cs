@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Eiram;
+﻿using System.Collections.Generic;
 using Events;
-using Items;
-using Registers;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Inventories
@@ -14,13 +8,14 @@ namespace Inventories
     public class PlayerInventoryUI : MonoBehaviour
     {
         [SerializeField] private Vector3 pointerOffset = new Vector3();
-        [SerializeField] private GameObject slotPrefab;
-        [SerializeField] private RectTransform contentTransform;
-        [SerializeField] private Sprite emptySlotSprite = null;
+        [SerializeField] private GameObject slotPrefab = null;
+        [SerializeField] private GameObject inventoryItemPrefab = null;
+        [SerializeField] private RectTransform contentTransform = null;
         [SerializeField] private GameObject slotPointer = null;
+
+        private Canvas canvas;
         
-        private List<Image> itemSprites = new List<Image>(PlayerInventory.Slots);
-        private List<TMP_Text> itemCounts = new List<TMP_Text>(PlayerInventory.Slots);
+        private List<ItemSlot> itemSlots = new List<ItemSlot>(PlayerInventory.Slots);
         
         private bool toggled = false;
 
@@ -29,6 +24,9 @@ namespace Inventories
             EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
             EiramEvents.PlayerInventoryIsDirtyEvent += OnPlayerInventoryIsDirty;
             EiramEvents.SelectedSlotChangedEvent += OnSelectedSlotChanged;
+
+            canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
+            
             GenerateUI();
         }
 
@@ -44,21 +42,20 @@ namespace Inventories
             for (int i = 0; i < PlayerInventory.Slots; i++)
             {
                 var go = Instantiate(slotPrefab, contentTransform);
-                itemSprites.Add(go.GetComponentInChildren<Image>());
-                itemCounts.Add(go.GetComponentInChildren<TMP_Text>());
+                itemSlots.Add(go.GetComponent<ItemSlot>());
             }
             
         }
 
         private void MovePointer(int slotIndex)
         {
-            var pos = itemSprites[slotIndex].gameObject.transform.position;
+            var pos = itemSlots[slotIndex].gameObject.transform.position;
             slotPointer.transform.position = pos + pointerOffset;
         }
 
         private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
         {
-            Debug.Assert(PlayerInventory.Slots == itemSprites.Count && PlayerInventory.Slots == itemCounts.Count);
+            Debug.Assert(PlayerInventory.Slots == itemSlots.Count);
             if(toggled) CloseInventory(); else OpenInventory(playerInventory);
             toggled = !toggled;
         }
@@ -75,22 +72,19 @@ namespace Inventories
 
         private void Refresh(PlayerInventory playerInventory)
         {
-            for (int i = 0; i < playerInventory.ItemStacks.Count; i++)
+            for(int i = 0; i < playerInventory.ItemStacks.Count; i++)
             {
-                var currentItemStack = playerInventory.ItemStacks[i];
-                if (!currentItemStack.IsEmpty())
+                var itemStack = playerInventory.ItemStacks[i];
+                var itemSlot = itemSlots[i];
+                if (!itemStack.IsEmpty() && itemSlot.IsEmpty())
                 {
-                    var item = Register.GetItemById(currentItemStack.ItemId);
-                    itemSprites[i].sprite = item.sprite;
-                    itemCounts[i].gameObject.SetActive(true);
-                    itemCounts[i].text = currentItemStack.Size.ToString();
-                }
-                else
-                {
-                    itemSprites[i].sprite = emptySlotSprite;
-                    itemCounts[i].text = "0";
-                    itemCounts[i].gameObject.SetActive(false);
-                }
+                    var inventoryItemGo = Instantiate(inventoryItemPrefab, itemSlots[i].transform);
+                    var inventoryItem = inventoryItemGo.GetComponent<InventoryItem>();
+                    inventoryItem.Init(itemStack);
+                    itemSlot.Init(inventoryItem);
+                } 
+                
+                itemSlot.Refresh();
             }
         }
 

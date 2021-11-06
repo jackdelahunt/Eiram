@@ -42,5 +42,6 @@ namespace Events
         {
             SelectedSlotChangedEvent?.Invoke(playerInventory, slotIndex);
         }
+        
     }
 }
