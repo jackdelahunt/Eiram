@@ -1,78 +1,79 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Eiram;
-using Events;
-using Inventories;
-using Items;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Eiram.Handles;
 
-public class ItemSlot : MonoBehaviour, IDropHandler
+namespace Inventories
 {
-    public InventoryItem inventoryItem;
-    public int slotNumber = -1;
-    public InventoryUI InventoryUI;
+    public class ItemSlot : MonoBehaviour, IDropHandler
+    {
+        public Option<InventoryItem> InventoryItemOption = None<InventoryItem>();
+        public int slotNumber = -1;
+        public IInventoryUI InventoryUI;
     
-    private RectTransform rectTransform;
+        private RectTransform rectTransform;
     
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-    }
-
-    public void Refresh()
-    {
-        if(inventoryItem != null)
-            inventoryItem.Refresh();
-    }
-
-    public void ItemPopped()
-    {
-        inventoryItem = null;
-        InventoryUI.ItemPopped(slotNumber);
-    }
-    
-    public void ItemPlaced(InventoryItem inventoryItem)
-    {
-        this.inventoryItem = inventoryItem;
-        InventoryUI.ItemPlaced(slotNumber, inventoryItem.ItemStack);
-        AlignInventoryItem();
-    }
-
-    public void Clear()
-    {
-        if (inventoryItem != null)
+        private void Awake()
         {
-            Destroy(inventoryItem.gameObject);
-            inventoryItem = null;
+            rectTransform = GetComponent<RectTransform>();
+        }
+
+        public void Refresh()
+        {
+            if (InventoryItemOption.IsSome(out var inventoryItem))
+            {
+                inventoryItem.Refresh();
+            }
+        }
+
+        public void ItemPopped()
+        {
+            InventoryItemOption = None<InventoryItem>();
+            InventoryUI.ItemPopped(slotNumber);
+        }
+    
+        public void ItemPlaced(InventoryItem inventoryItem)
+        {
+            InventoryItemOption = inventoryItem;
+            InventoryUI.ItemPlaced(slotNumber, inventoryItem.ItemStack);
+            AlignInventoryItem();
+        }
+
+        public void Clear()
+        {
+            if (InventoryItemOption.IsSome(out var inventoryItem))
+            {
+                Destroy(inventoryItem.gameObject);
+                InventoryItemOption = None<InventoryItem>();
+            }
+        }
+
+        public bool IsEmpty()
+        {
+            return InventoryItemOption.IsNone;
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            if (eventData == null || eventData.pointerDrag == null) return;
+
+            if (!eventData.pointerDrag.CompareTag("InventoryItem")) return;
+        
+        
+            InventoryItemOption = eventData.pointerDrag.GetComponent<InventoryItem>();
+            InventoryItemOption.Value.ItemSlot = this;
+            InventoryUI.ItemPlaced(slotNumber, InventoryItemOption.Value.ItemStack);
+            AlignInventoryItem();
+        }
+
+        public void AlignInventoryItem()
+        {
+            if (InventoryItemOption.IsSome(out var inventoryItem))
+            {
+                var otherTransform = inventoryItem.GetComponent<RectTransform>();
+                otherTransform.SetParent(rectTransform);
+                otherTransform.anchoredPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            }
         }
     }
-
-    public bool IsEmpty()
-    {
-        return inventoryItem == null;
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        if (eventData == null || eventData.pointerDrag == null) return;
-
-        if (!eventData.pointerDrag.CompareTag("InventoryItem")) return;
-        
-        
-        inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-        inventoryItem.ItemSlot = this;
-        InventoryUI.ItemPlaced(slotNumber, inventoryItem.ItemStack);
-        AlignInventoryItem();
-    }
-
-    public void AlignInventoryItem()
-    {
-        var otherTransform = inventoryItem.GetComponent<RectTransform>();
-        otherTransform.SetParent(rectTransform);
-        otherTransform.anchoredPosition = new Vector3(0.0f, 0.0f, 0.0f);
-    }
-
 }

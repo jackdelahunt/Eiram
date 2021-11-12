@@ -13,6 +13,7 @@ namespace Inventories
         private readonly int numberOfSlots;
         public readonly List<ItemStack> ItemStacks;
         public bool IsDirty = false;
+        
         public Inventory(int numberOfSlots)
         {
             this.numberOfSlots = numberOfSlots;

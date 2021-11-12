@@ -2,7 +2,7 @@
 
 namespace Inventories
 {
-    public interface InventoryUI
+    public interface IInventoryUI
     {
         void ItemPopped(int itemSlot);
         void ItemPlaced(int itemSlot, ItemStack itemStack);

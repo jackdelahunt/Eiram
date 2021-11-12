@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Inventories
 {
-    public class PlayerInventoryUI : MonoBehaviour, InventoryUI
+    public class PlayerInventoryUI : MonoBehaviour, IInventoryUI
     {
         [SerializeField] private Vector3 pointerOffset = new Vector3();
         [SerializeField] private GameObject slotPrefab = null;
@@ -109,7 +109,7 @@ namespace Inventories
                     inventoryItem.ItemStack = itemStack;
                     inventoryItem.ItemSlot = itemSlot;
                     
-                    itemSlot.inventoryItem = inventoryItem;
+                    itemSlot.InventoryItemOption = inventoryItem;
                 }
 
                 if (itemStack.IsEmpty())
