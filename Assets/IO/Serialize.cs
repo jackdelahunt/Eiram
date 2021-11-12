@@ -16,10 +16,10 @@ namespace IO
             fs.Close();
         }
         
-        public static Some<T> In<T>(string filePath)
+        public static Option<T> In<T>(string filePath)
         {
             if (!File.Exists(filePath))
-                return None;
+                return None<T>();
 
             BinaryFormatter bf = new BinaryFormatter();
             FileStream fs = new FileStream(filePath, FileMode.Open);
@@ -33,7 +33,7 @@ namespace IO
             catch
             {
                 fs.Close();
-                return None;
+                return None<T>();
             }
         }
     }

@@ -116,7 +116,7 @@ namespace Worlds
         /*
          * Returns a tile in a given location
          */
-        public Some<SerialTileData> GetTileData(Vector3Int worldPosition)
+        public Option<SerialTileData> GetTileData(Vector3Int worldPosition)
         {
             var chunkResult = ChunkWithPosition(worldPosition);
             if (chunkResult.IsSome(out var chunk))
@@ -124,7 +124,7 @@ namespace Worlds
                 return chunk.GetTileData(worldPosition);
             }
             
-            return None;
+            return None<SerialTileData>();
         }
         
         private void ChunkRefresh()
@@ -176,7 +176,7 @@ namespace Worlds
             if (Save.Region.GetFile($"{chunkX}.chunk").IsSome(out var file))
             {
                 var loadResult = Filesystem.LoadFrom<ChunkData>($"{chunkX}.chunk", Save.Region);
-                if (loadResult.IsNone())
+                if (loadResult.IsNone)
                 {
                     // delete bad data
                     file.Delete();
@@ -190,19 +190,19 @@ namespace Worlds
             return new Chunk(chunkX);
         }
 
-        private Some<Chunk> ChunkWithPosition(Vector3Int worldPosition)
+        private Option<Chunk> ChunkWithPosition(Vector3Int worldPosition)
         {
             if (worldPosition.y < 0 || worldPosition.y >= EiramTypes.CHUNK_HEIGHT)
-                return None;
+                return None<Chunk>();
 
             // verify chunk is loaded 
             return IsChunkLoaded(Utils.Utils.GetChunkXFromPosition(worldPosition));
         }
 
-        private Some<Chunk> IsChunkLoaded(int chunkX)
+        private Option<Chunk> IsChunkLoaded(int chunkX)
         {
             var exists = activeChunks.TryGetValue(chunkX, out Chunk chunk);
-            return exists ? new Some<Chunk>(chunk) : None;
+            return exists ? new Option<Chunk>(chunk) : None<Chunk>();
         }
         
         private void OnTilePlace(Vector3Int worldPosition, SerialTileData serialTileData)

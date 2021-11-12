@@ -2,29 +2,35 @@
 {
     public static class Handles
     {
-        public static readonly EmptySome None = new EmptySome();
+        public static Option<T> Some<T>(T value)
+        {
+            return new Option<T>(value);
+        }
+
+        public static Option<T> None<T>()
+        {
+            return new Option<T>
+            {
+                IsNone = true,
+                Value = default(T),
+            };
+        }
     }
     
-    public struct Some<T>
+    public struct Option<T>
     {
         public T Value;
-        private bool isNone;
-        
-        public Some(T value)
+        public bool IsNone { get;  set; }
+
+        public Option(T value)
         {
             this.Value = value;
-            this.isNone = false;
-        }
-        
-        private Some(bool isNone)
-        {
-            this.isNone = isNone;
-            this.Value = default(T);
+            this.IsNone = false;
         }
         
         public T Unwrap()
         {
-            if (isNone) throw new UnwrappedNoneException();
+            if (IsNone) throw new UnwrappedNoneException();
 
             return Value;
         }
@@ -32,26 +38,12 @@
         public bool IsSome(out T value)
         {
             value = this.Value;
-            return !isNone;
-        }
-
-        public bool IsNone()
-        {
-            return isNone;
+            return !IsNone;
         }
         
-        public static implicit operator Some<T>(T value)
+        public static implicit operator Option<T>(T value)
         {
-            return new Some<T>(value);
+            return new Option<T>(value);
         }
-
-        public static implicit operator Some<T>(EmptySome emptySome)
-        {
-            return new Some<T>(true);
-        }
-    }
-
-    public struct EmptySome
-    {
     }
 }

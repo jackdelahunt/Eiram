@@ -54,7 +54,7 @@ namespace IO
 
             foreach (var pathOnDisk in subDirsOnDisk)
             {
-                if (GetSubDirectory(pathOnDisk).IsNone())
+                if (GetSubDirectory(pathOnDisk).IsNone)
                 {
                     SubDirectories.Add(new EiarmDirectory(pathOnDisk));
                 }
@@ -69,7 +69,7 @@ namespace IO
 
             foreach (var pathOnDisk in subFilesOnDisk)
             {
-                if (GetSubDirectory(pathOnDisk).IsNone())
+                if (GetSubDirectory(pathOnDisk).IsNone)
                 {
                     SubFiles.Add(new EiarmFile(pathOnDisk));
                 }
@@ -81,7 +81,7 @@ namespace IO
             return new EiarmDirectory(Directory.CreateDirectory($"{Path}/name").FullName);
         }
 
-        public Some<EiarmDirectory> GetSubDirectory(string name)
+        public Option<EiarmDirectory> GetSubDirectory(string name)
         {
             for (int i = 0; i < SubDirectories.Count; i++)
             {
@@ -89,10 +89,10 @@ namespace IO
                     return SubDirectories[i];
             }
 
-            return None;
+            return None<EiarmDirectory>();
         }
         
-        public Some<EiarmFile> GetFile(string name)
+        public Option<EiarmFile> GetFile(string name)
         {
             for (int i = 0; i < SubFiles.Count; i++)
             {
@@ -100,7 +100,7 @@ namespace IO
                     return SubFiles[i];
             }
 
-            return None;
+            return None<EiarmFile>();
         }
 
         public void Delete(bool recursive = true)

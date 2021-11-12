@@ -26,7 +26,7 @@ namespace IO
             return file;
         }
         
-        public static Some<T> LoadFrom<T>(string fileName, EiarmDirectory directory)
+        public static Option<T> LoadFrom<T>(string fileName, EiarmDirectory directory)
         {
             var filePath = $"{directory.Path}/{fileName}";
             return Serialize.In<T>(filePath);
