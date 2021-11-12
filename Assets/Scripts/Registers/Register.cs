@@ -60,6 +60,7 @@ namespace Registers
                 null,
                 null,
                 null,
+                new TilledSoil(concreteTileDataArray[17]),
             };
 
             items = itemArray;

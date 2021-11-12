@@ -82,6 +82,15 @@ namespace Worlds
             }
         }
         
+        public void UseTileAt(Vector3Int worldPosition, Player player)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.UseTileAt(worldPosition, player);
+            }
+        }
+        
         public void LoadWorld()
         {
             var loadResult = Filesystem.LoadFrom<PlayerData>("player.data", Save.Data);
