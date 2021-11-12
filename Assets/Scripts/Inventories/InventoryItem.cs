@@ -7,18 +7,22 @@ using Registers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    public ItemStack ItemStack;
+    public ItemSlot ItemSlot;
+    
     [SerializeField] private TMP_Text count = null;
     [SerializeField] private float onDragAlpha = 1.0f;
     
+    private ItemSlot lastItemSlot;
     private RectTransform rectTransform = null;
     private Canvas canvas = null;
     private CanvasGroup canvasGroup = null;
     private Image image = null;
-    private ItemStack itemStack;
 
     private void Awake()
     {
@@ -28,16 +32,10 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         image = GetComponent<Image>();
     }
 
-    public void Init(ItemStack itemStack)
-    {
-        this.itemStack = itemStack;
-        Refresh();
-    }
-
     public void Refresh()
     {
-        count.text = itemStack.Size.ToString();
-        image.sprite = Register.GetItemById(itemStack.ItemId).sprite;
+        count.text = ItemStack.Size.ToString();
+        image.sprite = Register.GetItemById(ItemStack.ItemId).sprite;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -54,11 +52,24 @@ public class InventoryItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     {
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = onDragAlpha;
+        
         Debug.Log("drag start");
+        ItemSlot.ItemPopped();
+        lastItemSlot = ItemSlot;
+        ItemSlot = null;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (ItemSlot == null)
+        {
+            ItemSlot = lastItemSlot;
+            ItemSlot.ItemPlaced(this);
+        }
+        else
+        {
+            lastItemSlot = null;
+        }
         canvasGroup.blocksRaycasts = true;
         canvasGroup.alpha = 1.0f;
         Debug.Log("drag end");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Events;
+using Items;
 using Players;
 using Registers;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Inventories
 {
-    public class PlayerInventoryUI : MonoBehaviour
+    public class PlayerInventoryUI : MonoBehaviour, InventoryUI
     {
         [SerializeField] private Vector3 pointerOffset = new Vector3();
         [SerializeField] private GameObject slotPrefab = null;
@@ -51,12 +52,26 @@ namespace Inventories
             EiramEvents.SelectedSlotChangedEvent -= OnSelectedSlotChanged;
         }
 
+        public void ItemPopped(int slotNumber)
+        {
+            playerInventory.ClearSlot(slotNumber);
+        }
+
+        public void ItemPlaced(int itemSlot, ItemStack itemStack)
+        {
+            playerInventory.ItemStacks[itemSlot] = itemStack;
+            playerInventory.IsDirty = true;
+        }
+
         private void GenerateUI()
         {
             for (int i = 0; i < PlayerInventory.Slots; i++)
             {
                 var go = Instantiate(slotPrefab, contentTransform);
-                itemSlots.Add(go.GetComponent<ItemSlot>());
+                var itemSlot = go.GetComponent<ItemSlot>();
+                itemSlot.slotNumber = i;
+                itemSlot.InventoryUI = this;
+                itemSlots.Add(itemSlot);
             }
             
         }
@@ -90,9 +105,17 @@ namespace Inventories
                 {
                     var inventoryItemGo = Instantiate(inventoryItemPrefab, itemSlots[i].transform);
                     var inventoryItem = inventoryItemGo.GetComponent<InventoryItem>();
-                    inventoryItem.Init(itemStack);
-                    itemSlot.Init(inventoryItem);
-                } 
+                    
+                    inventoryItem.ItemStack = itemStack;
+                    inventoryItem.ItemSlot = itemSlot;
+                    
+                    itemSlot.inventoryItem = inventoryItem;
+                }
+
+                if (itemStack.IsEmpty())
+                {
+                    itemSlot.Clear();
+                }
                 
                 itemSlot.Refresh();
             }

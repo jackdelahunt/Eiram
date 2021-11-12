@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 6195981408798853127}
   m_Layer: 5
   m_Name: InventoryItem
-  m_TagString: Untagged
+  m_TagString: InventoryItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,6 +224,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6ce7a69909db74abdeea33fadaf46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemStack:
+    ItemId: -1
+    Size: 0
+  ItemSlot: {fileID: 0}
   count: {fileID: 6195981407214780320}
   onDragAlpha: 1
 --- !u!225 &6195981408798853127
