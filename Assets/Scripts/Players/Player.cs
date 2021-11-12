@@ -80,12 +80,13 @@ namespace Players
             if (Input.GetButtonDown("Fire2"))
             {
                 var inHandStack = playerInventory.PopSelectedItem();
-                if (!inHandStack.IsEmpty() && inHandStack.ItemId != ItemId.UNKNOWN)
-                {
-                    var mousePos = GetMousePosition();
-                    var tilePos = ConvertPositionToTile(mousePos);
+                var mousePos = GetMousePosition();
+                var tilePos = ConvertPositionToTile(mousePos);
+                
+                if (inHandStack.IsEmpty())
+                    World.Current.UseTileAt(tilePos, this);    
+                else
                     World.Current.PlaceTileAt(tilePos, Register.GetTileByItemId(inHandStack.ItemId).TileId());
-                }
             }
 
             float scrollAmount = Input.GetAxisRaw("Scroll"); 

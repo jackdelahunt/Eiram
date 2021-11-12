@@ -1,5 +1,6 @@
 using Eiram;
 using Items;
+using Players;
 using Tags;
 using UnityEditor;
 using UnityEngine;
@@ -25,16 +26,18 @@ namespace Tiles
 
         public virtual void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
 
-        public void OnPlace(Vector3Int worldPosition, SerialTileData serialTileData)
+        public virtual void OnPlace(Vector3Int worldPosition, SerialTileData serialTileData)
         {
             OnUpdate(worldPosition, serialTileData);
             UpdateNeighbours(worldPosition);
         }
 
-        public void OnBreak(Vector3Int worldPosition, SerialTileData currentTileData)
+        public virtual void OnBreak(Vector3Int worldPosition, SerialTileData currentTileData)
         {
             UpdateNeighbours(worldPosition);
         }
+
+        public virtual void OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player) {}
 
         private void UpdateNeighbours(Vector3Int worldPosition)
         {
@@ -73,6 +76,12 @@ namespace Tiles
     public class Dirt : AbstractTile
     {
         public Dirt(ConcreteTileData concreteTileData) : base(concreteTileData){}
+
+        public override void OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player)
+        {
+            base.OnUse(worldPosition, currentTileData, player);
+            World.Current.ReplaceTileAt(worldPosition, Eiram.TileId.TILLED_SOIL);
+        }
     }
     
     public class Grass : AbstractTile
@@ -98,5 +107,10 @@ namespace Tiles
     public class Bedrock : AbstractTile
     {
         public Bedrock(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class TilledSoil : AbstractTile
+    {
+        public TilledSoil(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
 }

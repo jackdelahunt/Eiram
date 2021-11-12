@@ -25,7 +25,8 @@ namespace Eiram
         ROSE = 13,
         DAISY = 14,
         DEADBUSH = 15,
-        GRASS_FOLIAGE = 16
+        GRASS_FOLIAGE = 16,
+        TILLED_SOIL = 17,
     }
     
     public enum ItemId

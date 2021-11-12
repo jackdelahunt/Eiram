@@ -2,6 +2,7 @@ using System;
 using Eiram;
 using Events;
 using IO;
+using Players;
 using Registers;
 using Tilemaps;
 using UnityEngine;
@@ -73,6 +74,12 @@ namespace Chunks
         {
             var data = GetTileData(worldPosition);
             Register.GetTileByTileId(data.TileId).OnUpdate(worldPosition, data);
+        }
+        
+        public void UseTileAt(Vector3Int worldPosition, Player player)
+        {
+            var data = GetTileData(worldPosition);
+            Register.GetTileByTileId(data.TileId).OnUse(worldPosition, data, player);
         }
 
         public SerialTileData GetTileData(Vector3Int worldPosition)
