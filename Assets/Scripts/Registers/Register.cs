@@ -1,3 +1,4 @@
+using System;
 using Eiram;
 using Items.Items;
 using JetBrains.Annotations;
@@ -63,34 +64,27 @@ namespace Registers
             };
 
             items = itemArray;
-            
-           if (!Application.isEditor) return;
+
+#if UNITY_EDITOR
+            if (tiles.Length != concreteTileDataArray.Length)
+               throw new Exception("Unequal tiles to tile data");
+
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                if(tiles[i] == null) continue;
+                
+                if (i != (int) tiles[i].TileId())
+                    throw new Exception($"TileId is in the wrong slot index is {i}");
+            }
            
-           Debug.Assert(tiles.Length == concreteTileDataArray.Length, "Unequal tiles to tile data");
+            for (int i = 0; i < items.Length; i++)
+            {
+                if(items[i] == null) continue;
 
-           for (int i = 0; i < tiles.Length; i++)
-           {
-               if (tiles[i] == null)
-               {
-                   Debug.LogFormat("Register has tile of null entry at index {0}", i);
-                   continue;
-               }
-
-               Debug.Assert(i == (int)tiles[i].TileId(), $"{i} != {tiles[i].TileId()}");
-           }
-           
-           Debug.Assert(items.Length == itemArray.Length, "Unequal items to item array");
-
-           for (int i = 0; i < items.Length; i++)
-           {
-               if (items[i] == null)
-               {
-                   Debug.LogFormat("Register has  item null entry at index {0}", i);
-                   continue;
-               }
-
-               Debug.Assert(i == (int)(items[i].itemId), $"{i} != {items[i].itemId}");
-           }
+                if (i != (int) items[i].itemId)
+                    throw new Exception($"ItemId is in the wrong slot index is {i}");
+            }
+#endif
         }
     }
 }
