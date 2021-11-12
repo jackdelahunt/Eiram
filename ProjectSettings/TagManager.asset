@@ -8,6 +8,7 @@ TagManager:
   - World
   - ItemEntity
   - Canvas
+  - InventoryItem
   layers:
   - Default
   - TransparentFX

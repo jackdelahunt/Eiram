@@ -1,8 +1,5 @@
 ﻿using System.IO;
 using Eiram;
-using UnityEngine.WSA;
-using static Eiram.Handles;
-using UnityEngine;
 using Application = UnityEngine.Application;
 
 namespace IO
