@@ -32,12 +32,12 @@ namespace Worlds
             playerObject = GameObject.FindGameObjectWithTag("Player");
             player = playerObject.GetComponent<Player>();
             Save = Filesystem.CreateSave("DEBUG_SAVE");
+            LoadWorld();
         }
 
         void Start()
         {
             InvokeRepeating(nameof(ChunkRefresh), 0.0f, 1.0f);
-            LoadWorld();
         }   
 
         private void OnDestroy()

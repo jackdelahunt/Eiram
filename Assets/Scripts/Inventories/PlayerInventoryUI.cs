@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Events;
+using Players;
+using Registers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,15 +17,13 @@ namespace Inventories
         [SerializeField] private GameObject slotPointer = null;
 
         private Canvas canvas;
-        
         private List<ItemSlot> itemSlots = new List<ItemSlot>(PlayerInventory.Slots);
-        
+        private PlayerInventory playerInventory;
         private bool toggled = false;
 
         private void Awake()
         {
             EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
-            EiramEvents.PlayerInventoryIsDirtyEvent += OnPlayerInventoryIsDirty;
             EiramEvents.SelectedSlotChangedEvent += OnSelectedSlotChanged;
 
             canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
@@ -30,10 +31,23 @@ namespace Inventories
             GenerateUI();
         }
 
+        private void Start()
+        {
+            playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().playerInventory;
+        }
+
+        private void Update()
+        {
+            if (playerInventory.IsDirty)
+            {
+                playerInventory.IsDirty = false;
+                Refresh();
+            }
+        }
+
         private void OnDestroy()
         {
             EiramEvents.PlayerToggleInventoryEvent -= OnPlayerToggleInventoryEvent;
-            EiramEvents.PlayerInventoryIsDirtyEvent -= OnPlayerInventoryIsDirty;
             EiramEvents.SelectedSlotChangedEvent -= OnSelectedSlotChanged;
         }
 
@@ -56,21 +70,17 @@ namespace Inventories
         private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
         {
             Debug.Assert(PlayerInventory.Slots == itemSlots.Count);
-            if(toggled) CloseInventory(); else OpenInventory(playerInventory);
+            if(toggled) CloseInventory(); else OpenInventory();
             toggled = !toggled;
+            Refresh();
         }
 
-        private void OnPlayerInventoryIsDirty(PlayerInventory playerInventory)
-        {
-            Refresh(playerInventory);
-        }
-
-        private void OnSelectedSlotChanged(PlayerInventory playerInventory, int slotIndex)
+        private void OnSelectedSlotChanged(int slotIndex)
         {
             MovePointer(slotIndex);
         }
 
-        private void Refresh(PlayerInventory playerInventory)
+        private void Refresh()
         {
             for(int i = 0; i < playerInventory.ItemStacks.Count; i++)
             {
@@ -88,10 +98,10 @@ namespace Inventories
             }
         }
 
-        private void OpenInventory(PlayerInventory playerInventory)
+        private void OpenInventory()
         {
             LeanTween.moveY(gameObject, transform.position.y - 460.0f, 0.4f);
-            Refresh(playerInventory);
+            Refresh();
         }
         
         private void CloseInventory()
