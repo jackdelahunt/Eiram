@@ -1,42 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
-using Eiram;
 using Events;
 using Items;
+using Players;
 using Registers;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Inventories
 {
-    public class PlayerInventoryUI : MonoBehaviour
+    public class PlayerInventoryUI : MonoBehaviour, InventoryUI
     {
         [SerializeField] private Vector3 pointerOffset = new Vector3();
-        [SerializeField] private GameObject slotPrefab;
-        [SerializeField] private RectTransform contentTransform;
-        [SerializeField] private Sprite emptySlotSprite = null;
+        [SerializeField] private GameObject slotPrefab = null;
+        [SerializeField] private GameObject inventoryItemPrefab = null;
+        [SerializeField] private RectTransform contentTransform = null;
         [SerializeField] private GameObject slotPointer = null;
-        
-        private List<Image> itemSprites = new List<Image>(PlayerInventory.Slots);
-        private List<TMP_Text> itemCounts = new List<TMP_Text>(PlayerInventory.Slots);
-        
+
+        private Canvas canvas;
+        private List<ItemSlot> itemSlots = new List<ItemSlot>(PlayerInventory.Slots);
+        private PlayerInventory playerInventory;
         private bool toggled = false;
 
         private void Awake()
         {
             EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
-            EiramEvents.PlayerInventoryIsDirtyEvent += OnPlayerInventoryIsDirty;
             EiramEvents.SelectedSlotChangedEvent += OnSelectedSlotChanged;
+
+            canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
+            
             GenerateUI();
+        }
+
+        private void Start()
+        {
+            playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().playerInventory;
+        }
+
+        private void Update()
+        {
+            if (playerInventory.IsDirty)
+            {
+                playerInventory.IsDirty = false;
+                Refresh();
+            }
         }
 
         private void OnDestroy()
         {
             EiramEvents.PlayerToggleInventoryEvent -= OnPlayerToggleInventoryEvent;
-            EiramEvents.PlayerInventoryIsDirtyEvent -= OnPlayerInventoryIsDirty;
             EiramEvents.SelectedSlotChangedEvent -= OnSelectedSlotChanged;
+        }
+
+        public void ItemPopped(int slotNumber)
+        {
+            playerInventory.ClearSlot(slotNumber);
+        }
+
+        public void ItemPlaced(int itemSlot, ItemStack itemStack)
+        {
+            playerInventory.ItemStacks[itemSlot] = itemStack;
+            playerInventory.IsDirty = true;
         }
 
         private void GenerateUI()
@@ -44,60 +68,63 @@ namespace Inventories
             for (int i = 0; i < PlayerInventory.Slots; i++)
             {
                 var go = Instantiate(slotPrefab, contentTransform);
-                itemSprites.Add(go.GetComponentInChildren<Image>());
-                itemCounts.Add(go.GetComponentInChildren<TMP_Text>());
+                var itemSlot = go.GetComponent<ItemSlot>();
+                itemSlot.slotNumber = i;
+                itemSlot.InventoryUI = this;
+                itemSlots.Add(itemSlot);
             }
             
         }
 
         private void MovePointer(int slotIndex)
         {
-            var pos = itemSprites[slotIndex].gameObject.transform.position;
+            var pos = itemSlots[slotIndex].gameObject.transform.position;
             slotPointer.transform.position = pos + pointerOffset;
         }
 
         private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
         {
-            Debug.Assert(PlayerInventory.Slots == itemSprites.Count && PlayerInventory.Slots == itemCounts.Count);
-            if(toggled) CloseInventory(); else OpenInventory(playerInventory);
+            Debug.Assert(PlayerInventory.Slots == itemSlots.Count);
+            if(toggled) CloseInventory(); else OpenInventory();
             toggled = !toggled;
+            Refresh();
         }
 
-        private void OnPlayerInventoryIsDirty(PlayerInventory playerInventory)
-        {
-            Refresh(playerInventory);
-        }
-
-        private void OnSelectedSlotChanged(PlayerInventory playerInventory, int slotIndex)
+        private void OnSelectedSlotChanged(int slotIndex)
         {
             MovePointer(slotIndex);
         }
 
-        private void Refresh(PlayerInventory playerInventory)
+        private void Refresh()
         {
-            for (int i = 0; i < playerInventory.ItemStacks.Count; i++)
+            for(int i = 0; i < playerInventory.ItemStacks.Count; i++)
             {
-                var currentItemStack = playerInventory.ItemStacks[i];
-                if (!currentItemStack.IsEmpty())
+                var itemStack = playerInventory.ItemStacks[i];
+                var itemSlot = itemSlots[i];
+                if (!itemStack.IsEmpty() && itemSlot.IsEmpty())
                 {
-                    var item = Register.GetItemById(currentItemStack.ItemId);
-                    itemSprites[i].sprite = item.sprite;
-                    itemCounts[i].gameObject.SetActive(true);
-                    itemCounts[i].text = currentItemStack.Size.ToString();
+                    var inventoryItemGo = Instantiate(inventoryItemPrefab, itemSlots[i].transform);
+                    var inventoryItem = inventoryItemGo.GetComponent<InventoryItem>();
+                    
+                    inventoryItem.ItemStack = itemStack;
+                    inventoryItem.ItemSlot = itemSlot;
+                    
+                    itemSlot.inventoryItem = inventoryItem;
                 }
-                else
+
+                if (itemStack.IsEmpty())
                 {
-                    itemSprites[i].sprite = emptySlotSprite;
-                    itemCounts[i].text = "0";
-                    itemCounts[i].gameObject.SetActive(false);
+                    itemSlot.Clear();
                 }
+                
+                itemSlot.Refresh();
             }
         }
 
-        private void OpenInventory(PlayerInventory playerInventory)
+        private void OpenInventory()
         {
             LeanTween.moveY(gameObject, transform.position.y - 460.0f, 0.4f);
-            Refresh(playerInventory);
+            Refresh();
         }
         
         private void CloseInventory()

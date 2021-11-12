@@ -188,6 +188,8 @@ MonoBehaviour:
   pointerOffset: {x: 0, y: -40, z: 0}
   slotPrefab: {fileID: 8828641747527187353, guid: a644058a9d717294a88def6afbe2eb3b,
     type: 3}
+  inventoryItemPrefab: {fileID: 6195981408798853130, guid: f351304e594bc2342a44489b84acbf9d,
+    type: 3}
   contentTransform: {fileID: 6897256475441182503}
   emptySlotSprite: {fileID: 21300000, guid: 8196e66c2d14208458afa4802e37ba0b, type: 3}
   slotPointer: {fileID: 127808939}

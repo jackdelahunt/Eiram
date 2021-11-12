@@ -29,18 +29,12 @@ namespace Events
             PlayerToggleInventoryEvent?.Invoke(playerInventory);
         }
         
-        public static event Action<PlayerInventory> PlayerInventoryIsDirtyEvent;
+        public static event Action<int> SelectedSlotChangedEvent;
 
-        public static void OnPlayerInventoryIsDirty(PlayerInventory playerInventory)
+        public static void SelectedSlotChanged(int slotIndex)
         {
-            PlayerInventoryIsDirtyEvent?.Invoke(playerInventory);
+            SelectedSlotChangedEvent?.Invoke(slotIndex);
         }
         
-        public static event Action<PlayerInventory, int> SelectedSlotChangedEvent;
-
-        public static void SelectedSlotChanged(PlayerInventory playerInventory, int slotIndex)
-        {
-            SelectedSlotChangedEvent?.Invoke(playerInventory, slotIndex);
-        }
     }
 }

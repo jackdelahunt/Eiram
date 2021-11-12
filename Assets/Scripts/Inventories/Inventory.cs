@@ -82,9 +82,13 @@ namespace Inventories
                 }
                 
                 stack.Size -= amount;
+                
+                var toReturn = new ItemStack(stack.ItemId, amount); 
+                
                 if(stack.Size == 0)
                     ItemStacks[slotIndex].Empty();
-                return new ItemStack(stack.ItemId, amount);
+
+                return toReturn;
             }
 
             return new ItemStack();
@@ -123,6 +127,12 @@ namespace Inventories
             }
             
             return -1;
+        }
+
+        public void ClearSlot(int slotNumber)
+        {
+            ItemStacks[slotNumber] = new ItemStack();
+            IsDirty = true;
         }
     }
 }

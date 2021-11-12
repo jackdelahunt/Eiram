@@ -13,12 +13,13 @@ namespace Players
     //[RequireComponent(typeof(Animator))]
     public class Player : MonoBehaviour
     {
+        public PlayerInventory playerInventory;
+        
         [SerializeField] private float jumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
         
         private Camera mainCamera = null;
         private CharacterController controller = null;
-        private PlayerInventory playerInventory = new PlayerInventory();
         // private Animator animator = null;
 
         private bool isPlayerIdle = true;
@@ -40,13 +41,6 @@ namespace Players
             CheckForMouseInput();
             CheckPlayerJump();
             CheckPlayerIdle();
-
-            // TODO: the player should not need to handle this
-            if (playerInventory.IsDirty)
-            {
-                EiramEvents.OnPlayerInventoryIsDirty(playerInventory);
-                playerInventory.IsDirty = false;
-            }
         }
 
         public void ApplyPlayerData(PlayerData playerData)
