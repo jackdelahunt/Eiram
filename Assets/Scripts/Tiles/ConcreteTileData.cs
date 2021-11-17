@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Eiram;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -11,5 +13,14 @@ namespace Tiles
         public TileId TileId;
         public ItemId ItemId;
         public TileBase TileBase;
+        public List<LootItem> Drops;
+    }
+
+    [Serializable]
+    public struct LootItem
+    {
+        public ItemId ItemId;
+        public int Quantity;
+        public float Chance;
     }
 }

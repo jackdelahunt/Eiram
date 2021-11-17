@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Eiram;
 using Items;
 using Players;
@@ -6,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Worlds;
+using Random = System.Random;
 
 namespace Tiles
 {
@@ -45,6 +48,21 @@ namespace Tiles
             World.Current.UpdateTileAt(worldPosition.Right());
             World.Current.UpdateTileAt(worldPosition.Down());
             World.Current.UpdateTileAt(worldPosition.Left());
+        }
+
+        public virtual List<ItemId> GenerateDrops()
+        {
+            var drops = new List<ItemId>();
+            var r = new Random();
+            foreach (var drop in concreteTileData.Drops)
+            {
+                if (r.NextDouble() <= drop.Chance)
+                {
+                    for(int i = 0; i < drop.Quantity; i++) drops.Add(drop.ItemId);
+                }
+            }
+
+            return drops;
         }
 
         public SerialTileData DefaultTileData()
