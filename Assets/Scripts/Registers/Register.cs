@@ -21,20 +21,6 @@ namespace Registers
         {
             return tiles[(int)tileId];
         }
-
-        [CanBeNull]
-        public static AbstractTile GetTileByItemId(ItemId itemId)
-        {
-            Debug.Assert(itemId != ItemId.UNKNOWN);
-            
-            foreach (var tile in tiles)
-            {
-                if (tile.ItemId() == itemId)
-                    return tile;
-            }
-
-            return null;
-        }
         
         public static Item GetItemById(ItemId itemId)
         {

@@ -79,11 +79,6 @@ namespace Tiles
         {
             return concreteTileData.TileBase;
         }
-
-        public ItemId ItemId()
-        {
-            return concreteTileData.ItemId;
-        }
     }
     
     public class Air : AbstractTile

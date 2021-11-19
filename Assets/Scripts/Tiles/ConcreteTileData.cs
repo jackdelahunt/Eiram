@@ -11,7 +11,6 @@ namespace Tiles
     {
         public string TileName;
         public TileId TileId;
-        public ItemId ItemId;
         public TileBase TileBase;
         public List<LootItem> Drops;
     }
