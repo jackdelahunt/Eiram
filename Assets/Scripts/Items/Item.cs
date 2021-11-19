@@ -10,6 +10,7 @@ namespace Items
         {
             public string itemName;
             public ItemId itemId;
+            public TileId tileId;
             public int maxStack = 64;
             public Sprite sprite;
         }

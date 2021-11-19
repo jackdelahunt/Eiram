@@ -212,15 +212,17 @@ namespace Worlds
         
         private void OnTileBreak(Vector3Int worldPosition, SerialTileData serialTileData)
         {
-            ItemId itemId = Register.GetTileByTileId(serialTileData.TileId).ItemId();
-            if (itemId != ItemId.UNKNOWN)
+            var tile = Register.GetTileByTileId(serialTileData.TileId);
+            var dropsItemIds = tile.GenerateDrops();
+            tile.OnBreak(worldPosition, serialTileData);
+            
+            var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);
+
+            foreach (var itemId in dropsItemIds)
             {
-                var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);
                 var newItemEntity = Instantiate(itemEntityPrefab, worldPosition + spawnOffset, new Quaternion()).GetComponent<ItemEntity>();
                 newItemEntity.Init(itemId);
             }
-            
-            Register.GetTileByTileId(serialTileData.TileId).OnBreak(worldPosition, serialTileData);
         }
     }
 }
