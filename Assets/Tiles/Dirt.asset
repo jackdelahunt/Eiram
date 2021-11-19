@@ -16,3 +16,10 @@ MonoBehaviour:
   TileId: 1
   ItemId: 0
   TileBase: {fileID: 11400000, guid: 66e5e9ce7dc9e8546aab9b9a21ffc036, type: 2}
+  Drops:
+  - ItemId: 0
+    Quantity: 10
+    Chance: 1
+  - ItemId: 1
+    Quantity: 2
+    Chance: 1

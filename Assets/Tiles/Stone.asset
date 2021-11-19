@@ -16,3 +16,4 @@ MonoBehaviour:
   TileId: 3
   ItemId: -1
   TileBase: {fileID: 11400000, guid: b09803d74d32da446abc674cbaeddf68, type: 2}
+  Drops: []
