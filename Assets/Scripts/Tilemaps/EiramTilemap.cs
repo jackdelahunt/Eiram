@@ -61,5 +61,11 @@ namespace Tilemaps
             positionsCache.Add(worldPosition);
             tileBaseCache.Add(Register.GetTileByTileId(tileId).TileBase());
         }
+        
+        public void SetTile(Vector3Int worldPosition, TileBase tileBase)
+        {
+            positionsCache.Add(worldPosition);
+            tileBaseCache.Add(tileBase);
+        }
     }
 }

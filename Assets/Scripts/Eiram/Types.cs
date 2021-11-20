@@ -27,6 +27,7 @@ namespace Eiram
         DEADBUSH = 15,
         GRASS_FOLIAGE = 16,
         TILLED_SOIL = 17,
+        THORNS = 18,
     }
     
     public enum ItemId
@@ -34,5 +35,6 @@ namespace Eiram
         UNKNOWN = -1,
         DIRT = 0,
         GRASS = 1,
+        THORNS = 2,
     }
 }

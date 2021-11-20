@@ -91,6 +91,15 @@ namespace Worlds
             }
         }
         
+        public void RandomUpdateTileAt(Vector3Int worldPosition)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.RandomUpdateTileAt(worldPosition);
+            }
+        }
+        
         public void LoadWorld()
         {
             var loadResult = Filesystem.LoadFrom<PlayerData>("player.data", Save.Data);
