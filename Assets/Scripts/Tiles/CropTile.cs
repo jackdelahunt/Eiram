@@ -36,15 +36,22 @@ namespace Tiles
 #endif
         }
 
+        public override bool CanPlace(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            if (World.Current.GetTileData(worldPosition.Down()).IsSome(out var serialTileData))
+            {
+                return serialTileData.TileId == Eiram.TileId.TILLED_SOIL;
+            }
+
+            return false;
+        }
+
         public override void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData)
         {
             base.OnUpdate(worldPosition, currentTileData);
-            if (World.Current.GetTileData(worldPosition.Down()).IsSome(out var serialTileData))
+            if (!CanPlace(worldPosition, currentTileData))
             {
-                if (serialTileData.TileId != Eiram.TileId.TILLED_SOIL)
-                {
-                    World.Current.RemoveTileAt(worldPosition);
-                }
+                World.Current.RemoveTileAt(worldPosition);
             }
         }
 

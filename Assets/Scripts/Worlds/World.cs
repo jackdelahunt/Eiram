@@ -46,13 +46,15 @@ namespace Worlds
             EiramEvents.TileBreakEvent -= OnTileBreak;
         }
         
-        public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
+        public bool PlaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
             if (activeChunks.TryGetValue(chunkX, out var chunk))
             {
-                chunk.PlaceTileAt(worldPosition, tileId);
+                return chunk.PlaceTileAt(worldPosition, tileId);
             }
+
+            return false;
         }
 
         public void RemoveTileAt(Vector3Int worldPosition)

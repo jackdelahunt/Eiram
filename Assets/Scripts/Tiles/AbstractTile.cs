@@ -28,6 +28,11 @@ namespace Tiles
             };
         }
 
+        public virtual bool CanPlace(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            return true;
+        }
+
         public virtual void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
 
         public virtual void OnPlace(Vector3Int worldPosition, SerialTileData serialTileData)

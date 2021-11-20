@@ -43,14 +43,25 @@ namespace Chunks
             return tileDataArray[chunkPosition.x, chunkPosition.y];
         }
         
-        public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
+        public bool PlaceTileAt(Vector3Int worldPosition, TileId tileId)
         {   
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            var data = Register.GetTileByTileId(tileId).DefaultTileData();
-            tileDataArray[chunkPosition.x, chunkPosition.y] = data;
-            EiramTilemap.Foreground.SetTile(worldPosition, tileId);
+            var tile = Register.GetTileByTileId(tileId);
+            var data = tile.DefaultTileData();
 
-            EiramEvents.OnTilePlace(worldPosition, data);
+            if (tileDataArray[chunkPosition.x, chunkPosition.y].TileId != TileId.AIR)
+                return false;
+            
+            if (tile.CanPlace(worldPosition, data))
+            {
+                tileDataArray[chunkPosition.x, chunkPosition.y] = data;
+                EiramTilemap.Foreground.SetTile(worldPosition, tileId);
+
+                EiramEvents.OnTilePlace(worldPosition, data);
+                return true;
+            }
+
+            return false;
         }
 
         public void RemoveTileAt(Vector3Int worldPosition)

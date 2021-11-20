@@ -27,10 +27,10 @@ namespace Inventories
         
         public int TryAddItem(ItemId itemId, int size)
         {
-            void _setStack(ItemId id, int slot, int newSize)
+            void _setStack(ItemId id, int slotIndex, int newSize)
             {
-                ItemStacks[slot].ItemId = id;
-                ItemStacks[slot].Size = newSize;
+                ItemStacks[slotIndex].ItemId = id;
+                ItemStacks[slotIndex].Size = newSize;
                 IsDirty = true;
             }
 
@@ -106,7 +106,12 @@ namespace Inventories
 
             return -1;
         }
-        
+
+        public ItemStack ItemStackAt(int slotIndex)
+        {
+            return ItemStacks[slotIndex];
+        }
+
         public int NextAvailableSlot(ItemId itemId, int maxStack)
         {
             for(int i = 0; i < ItemStacks.Count; i++)
@@ -130,9 +135,9 @@ namespace Inventories
             return -1;
         }
 
-        public void ClearSlot(int slotNumber)
+        public void ClearSlot(int slotIndex)
         {
-            ItemStacks[slotNumber] = new ItemStack();
+            ItemStacks[slotIndex] = new ItemStack();
             IsDirty = true;
         }
     }
