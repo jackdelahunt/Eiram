@@ -18,7 +18,7 @@ namespace Tiles
             return new SerialTileData
             {
                 TileId = this.TileId,
-                Tag = Tag
+                Tag = Tag.Clone() as Tag
             };
         }
         

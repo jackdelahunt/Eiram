@@ -34,6 +34,11 @@ namespace Players
             //animator = GetComponent<Animator>();
         }
 
+        public void Start()
+        {
+            playerInventory.TryAddItem(ItemId.THORNS, 5);
+        }
+
         void Update()
         {
             isPlayerIdle = true;
@@ -84,7 +89,7 @@ namespace Players
                 var tilePos = ConvertPositionToTile(mousePos);
                 
                 if (inHandStack.IsEmpty())
-                    World.Current.UseTileAt(tilePos, this);    
+                    World.Current.RandomUpdateTileAt(tilePos);    
                 else
                     World.Current.PlaceTileAt(tilePos, Register.GetItemById(inHandStack.ItemId).tileId);
             }

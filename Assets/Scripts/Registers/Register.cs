@@ -48,6 +48,7 @@ namespace Registers
                 null,
                 null,
                 new TilledSoil(concreteTileDataArray[17]),
+                new Thorns(concreteTileDataArray[18]),
             };
 
             items = itemArray;

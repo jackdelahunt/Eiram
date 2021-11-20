@@ -21,5 +21,9 @@ namespace Eiram
         public UnwrappedNoneException()
             : base($"Tried to unwrap a None")
         { }
+        
+        public UnwrappedNoneException(string message)
+            : base(message)
+        { }
     }
 }

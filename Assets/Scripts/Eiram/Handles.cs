@@ -28,6 +28,13 @@
             this.IsNone = false;
         }
         
+        public T Unwrap(string message)
+        {
+            if (IsNone) throw new UnwrappedNoneException(message);
+
+            return Value;
+        }
+        
         public T Unwrap()
         {
             if (IsNone) throw new UnwrappedNoneException();

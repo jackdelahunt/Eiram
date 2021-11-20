@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Eiram;
 
 namespace Tags
@@ -7,7 +8,18 @@ namespace Tags
     [Serializable]
     public class Tag : ICloneable
     {
-        private Dictionary<string, object> dictionary = new Dictionary<string, object>();
+        protected Dictionary<string, object> dictionary = new Dictionary<string, object>();
+        
+        public Tag() {}
+        
+
+        public Tag(params ValueTuple<string, object>[] keyValues)
+        {
+            foreach (var keyValue in keyValues)
+            {
+                dictionary.Add(keyValue.Item1, keyValue.Item2);
+            }
+        }
 
         public bool HasKey(string tag)
         {
@@ -61,10 +73,16 @@ namespace Tags
             dictionary.Add(key, value);
         }
 
-        public int GetInt(string tag)
+        public int GetInt(string key)
         {
-            var contains = dictionary.TryGetValue(tag, out object value);
-            return contains ? Convert.ToInt32(value) : throw new NotFoundException(tag); 
+            var contains = dictionary.TryGetValue(key, out object value);
+            return contains ? Convert.ToInt32(value) : throw new NotFoundException(key); 
+        }
+        
+        public void SetInt(string key, int newValue)
+        {
+            dictionary.Remove(key);
+            dictionary.Add(key, newValue);
         }
         
         public object Clone()

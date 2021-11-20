@@ -82,6 +82,12 @@ namespace Chunks
             Register.GetTileByTileId(data.TileId).OnUse(worldPosition, data, player);
         }
 
+        public void RandomUpdateTileAt(Vector3Int worldPosition)
+        {
+            var data = GetTileData(worldPosition);
+            Register.GetTileByTileId(data.TileId).OnRandomUpdate(worldPosition, data);
+        }
+
         public SerialTileData GetTileData(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);

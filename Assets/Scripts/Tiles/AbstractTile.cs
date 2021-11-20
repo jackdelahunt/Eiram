@@ -9,12 +9,13 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Worlds;
 using Random = System.Random;
+using static Eiram.Handles;
 
 namespace Tiles
 {
     public abstract class AbstractTile
     {
-        private ConcreteTileData concreteTileData;
+        protected ConcreteTileData concreteTileData;
         protected SerialTileData defaultTileData;
 
         public AbstractTile(ConcreteTileData concreteTileData)
@@ -42,6 +43,8 @@ namespace Tiles
 
         public virtual void OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player) {}
 
+        public virtual void OnRandomUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
+
         private void UpdateNeighbours(Vector3Int worldPosition)
         {
             World.Current.UpdateTileAt(worldPosition.Up());
@@ -65,9 +68,16 @@ namespace Tiles
             return drops;
         }
 
+        public Option<T> As<T>()
+        {
+            if (concreteTileData is T t) return t;
+            return None<T>();
+        }
+
         public SerialTileData DefaultTileData()
         {
-            return this.defaultTileData.Clone() as SerialTileData;
+            var clone = this.defaultTileData.Clone() as SerialTileData;
+            return clone;
         }
 
         public TileId TileId()
@@ -125,5 +135,10 @@ namespace Tiles
     public class TilledSoil : AbstractTile
     {
         public TilledSoil(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class Thorns : CropTile
+    {
+        public Thorns(ConcreteTileData concreteTileData) : base(concreteTileData) {}
     }
 }
