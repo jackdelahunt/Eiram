@@ -82,6 +82,7 @@ namespace Players
                 World.Current.RemoveTileAt(tilePos);
             }
 
+            
             if (Input.GetButtonDown("Fire2"))
             {
                 var inHandStack = playerInventory.PopSelectedItem();
@@ -89,7 +90,7 @@ namespace Players
                 var tilePos = ConvertPositionToTile(mousePos);
                 
                 if (inHandStack.IsEmpty())
-                    World.Current.RandomUpdateTileAt(tilePos);    
+                    World.Current.UseTileAt(tilePos, this);    
                 else
                     World.Current.PlaceTileAt(tilePos, Register.GetItemById(inHandStack.ItemId).tileId);
             }

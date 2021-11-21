@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Chunks;
 using Eiram;
 using Registers;
+using Tiles;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -39,7 +40,7 @@ namespace Tilemaps
                 for (int j = 0; j < EiramTypes.CHUNK_HEIGHT; j++)
                 {
                     var worldPos = new Vector3Int((chunk.ChunkX * EiramTypes.CHUNK_WIDTH) + i, j, 0);
-                    SetTile(worldPos, chunk.GetTileAt(worldPos).TileId);
+                    SetTile(worldPos, chunk.GetTileAt(worldPos));
                 }
             }
         }
@@ -51,15 +52,21 @@ namespace Tilemaps
                 for (int j = 0; j < EiramTypes.CHUNK_HEIGHT; j++)
                 {
                     var worldPos = new Vector3Int((chunk.ChunkX * EiramTypes.CHUNK_WIDTH) + i, j, 0);
-                    SetTile(worldPos, TileId.AIR);
+                    SetTile(worldPos, Register.GetTileByTileId(TileId.AIR).DefaultTileData());
                 }
             }
         }
 
+        public void SetTile(Vector3Int worldPosition, SerialTileData serialTileData)
+        {
+            positionsCache.Add(worldPosition);
+            tileBaseCache.Add(Register.GetTileByTileId(serialTileData.TileId).TileBase(serialTileData));
+        }
+        
         public void SetTile(Vector3Int worldPosition, TileId tileId)
         {
             positionsCache.Add(worldPosition);
-            tileBaseCache.Add(Register.GetTileByTileId(tileId).TileBase());
+            tileBaseCache.Add(Register.GetTileByTileId(tileId).TileBase(Register.GetTileByTileId(tileId).DefaultTileData()));
         }
         
         public void SetTile(Vector3Int worldPosition, TileBase tileBase)

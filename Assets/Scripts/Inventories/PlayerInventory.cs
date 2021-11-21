@@ -41,5 +41,10 @@ namespace Inventories
         {
             return RemoveFromItemStack(SelectedSlot, 1);
         }
+        
+        public ItemStack PeekSelectedItem()
+        {
+            return ItemStackAt(selectedSlot);
+        }
     }
 }

@@ -28,6 +28,11 @@ namespace Tiles
             };
         }
 
+        public virtual bool CanPlace(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            return true;
+        }
+
         public virtual void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
 
         public virtual void OnPlace(Vector3Int worldPosition, SerialTileData serialTileData)
@@ -53,7 +58,7 @@ namespace Tiles
             World.Current.UpdateTileAt(worldPosition.Left());
         }
 
-        public virtual List<ItemId> GenerateDrops()
+        public virtual List<ItemId> GenerateDrops(SerialTileData currentTileData)
         {
             var drops = new List<ItemId>();
             var r = new Random();
@@ -68,7 +73,7 @@ namespace Tiles
             return drops;
         }
 
-        public Option<T> As<T>()
+        public Option<T> As<T>() where T: ConcreteTileData
         {
             if (concreteTileData is T t) return t;
             return None<T>();
@@ -85,7 +90,7 @@ namespace Tiles
             return concreteTileData.TileId;
         }
 
-        public TileBase TileBase()
+        public virtual TileBase TileBase(SerialTileData currentTileData)
         {
             return concreteTileData.TileBase;
         }

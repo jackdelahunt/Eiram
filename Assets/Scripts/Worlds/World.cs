@@ -38,6 +38,7 @@ namespace Worlds
         void Start()
         {
             InvokeRepeating(nameof(ChunkRefresh), 0.0f, 1.0f);
+            InvokeRepeating(nameof(RandomUpdateChunks), 0.0f, 1.0f);
         }   
 
         private void OnDestroy()
@@ -46,13 +47,15 @@ namespace Worlds
             EiramEvents.TileBreakEvent -= OnTileBreak;
         }
         
-        public void PlaceTileAt(Vector3Int worldPosition, TileId tileId)
+        public bool PlaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
             if (activeChunks.TryGetValue(chunkX, out var chunk))
             {
-                chunk.PlaceTileAt(worldPosition, tileId);
+                return chunk.PlaceTileAt(worldPosition, tileId);
             }
+
+            return false;
         }
 
         public void RemoveTileAt(Vector3Int worldPosition)
@@ -180,6 +183,14 @@ namespace Worlds
             }
         }
 
+        private void RandomUpdateChunks()
+        {
+            foreach(var keyValuePair in activeChunks)
+            {
+                keyValuePair.Value.RandomUpdate();
+            }
+        }
+
         private Chunk CreateChunk(int chunkX)
         {
             if (Save.Region.GetFile($"{chunkX}.chunk").IsSome(out var file))
@@ -222,7 +233,7 @@ namespace Worlds
         private void OnTileBreak(Vector3Int worldPosition, SerialTileData serialTileData)
         {
             var tile = Register.GetTileByTileId(serialTileData.TileId);
-            var dropsItemIds = tile.GenerateDrops();
+            var dropsItemIds = tile.GenerateDrops(serialTileData);
             tile.OnBreak(worldPosition, serialTileData);
             
             var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);
