@@ -15,28 +15,31 @@ namespace Inventories
     {
         public static readonly int Slots = 70;
 
-        private int selectedSlot = 0;
+        public int SelectedSlot { get; private set; }
         private const int hotbarSlotsCount = 10;
-        
-        public PlayerInventory() : base(Slots) {}
+
+        public PlayerInventory() : base(Slots)
+        {
+            SelectedSlot = 0;
+        }
 
         public void SelectNext()
         {
-            selectedSlot++;
-            if (selectedSlot >= hotbarSlotsCount) selectedSlot = 0;
-            EiramEvents.SelectedSlotChanged(selectedSlot);
+            SelectedSlot++;
+            if (SelectedSlot >= hotbarSlotsCount) SelectedSlot = 0;
+            EiramEvents.SelectedSlotChanged(SelectedSlot);
         }
         
         public void SelectPrevious()
         {
-            selectedSlot--;
-            if (selectedSlot < 0) selectedSlot = hotbarSlotsCount - 1;
-            EiramEvents.SelectedSlotChanged(selectedSlot);
+            SelectedSlot--;
+            if (SelectedSlot < 0) SelectedSlot = hotbarSlotsCount - 1;
+            EiramEvents.SelectedSlotChanged(SelectedSlot);
         }
 
         public ItemStack PopSelectedItem()
         {
-            return RemoveFromItemStack(selectedSlot, 1);
+            return RemoveFromItemStack(SelectedSlot, 1);
         }
     }
 }

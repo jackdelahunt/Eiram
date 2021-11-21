@@ -35,6 +35,12 @@ namespace Inventories
         private void Start()
         {
             playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().playerInventory;
+            Invoke(nameof(LateStart), 0.05f); // TODO: fix this crap
+        }
+
+        private void LateStart()
+        {
+            MovePointer(playerInventory.SelectedSlot);
         }
 
         private void Update()
@@ -73,7 +79,6 @@ namespace Inventories
                 itemSlot.InventoryUI = this;
                 itemSlots.Add(itemSlot);
             }
-            
         }
 
         private void MovePointer(int slotIndex)
