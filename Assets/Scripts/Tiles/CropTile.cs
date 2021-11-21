@@ -18,8 +18,8 @@ namespace Tiles
 #if UNITY_EDITOR
             if (concreteTileData is CropTileData cropTileData)
             {
-                if(cropTileData.maxAge != cropTileData.tileBases.Count)
-                    throw new Exception($"Crop tile max age needs to match sprite count -> sprites:{cropTileData.tileBases.Count} maxAge:{cropTileData.maxAge}");
+                if(cropTileData.maxAge != cropTileData.tileBases.Count - 1)
+                    throw new Exception($"Crop tile max age needs to match (sprite count - 1) => sprites:{cropTileData.tileBases.Count} maxAge:{cropTileData.maxAge}");
             }
             else
             {
@@ -51,20 +51,32 @@ namespace Tiles
         {
             base.OnRandomUpdate(worldPosition, currentTileData);
             OnGrow(worldPosition, currentTileData);
-            var copy = Register.GetTileByTileId(Eiram.TileId.THORNS).DefaultTileData();
-            return;
         }
 
         public virtual void OnGrow(Vector3Int worldPosition, SerialTileData currentTileData)
         {
+            int startAge = currentTileData.Tag.GetInt("age");
+            int maxAge = CropTileData.maxAge;
+            
+            if (startAge < maxAge)
+                currentTileData.Tag.SetInt("age", startAge + 1);
+            
+            // if we did not grow this frame
+            if (startAge != maxAge)
+                RefreshTile(worldPosition, startAge + 1);
+        }
+
+        public override List<ItemId> GenerateDrops(SerialTileData currentTileData)
+        {
             int age = currentTileData.Tag.GetInt("age");
-            int maxAge = Register.GetTileByTileId(currentTileData.TileId).As<DynamicTileData>().Unwrap("This tile is not dynamic").maxAge;
-            
-            if (age < maxAge)
-                currentTileData.Tag.SetInt("age", ++age);
-            
+            int maxAge = CropTileData.maxAge;
+ 
+            // if not full grown drop seed
             if (age != maxAge)
-                RefreshTile(worldPosition, age);
+                return new List<ItemId>() {CropTileData.SeedItemId};
+            
+            // fully grown? drop normal drops
+            return base.GenerateDrops(currentTileData);
         }
 
         public CropTileData CropTileData => this.concreteTileData as CropTileData;

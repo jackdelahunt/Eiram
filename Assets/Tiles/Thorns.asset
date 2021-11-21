@@ -19,7 +19,8 @@ MonoBehaviour:
   - ItemId: 2
     Quantity: 2
     Chance: 1
-  maxAge: 2
+  maxAge: 1
   tileBases:
   - {fileID: 11400000, guid: ab43ac5364ab7ed4a946c22d8b0cb097, type: 2}
   - {fileID: 11400000, guid: 55a02b232db7d224fbeffe13275b0bea, type: 2}
+  SeedItemId: 2

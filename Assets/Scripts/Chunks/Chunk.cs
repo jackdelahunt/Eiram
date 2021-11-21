@@ -17,7 +17,7 @@ namespace Chunks
     public class Chunk
     {
         // time = growthStages / delta / (RANDOM_TILE_UPDATE_COUNT / WIDTH * HEIGHT)
-        private const int RANDOM_TILE_UPDATE_COUNT = 20;
+        private const int RANDOM_TILE_UPDATE_COUNT = 2000;
         
         public readonly int ChunkX;
         private readonly SerialTileData[,] tileDataArray;

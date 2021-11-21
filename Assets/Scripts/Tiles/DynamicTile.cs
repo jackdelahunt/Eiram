@@ -25,8 +25,8 @@ namespace Tiles
 #if UNITY_EDITOR
             if (concreteTileData is DynamicTileData dynamicTile)
             {
-                if(dynamicTile.maxAge != dynamicTile.tileBases.Count)
-                    throw new Exception($"Dynamic tile max age needs to match sprite count -> sprites:{dynamicTile.tileBases.Count} maxAge:{dynamicTile.maxAge}");
+                if(dynamicTile.maxAge != dynamicTile.tileBases.Count - 1)
+                    throw new Exception($"Dynamic tile max age needs to match (sprite count - 1) => sprites:{dynamicTile.tileBases.Count} maxAge:{dynamicTile.maxAge}");
             }
             else
             {

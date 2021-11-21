@@ -233,7 +233,7 @@ namespace Worlds
         private void OnTileBreak(Vector3Int worldPosition, SerialTileData serialTileData)
         {
             var tile = Register.GetTileByTileId(serialTileData.TileId);
-            var dropsItemIds = tile.GenerateDrops();
+            var dropsItemIds = tile.GenerateDrops(serialTileData);
             tile.OnBreak(worldPosition, serialTileData);
             
             var spawnOffset = new Vector3(0.5f, 0.5f, 0.0f);

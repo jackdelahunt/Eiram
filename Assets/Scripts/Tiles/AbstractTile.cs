@@ -58,7 +58,7 @@ namespace Tiles
             World.Current.UpdateTileAt(worldPosition.Left());
         }
 
-        public virtual List<ItemId> GenerateDrops()
+        public virtual List<ItemId> GenerateDrops(SerialTileData currentTileData)
         {
             var drops = new List<ItemId>();
             var r = new Random();
