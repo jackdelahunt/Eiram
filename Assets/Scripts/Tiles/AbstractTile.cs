@@ -73,7 +73,7 @@ namespace Tiles
             return drops;
         }
 
-        public Option<T> As<T>()
+        public Option<T> As<T>() where T: ConcreteTileData
         {
             if (concreteTileData is T t) return t;
             return None<T>();
