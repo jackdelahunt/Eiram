@@ -6,6 +6,7 @@ using Registers;
 using Tags;
 using Tilemaps;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Worlds;
 
 namespace Tiles
@@ -79,7 +80,13 @@ namespace Tiles
         {
             EiramTilemap.Foreground.SetTile(worldPosition, DynamicTile.tileBases[age]);
         }
-        
+
+        public override TileBase TileBase(SerialTileData currentTileData)
+        {
+            int age = currentTileData.Tag.GetInt("age");
+            return DynamicTile.tileBases[age];
+        }
+
         public DynamicTile DynamicTile => this.concreteTileData as DynamicTile;
     }
 }

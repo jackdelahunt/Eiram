@@ -90,7 +90,7 @@ namespace Tiles
             return concreteTileData.TileId;
         }
 
-        public TileBase TileBase()
+        public virtual TileBase TileBase(SerialTileData currentTileData)
         {
             return concreteTileData.TileBase;
         }

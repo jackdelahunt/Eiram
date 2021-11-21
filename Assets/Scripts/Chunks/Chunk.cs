@@ -59,7 +59,7 @@ namespace Chunks
             if (tile.CanPlace(worldPosition, data))
             {
                 tileDataArray[chunkPosition.x, chunkPosition.y] = data;
-                EiramTilemap.Foreground.SetTile(worldPosition, tileId);
+                EiramTilemap.Foreground.SetTile(worldPosition, data);
 
                 EiramEvents.OnTilePlace(worldPosition, data);
                 return true;
