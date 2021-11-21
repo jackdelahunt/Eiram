@@ -11,24 +11,15 @@ using Worlds;
 
 namespace Tiles
 {
-    public abstract class CropTile : AbstractTile
+    public abstract class CropTile : DynamicTile
     {
         protected CropTile(ConcreteTileData concreteTileData) : base(concreteTileData)
         {
-
-            defaultTileData = new SerialTileData()
-            {
-                TileId = concreteTileData.TileId,
-                Tag = new Tag(
-                        ("age", 0)
-                    )
-            };
-            
 #if UNITY_EDITOR
-            if (concreteTileData is DynamicTile dynamicTile)
+            if (concreteTileData is CropTileData cropTileData)
             {
-                if(dynamicTile.maxAge != dynamicTile.tileBases.Count)
-                    throw new Exception($"Crop tile max age needs to match sprite count -> sprites:{dynamicTile.tileBases.Count} maxAge:{dynamicTile.maxAge}");
+                if(cropTileData.maxAge != cropTileData.tileBases.Count)
+                    throw new Exception($"Crop tile max age needs to match sprite count -> sprites:{cropTileData.tileBases.Count} maxAge:{cropTileData.maxAge}");
             }
             else
             {
@@ -67,7 +58,7 @@ namespace Tiles
         public virtual void OnGrow(Vector3Int worldPosition, SerialTileData currentTileData)
         {
             int age = currentTileData.Tag.GetInt("age");
-            int maxAge = Register.GetTileByTileId(currentTileData.TileId).As<DynamicTile>().Unwrap("This tile is not dynamic").maxAge;
+            int maxAge = Register.GetTileByTileId(currentTileData.TileId).As<DynamicTileData>().Unwrap("This tile is not dynamic").maxAge;
             
             if (age < maxAge)
                 currentTileData.Tag.SetInt("age", ++age);
@@ -76,17 +67,6 @@ namespace Tiles
                 RefreshTile(worldPosition, age);
         }
 
-        public virtual void RefreshTile(Vector3Int worldPosition, int age)
-        {
-            EiramTilemap.Foreground.SetTile(worldPosition, DynamicTile.tileBases[age]);
-        }
-
-        public override TileBase TileBase(SerialTileData currentTileData)
-        {
-            int age = currentTileData.Tag.GetInt("age");
-            return DynamicTile.tileBases[age];
-        }
-
-        public DynamicTile DynamicTile => this.concreteTileData as DynamicTile;
+        public CropTileData CropTileData => this.concreteTileData as CropTileData;
     }
 }

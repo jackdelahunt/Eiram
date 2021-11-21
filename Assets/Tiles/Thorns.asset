@@ -9,12 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10f3ed7c59f54c339a22b9e02fb600ae, type: 3}
+  m_Script: {fileID: 11500000, guid: fb387c67cd0840fc8bf6d42a2abb3eda, type: 3}
   m_Name: Thorns
   m_EditorClassIdentifier: 
-  TileName: 
-  TileId: 0
-  TileBase: {fileID: 0}
-  Drops: []
-  maxAge: 0
-  tileBases: []
+  TileName: Thorns
+  TileId: 18
+  TileBase: {fileID: 11400000, guid: ab43ac5364ab7ed4a946c22d8b0cb097, type: 2}
+  Drops:
+  - ItemId: 2
+    Quantity: 2
+    Chance: 1
+  maxAge: 2
+  tileBases:
+  - {fileID: 11400000, guid: ab43ac5364ab7ed4a946c22d8b0cb097, type: 2}
+  - {fileID: 11400000, guid: 55a02b232db7d224fbeffe13275b0bea, type: 2}
