@@ -9,12 +9,16 @@ using UnityEngine;
 using TerrainGeneration;
 using Tiles;
 using Worlds;
+using Random = System.Random;
 
 namespace Chunks
 {
     [Serializable]
     public class Chunk
     {
+        // time = growthStages / delta / (RANDOM_TILE_UPDATE_COUNT / WIDTH * HEIGHT)
+        private const int RANDOM_TILE_UPDATE_COUNT = 20;
+        
         public readonly int ChunkX;
         private readonly SerialTileData[,] tileDataArray;
 
@@ -99,15 +103,33 @@ namespace Chunks
             Register.GetTileByTileId(data.TileId).OnRandomUpdate(worldPosition, data);
         }
 
+        public void RandomUpdate()
+        {
+            var rand = new Random();
+            for(int i = 0; i < RANDOM_TILE_UPDATE_COUNT; i++)
+            {
+                int randomX = (int) (rand.NextDouble() * EiramTypes.CHUNK_WIDTH);
+                int randomY = (int) (rand.NextDouble() * EiramTypes.CHUNK_HEIGHT);
+
+                var worldPosition = ChunkCoordToWorldCoord(new Vector3Int(randomX, randomY, 0));
+                RandomUpdateTileAt(worldPosition);  
+            }
+        }
+
         public SerialTileData GetTileData(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
             return tileDataArray[chunkPosition.x, chunkPosition.y];
         }
-        
+
         public Vector3Int WorldCoordToChunkCoord(Vector3Int worldPosition)
         {
             return new Vector3Int(worldPosition.x - (ChunkX * EiramTypes.CHUNK_WIDTH), worldPosition.y, 0);
+        }
+        
+        public Vector3Int ChunkCoordToWorldCoord(Vector3Int chunkPosition)
+        {
+            return new Vector3Int(chunkPosition.x + (EiramTypes.CHUNK_WIDTH * ChunkX), chunkPosition.y, 0);
         }
 
         public ChunkData SerializableData()

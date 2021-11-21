@@ -89,16 +89,12 @@ namespace Players
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
                 
-                if (inHandStack.IsEmpty())
-                {
-                    World.Current.RandomUpdateTileAt(tilePos);
-                }    
-                else
+                if (!inHandStack.IsEmpty())
                 {
                     // if placed remove item in hand
                     if (World.Current.PlaceTileAt(tilePos, Register.GetItemById(inHandStack.ItemId).tileId))
                         playerInventory.PopSelectedItem();
-                }
+                }    
             }
 
             float scrollAmount = Input.GetAxisRaw("Scroll"); 

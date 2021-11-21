@@ -38,6 +38,7 @@ namespace Worlds
         void Start()
         {
             InvokeRepeating(nameof(ChunkRefresh), 0.0f, 1.0f);
+            InvokeRepeating(nameof(RandomUpdateChunks), 0.0f, 1.0f);
         }   
 
         private void OnDestroy()
@@ -179,6 +180,14 @@ namespace Worlds
             {
                 activeChunks.Remove(chunk.ChunkX);
                 chunk.Die();
+            }
+        }
+
+        private void RandomUpdateChunks()
+        {
+            foreach(var keyValuePair in activeChunks)
+            {
+                keyValuePair.Value.RandomUpdate();
             }
         }
 
