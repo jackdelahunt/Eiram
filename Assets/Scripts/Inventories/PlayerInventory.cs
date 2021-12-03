@@ -44,7 +44,7 @@ namespace Inventories
         
         public ItemStack PeekSelectedItem()
         {
-            return ItemStackAt(selectedSlot);
+            return ItemStackAt(SelectedSlot);
         }
     }
 }
