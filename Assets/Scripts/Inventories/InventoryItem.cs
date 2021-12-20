@@ -34,7 +34,7 @@ namespace Inventories
         public void Refresh()
         {
             count.text = ItemStack.Size.ToString();
-            image.sprite = Register.GetItemById(ItemStack.ItemId).sprite;
+            image.sprite = Register.GetItemByItemId(ItemStack.ItemId).sprite;
         }
 
         public void OnPointerDown(PointerEventData eventData)

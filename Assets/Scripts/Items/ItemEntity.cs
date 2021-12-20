@@ -22,7 +22,7 @@ namespace Items
         {
             this.ItemId = itemId;
             this.Size = size;
-            spriteRenderer.sprite = Register.GetItemById(itemId).sprite;
+            spriteRenderer.sprite = Register.GetItemByItemId(itemId).sprite;
         }
     }
 }

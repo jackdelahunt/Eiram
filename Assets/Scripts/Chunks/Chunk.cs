@@ -18,12 +18,14 @@ namespace Chunks
     {
         // time = growthStages / delta / (RANDOM_TILE_UPDATE_COUNT / WIDTH * HEIGHT)
         private const int RANDOM_TILE_UPDATE_COUNT = 2000;
-        
+        public readonly BiomeId BiomeId;
         public readonly int ChunkX;
         private readonly SerialTileData[,] tileDataArray;
 
         public Chunk(int chunkX)
         {
+            var rand = new Random();
+            this.BiomeId = rand.NextDouble() > 0.5 ? BiomeId.GRASS_HILLS : BiomeId.STONE_FLATS;
             this.ChunkX = chunkX;
             tileDataArray = TerrainGenerator.GenerateChunkData(this);
             EiramTilemap.Foreground.DrawChunk(this);

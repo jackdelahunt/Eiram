@@ -34,7 +34,7 @@ namespace Inventories
                 IsDirty = true;
             }
 
-            var item = Register.GetItemById(itemId);
+            var item = Register.GetItemByItemId(itemId);
             for (int i = 0; i < ItemStacks.Count; i++)
             {
                 // check for same item

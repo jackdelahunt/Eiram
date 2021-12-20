@@ -92,7 +92,7 @@ namespace Players
                 if (inHandStack.IsEmpty())
                     World.Current.UseTileAt(tilePos, this);    
                 else
-                    World.Current.PlaceTileAt(tilePos, Register.GetItemById(inHandStack.ItemId).tileId);
+                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(inHandStack.ItemId).tileId);
             }
 
             float scrollAmount = Input.GetAxisRaw("Scroll"); 

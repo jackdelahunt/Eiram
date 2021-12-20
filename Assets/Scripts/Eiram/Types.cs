@@ -37,4 +37,11 @@ namespace Eiram
         GRASS = 1,
         THORNS = 2,
     }
+    
+    public enum BiomeId
+    {
+        UNKNOWN = -1,
+        GRASS_HILLS = 0,
+        STONE_FLATS = 1
+    }
 }
