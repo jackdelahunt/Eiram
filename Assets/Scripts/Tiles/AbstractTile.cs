@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Eiram;
 using Items;
 using Players;
+using Registers;
 using Tags;
 using UnityEditor;
 using UnityEngine;
@@ -145,5 +146,32 @@ namespace Tiles
     public class Thorns : CropTile
     {
         public Thorns(ConcreteTileData concreteTileData) : base(concreteTileData) {}
+    }
+    
+    public class Trellis : AbstractTile
+    {
+        public Trellis(ConcreteTileData concreteTileData) : base(concreteTileData) {}
+
+        public override void OnRandomUpdate(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            base.OnRandomUpdate(worldPosition, currentTileData);
+            if(!World.Current.GetTileData(worldPosition.Left()).IsSome(out var leftData)) return;
+            
+            if(!World.Current.GetTileData(worldPosition.Left()).IsSome(out var rightData)) return;
+
+            if (!(Register.GetTileByTileId(leftData.TileId) is CropTile leftTile)) return;
+            if (!(Register.GetTileByTileId(leftData.TileId) is CropTile rightTile)) return;
+
+            if (leftData.Tag.GetInt("age") == leftTile.MaxAge() &&
+                rightData.Tag.GetInt("age") == rightTile.MaxAge())
+            {
+                var r = Register.GetCropRecipe(leftTile.TileId(), rightTile.TileId());
+                if (r.IsSome(out var recipe))
+                {
+                    World.Current.ReplaceTileAt(worldPosition, recipe.FinalCrop);
+                }
+            }
+        }
+
     }
 }

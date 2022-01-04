@@ -80,5 +80,11 @@ namespace Tiles
         }
 
         public CropTileData CropTileData => this.concreteTileData as CropTileData;
+
+        public int MaxAge()
+        {
+            var cropTileData = this.concreteTileData as CropTileData;
+            return cropTileData.maxAge;
+        }
     }
 }
