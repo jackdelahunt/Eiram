@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f122aa2cf3a50aaf0ae84ae9dd486c3b, type: 3}
-  m_Name: Trellis
+  m_Script: {fileID: 11500000, guid: de8aaa3cce6c4199a671a18a0ee310df, type: 3}
+  m_Name: Thorns
   m_EditorClassIdentifier: 
-  TileName: Trellis
-  TileId: 19
-  TileBase: {fileID: 11400000, guid: 380bae7797e95b94982759ad205af71d, type: 2}
-  Drops:
-  - ItemId: 3
-    Quantity: 1
-    Chance: 1
+  FinalCrop: 18
+  LeftCrop: 18
+  RightCrop: 18
+  Strict: 0

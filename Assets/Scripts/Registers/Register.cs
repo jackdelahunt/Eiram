@@ -3,10 +3,12 @@ using Biomes;
 using Eiram;
 using Items.Items;
 using JetBrains.Annotations;
+using Recipes;
 using Tiles;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static Eiram.Handles;
 
 namespace Registers
 {
@@ -15,10 +17,12 @@ namespace Registers
         private static AbstractTile[] tiles;
         private static Item[] items;
         private static Biome[] biomes;
+        private static CropRecipe[] cropRecipes;
         
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
         [SerializeField] private Item[] itemArray;
         [SerializeField] private Biome[] biomeArray;
+        [SerializeField] private CropRecipe[] cropRecipeArray;
 
         public static AbstractTile GetTileByTileId(TileId tileId)
         {
@@ -33,6 +37,21 @@ namespace Registers
         public static Biome GetBiomeByBiomeId(BiomeId biomeId)
         {
             return biomes[(int)biomeId];
+        }
+
+        public static Option<CropRecipe> GetCropRecipe(TileId left, TileId right)
+        {
+            foreach (var recipe in cropRecipes)
+            {
+                if (recipe.LeftCrop == left && recipe.RightCrop == right) return recipe;
+
+                if (!recipe.Strict)
+                {
+                    if (recipe.RightCrop == left && recipe.LeftCrop == right) return recipe;
+                }
+            }
+
+            return None<CropRecipe>();
         }
 
         public static int ActiveTiles() => tiles.Length;
@@ -66,6 +85,7 @@ namespace Registers
 
             items = itemArray;
             biomes = biomeArray;
+            cropRecipes = cropRecipeArray;
 
 #if UNITY_EDITOR
             if (tiles.Length != concreteTileDataArray.Length)

@@ -155,11 +155,9 @@ namespace Tiles
         public override void OnRandomUpdate(Vector3Int worldPosition, SerialTileData currentTileData)
         {
             base.OnRandomUpdate(worldPosition, currentTileData);
-            SerialTileData leftData;
-            if(!World.Current.GetTileData(worldPosition.Left()).IsSome(out leftData)) return;
+            if(!World.Current.GetTileData(worldPosition.Left()).IsSome(out var leftData)) return;
             
-            SerialTileData rightData;
-            if(!World.Current.GetTileData(worldPosition.Left()).IsSome(out rightData)) return;
+            if(!World.Current.GetTileData(worldPosition.Left()).IsSome(out var rightData)) return;
 
             if (!(Register.GetTileByTileId(leftData.TileId) is CropTile leftTile)) return;
             if (!(Register.GetTileByTileId(leftData.TileId) is CropTile rightTile)) return;
@@ -167,15 +165,12 @@ namespace Tiles
             if (leftData.Tag.GetInt("age") == leftTile.MaxAge() &&
                 rightData.Tag.GetInt("age") == rightTile.MaxAge())
             {
-                Debug.Log("GROW TRELLIS");
+                var r = Register.GetCropRecipe(leftTile.TileId(), rightTile.TileId());
+                if (r.IsSome(out var recipe))
+                {
+                    World.Current.ReplaceTileAt(worldPosition, recipe.FinalCrop);
+                }
             }
-                
-                
-            // check left
-            // check right
-            // if both grown
-            // check recipe
-            // plant seed recipe 
         }
 
     }

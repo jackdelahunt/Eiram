@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Trellis
   m_EditorClassIdentifier: 
   itemName: Trellis
-  itemId: 2
+  itemId: 3
   tileId: 19
   maxStack: 64
   sprite: {fileID: -6251682230944352461, guid: c7c3c177a4492b3408aabd834bd2d2b3, type: 3}
