@@ -34,6 +34,10 @@ namespace Registers
         {
             return biomes[(int)biomeId];
         }
+
+        public static int ActiveTiles() => tiles.Length;
+        public static int ActiveItems() => items.Length;
+        public static int ActiveBiomes() => biomes.Length;
         
         public void Awake()
         {

@@ -8,6 +8,7 @@ using Tilemaps;
 using UnityEngine;
 using TerrainGeneration;
 using Tiles;
+using Utils;
 using Worlds;
 using Random = System.Random;
 
@@ -25,7 +26,9 @@ namespace Chunks
         public Chunk(int chunkX)
         {
             var rand = new Random();
-            this.BiomeId = rand.NextDouble() > 0.5 ? BiomeId.GRASS_HILLS : BiomeId.STONE_FLATS;
+            float value = Noise.TerrainNoise(chunkX, 0, 0) * (float)(Register.ActiveBiomes() - 1);
+            Debug.Log(value);
+            this.BiomeId = (BiomeId)Mathf.Round(value);
             this.ChunkX = chunkX;
             tileDataArray = TerrainGenerator.GenerateChunkData(this);
             EiramTilemap.Foreground.DrawChunk(this);
