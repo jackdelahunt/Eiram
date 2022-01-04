@@ -28,6 +28,7 @@ namespace Eiram
         GRASS_FOLIAGE = 16,
         TILLED_SOIL = 17,
         THORNS = 18,
+        TRELLIS = 19,
     }
     
     public enum ItemId
@@ -36,6 +37,7 @@ namespace Eiram
         DIRT = 0,
         GRASS = 1,
         THORNS = 2,
+        TRELLIS = 3,
     }
     
     public enum BiomeId

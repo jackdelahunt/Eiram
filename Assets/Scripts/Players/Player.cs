@@ -37,6 +37,7 @@ namespace Players
         public void Start()
         {
             playerInventory.TryAddItem(ItemId.THORNS, 5);
+            playerInventory.TryAddItem(ItemId.TRELLIS, 5);
         }
 
         void Update()

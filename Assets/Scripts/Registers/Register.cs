@@ -61,6 +61,7 @@ namespace Registers
                 null,
                 new TilledSoil(concreteTileDataArray[17]),
                 new Thorns(concreteTileDataArray[18]),
+                new Trellis(concreteTileDataArray[19]),
             };
 
             items = itemArray;
