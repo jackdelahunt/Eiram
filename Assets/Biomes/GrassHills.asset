@@ -16,6 +16,6 @@ MonoBehaviour:
   biomeName: Grass Hills
   surfaceTile: 2
   subSurfaceTile: 1
-  surfaceThickness: 2
-  terrainHeightProportion: 0.1
-  scale: 0.1
+  surfaceThickness: 1
+  terrainHeightProportion: 0.2
+  scale: 0.05

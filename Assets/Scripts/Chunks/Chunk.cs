@@ -26,9 +26,7 @@ namespace Chunks
         public Chunk(int chunkX)
         {
             var rand = new Random();
-            float value = Noise.TerrainNoise(chunkX, 0, 0) * (float)(Register.ActiveBiomes() - 1);
-            Debug.Log(value);
-            this.BiomeId = (BiomeId)Mathf.Round(value);
+            this.BiomeId = (BiomeId)Mathf.Round(Noise.TerrainNoise(chunkX, 0, 0) * (float)(Register.ActiveBiomes() - 1));
             this.ChunkX = chunkX;
             tileDataArray = TerrainGenerator.GenerateChunkData(this);
             EiramTilemap.Foreground.DrawChunk(this);

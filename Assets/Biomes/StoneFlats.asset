@@ -17,5 +17,5 @@ MonoBehaviour:
   surfaceTile: 3
   subSurfaceTile: 3
   surfaceThickness: 1
-  terrainHeightProportion: 0.2
-  scale: 0.3
+  terrainHeightProportion: 0.15
+  scale: 0.2
