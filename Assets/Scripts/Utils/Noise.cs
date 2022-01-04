@@ -18,9 +18,9 @@ namespace Utils
         }
 
         // returns true or false if the noise form the inputs is above the threshold
-        public static bool CaveNoise(int x, int y, float threshold, int seed)
+        public static bool CaveNoise(int x, int y, float threshold, int seed, float scale = 0.05f)
         {
-            return TerrainNoise(x, y, seed, 0.2f) > threshold;
+            return TerrainNoise(x, y, seed, scale) > threshold;
         }
     }
 }

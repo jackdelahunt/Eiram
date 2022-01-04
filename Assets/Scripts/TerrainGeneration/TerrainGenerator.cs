@@ -84,9 +84,33 @@ namespace TerrainGeneration
                         ? Register.GetTileByTileId(biome.surfaceTile).DefaultTileData() 
                         : Register.GetTileByTileId(biome.subSurfaceTile).DefaultTileData();
                 }
+                
+                // plant some trees
+                if (Noise.CaveNoise(xOffset, highestPoint + 1, biome.treeThreshold, 0, biome.treeScale))
+                {
+                    MakeTree(tileDataArray, biome, xOffset, highestPoint + 1);
+                }  
 
                 xOffset++;
             }
+        }
+        
+        private static void MakeTree(SerialTileData[,] tileDataArray, Biome biome, int x, int y)
+        {
+            tileDataArray[x, y] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
+            tileDataArray[x, y + 1] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
+            tileDataArray[x, y + 2] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
+            tileDataArray[x, y + 3] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
+            tileDataArray[x, y + 4] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
+            tileDataArray[x, y + 5] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
+            
+            tileDataArray[x - 1, y + 4] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
+            tileDataArray[x - 1, y + 5] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
+            
+            tileDataArray[x + 1, y + 4] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
+            tileDataArray[x + 1, y + 5] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
+            
+            tileDataArray[x, y + 6] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
         }
     }
 }
