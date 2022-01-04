@@ -980,6 +980,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: concreteTileDataArray.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: f787c0b3e0bedd8079404e4bc6bcbdd1,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: concreteTileDataArray.Array.data[10]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0ce5905245ba3b5fda0eba6e8091d013,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: concreteTileDataArray.Array.data[11]
+      value: 
+      objectReference: {fileID: 11400000, guid: 29e7808e4f7db0bc3bf64647317774ca,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: concreteTileDataArray.Array.data[12]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ee8f0d13c9f992e8a637be8539986e8,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: concreteTileDataArray.Array.data[17]
       value: 
       objectReference: {fileID: 11400000, guid: 59b86b9dce48cd34ab287bb87f9ea73a,
