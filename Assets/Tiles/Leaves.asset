@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Leaves
   TileId: 12
-  TileBase: {fileID: 11400000, guid: d022fc4656cd1b34db30649a7195f81c, type: 2}
+  TileBase: {fileID: 11400000, guid: 00c6b7679a9969d418c9bff3d22aaf57, type: 2}
   Drops: []

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Plank
   TileId: 11
-  TileBase: {fileID: 11400000, guid: e8a019809ef1dcf4d8ba0dab25731121, type: 2}
+  TileBase: {fileID: 11400000, guid: c688d8e57a9cf0b4ca41dbb5fb7930d1, type: 2}
   Drops: []

@@ -39,10 +39,9 @@ namespace TerrainGeneration
         {
             for (int x = 0; x < EiramTypes.CHUNK_WIDTH; x++)
             {
-                tileDataArray[x, 0] = Register.GetTileByTileId(TileId.BEDROCK).DefaultTileData();
+                SetTile(x, 0, TileId.BEDROCK, tileDataArray);
             }
         }
-
         private static void CavePass(SerialTileData[,] tileDataArray, Chunk chunk, int caveHeight)
         {
             int xOffset = 0;
@@ -54,9 +53,7 @@ namespace TerrainGeneration
             {
                 while (xOffset < EiramTypes.CHUNK_WIDTH)
                 {
-                    tileDataArray[xOffset, yOffset] = Noise.CaveNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y + yOffset, 0.4f, 0) 
-                        ? Register.GetTileByTileId(TileId.STONE).DefaultTileData() 
-                        : Register.GetTileByTileId(TileId.AIR).DefaultTileData();
+                    SetTile(xOffset, yOffset, Noise.CaveNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y + yOffset, 0.4f, 0) ? TileId.STONE : TileId.AIR, tileDataArray);
                     xOffset++;
                 }
 
@@ -80,9 +77,7 @@ namespace TerrainGeneration
 
                 for (int y = highestPoint; y >= caveHeight; y--)
                 {
-                    tileDataArray[xOffset, y] = y > highestPoint - biome.surfaceThickness
-                        ? Register.GetTileByTileId(biome.surfaceTile).DefaultTileData() 
-                        : Register.GetTileByTileId(biome.subSurfaceTile).DefaultTileData();
+                    SetTile(xOffset, y, y > highestPoint - biome.surfaceThickness ? biome.surfaceTile : biome.subSurfaceTile, tileDataArray);
                 }
                 
                 // plant some trees
@@ -97,20 +92,29 @@ namespace TerrainGeneration
         
         private static void MakeTree(SerialTileData[,] tileDataArray, Biome biome, int x, int y)
         {
-            tileDataArray[x, y] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
-            tileDataArray[x, y + 1] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
-            tileDataArray[x, y + 2] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
-            tileDataArray[x, y + 3] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
-            tileDataArray[x, y + 4] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
-            tileDataArray[x, y + 5] = Register.GetTileByTileId(TileId.LOG).DefaultTileData();
-            
-            tileDataArray[x - 1, y + 4] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
-            tileDataArray[x - 1, y + 5] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
-            
-            tileDataArray[x + 1, y + 4] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
-            tileDataArray[x + 1, y + 5] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
-            
-            tileDataArray[x, y + 6] = Register.GetTileByTileId(TileId.LEAVES).DefaultTileData();
+            SetTile(x, y, TileId.LOG, tileDataArray);
+            SetTile(x, y + 1, TileId.LOG, tileDataArray);
+            SetTile(x, y + 2, TileId.LOG, tileDataArray);
+            SetTile(x, y + 3, TileId.LOG, tileDataArray);
+            SetTile(x, y + 4, TileId.LOG, tileDataArray);
+            SetTile(x, y + 5, TileId.LOG, tileDataArray);
+
+            SetTile(x - 1, y + 4, TileId.LEAVES, tileDataArray);
+            SetTile(x - 1, y + 5, TileId.LEAVES, tileDataArray);
+            SetTile(x + 1, y + 4, TileId.LEAVES, tileDataArray);
+            SetTile(x + 1, y + 5, TileId.LEAVES, tileDataArray);
+            SetTile(x, y + 6, TileId.LEAVES, tileDataArray);
+        }
+
+        private static void SetTile(int x, int y, TileId id, SerialTileData[,] tileDataArray)
+        {
+            if (x >= 0 && x < EiramTypes.CHUNK_WIDTH)
+            {
+                if (y >= 0 && y < EiramTypes.CHUNK_HEIGHT)
+                {
+                    tileDataArray[x, y] = Register.GetTileByTileId(id).DefaultTileData();
+                }
+            }
         }
     }
 }
