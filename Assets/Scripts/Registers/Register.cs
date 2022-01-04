@@ -1,4 +1,5 @@
 using System;
+using Biomes;
 using Eiram;
 using Items.Items;
 using JetBrains.Annotations;
@@ -13,19 +14,30 @@ namespace Registers
     {
         private static AbstractTile[] tiles;
         private static Item[] items;
+        private static Biome[] biomes;
         
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
         [SerializeField] private Item[] itemArray;
+        [SerializeField] private Biome[] biomeArray;
 
         public static AbstractTile GetTileByTileId(TileId tileId)
         {
             return tiles[(int)tileId];
         }
         
-        public static Item GetItemById(ItemId itemId)
+        public static Item GetItemByItemId(ItemId itemId)
         {
             return items[(int)itemId];
         }
+
+        public static Biome GetBiomeByBiomeId(BiomeId biomeId)
+        {
+            return biomes[(int)biomeId];
+        }
+
+        public static int ActiveTiles() => tiles.Length;
+        public static int ActiveItems() => items.Length;
+        public static int ActiveBiomes() => biomes.Length;
         
         public void Awake()
         {
@@ -52,6 +64,7 @@ namespace Registers
             };
 
             items = itemArray;
+            biomes = biomeArray;
 
 #if UNITY_EDITOR
             if (tiles.Length != concreteTileDataArray.Length)
@@ -71,6 +84,14 @@ namespace Registers
 
                 if (i != (int) items[i].itemId)
                     throw new Exception($"ItemId is in the wrong slot index is {i}");
+            }
+            
+            for (int i = 0; i < biomes.Length; i++)
+            {
+                if(biomes[i] == null) continue;
+
+                if (i != (int) biomes[i].biomeId)
+                    throw new Exception($"BiomeId is in the wrong slot index is {i}");
             }
 #endif
         }

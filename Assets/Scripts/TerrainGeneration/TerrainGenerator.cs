@@ -1,5 +1,6 @@
 using System.Data;
 using System.Linq;
+using Biomes;
 using Chunks;
 using Eiram;
 using Registers;
@@ -13,6 +14,7 @@ namespace TerrainGeneration
     {
         public static SerialTileData[,] GenerateChunkData(Chunk chunk)
         {
+            var biome = Register.GetBiomeByBiomeId(chunk.BiomeId);
             var tileDataArray = new SerialTileData[EiramTypes.CHUNK_WIDTH, EiramTypes.CHUNK_HEIGHT];
             for (int i = 0; i < tileDataArray.GetLength(0); i++)
             {
@@ -24,11 +26,11 @@ namespace TerrainGeneration
             
             // TODO: find out what to do with these hard coded values
             int caveHeight = Mathf.RoundToInt(EiramTypes.CHUNK_HEIGHT * 0.5f);
-            int maxTerrainHeight = Mathf.RoundToInt(EiramTypes.CHUNK_HEIGHT * 0.1f);
+            int maxTerrainHeight = Mathf.RoundToInt(EiramTypes.CHUNK_HEIGHT * biome.terrainHeightProportion);
 
             BedrockPass(tileDataArray);
             CavePass(tileDataArray, chunk, caveHeight);
-            TerrainPass(tileDataArray, chunk, caveHeight, maxTerrainHeight);
+            TerrainPass(tileDataArray, chunk, biome, caveHeight, maxTerrainHeight);
     
             return tileDataArray;
         }
@@ -63,7 +65,7 @@ namespace TerrainGeneration
             }
         }
 
-        private static void TerrainPass(SerialTileData[,] tileDataArray, Chunk chunk, int caveHeight,
+        private static void TerrainPass(SerialTileData[,] tileDataArray, Chunk chunk, Biome biome, int caveHeight,
             int maxTerrainHeight)
         {
             int xOffset = 0;
@@ -72,16 +74,15 @@ namespace TerrainGeneration
             
             while (xOffset < EiramTypes.CHUNK_WIDTH)
             {
-                var multiplier = Noise.TerrainNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y, 0, 0.1f);
+                var multiplier = Noise.TerrainNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y, 0, biome.scale);
                 int actualHeight = Mathf.RoundToInt(maxTerrainHeight * multiplier);
                 int highestPoint = (caveHeight + actualHeight) - 1;
 
-                for (int y = caveHeight; y < caveHeight + actualHeight; y++)
+                for (int y = highestPoint; y >= caveHeight; y--)
                 {
-                    // xOffset is equal to the local x of the tile aswell
-                    tileDataArray[xOffset, y] = y == highestPoint 
-                        ? Register.GetTileByTileId(TileId.GRASS).DefaultTileData() 
-                        : Register.GetTileByTileId(TileId.DIRT).DefaultTileData();
+                    tileDataArray[xOffset, y] = y > highestPoint - biome.surfaceThickness
+                        ? Register.GetTileByTileId(biome.surfaceTile).DefaultTileData() 
+                        : Register.GetTileByTileId(biome.subSurfaceTile).DefaultTileData();
                 }
 
                 xOffset++;

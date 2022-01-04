@@ -8,6 +8,7 @@ using Tilemaps;
 using UnityEngine;
 using TerrainGeneration;
 using Tiles;
+using Utils;
 using Worlds;
 using Random = System.Random;
 
@@ -18,12 +19,14 @@ namespace Chunks
     {
         // time = growthStages / delta / (RANDOM_TILE_UPDATE_COUNT / WIDTH * HEIGHT)
         private const int RANDOM_TILE_UPDATE_COUNT = 2000;
-        
+        public readonly BiomeId BiomeId;
         public readonly int ChunkX;
         private readonly SerialTileData[,] tileDataArray;
 
         public Chunk(int chunkX)
         {
+            var rand = new Random();
+            this.BiomeId = (BiomeId)Mathf.Round(Noise.TerrainNoise(chunkX, 0, 0) * (float)(Register.ActiveBiomes() - 1));
             this.ChunkX = chunkX;
             tileDataArray = TerrainGenerator.GenerateChunkData(this);
             EiramTilemap.Foreground.DrawChunk(this);
