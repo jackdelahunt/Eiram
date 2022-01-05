@@ -14,6 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Stone
   TileId: 3
-  ItemId: -1
-  TileBase: {fileID: 11400000, guid: b09803d74d32da446abc674cbaeddf68, type: 2}
+  TileBase: {fileID: 11400000, guid: 1521898ff307dc442b691b4d01d29afb, type: 2}
   Drops: []

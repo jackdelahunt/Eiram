@@ -138,6 +138,26 @@ namespace Tiles
         public Bedrock(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
     
+    public class Log : AbstractTile
+    {
+        public Log(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class Wood : AbstractTile
+    {
+        public Wood(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class Plank : AbstractTile
+    {
+        public Plank(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class Leaves : AbstractTile
+    {
+        public Leaves(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
     public class TilledSoil : AbstractTile
     {
         public TilledSoil(ConcreteTileData concreteTileData) : base(concreteTileData){}

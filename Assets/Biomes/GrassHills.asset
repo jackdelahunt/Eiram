@@ -19,3 +19,5 @@ MonoBehaviour:
   surfaceThickness: 1
   terrainHeightProportion: 0.2
   scale: 0.05
+  treeThreshold: 0.8
+  treeScale: 0.6

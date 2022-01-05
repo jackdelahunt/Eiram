@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Tilled Soil
   TileId: 17
-  ItemId: -1
-  TileBase: {fileID: 11400000, guid: 9810012d177bcd4478c1329d80c1474e, type: 2}
+  TileBase: {fileID: 11400000, guid: 820ee03150666704aa2359c2f973233f, type: 2}
+  Drops: []

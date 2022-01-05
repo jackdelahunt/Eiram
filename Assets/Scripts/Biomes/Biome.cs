@@ -16,5 +16,7 @@ namespace Biomes
         public int surfaceThickness;
         public float terrainHeightProportion;
         public float scale;
+        public float treeThreshold;
+        public float treeScale;
     }
 }

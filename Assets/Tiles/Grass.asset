@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Grass
   TileId: 2
-  ItemId: 1
-  TileBase: {fileID: 11400000, guid: abdd0beaa138ccb4abf59fc4617eb856, type: 2}
+  TileBase: {fileID: 11400000, guid: 45aded2aa25ec634e90b539bf88dbf54, type: 2}
   Drops:
   - ItemId: 1
     Quantity: 1
