@@ -28,13 +28,6 @@ namespace Inventories
         
         public int TryAddItem(ItemId itemId, int size)
         {
-            void _setStack(ItemId id, int slotIndex, int newSize)
-            {
-                ItemStacks[slotIndex].ItemId = id;
-                ItemStacks[slotIndex].Size = newSize;
-                IsDirty = true;
-            }
-
             var item = Register.GetItemByItemId(itemId);
             for (int i = 0; i < ItemStacks.Count; i++)
             {
@@ -46,13 +39,13 @@ namespace Inventories
                         int total = ItemStacks[i].Size + size;
                         if (total > item.maxStack)
                         {
-                            _setStack(itemId, i, item.maxStack);
+                            SetStack(itemId, i, item.maxStack);
                             int remainder = total - item.maxStack;
                             return TryAddItem(itemId, remainder);
                         }
                         else
                         {
-                            _setStack(itemId, i, total);
+                            SetStack(itemId, i, total);
                             return 0;
                         }
                     }
@@ -64,7 +57,7 @@ namespace Inventories
                 // check for empty slot
                 if (ItemStacks[i].IsEmpty())
                 {
-                    _setStack(itemId, i, size);
+                    SetStack(itemId, i, size);
                     return 0;
                 }
             }
@@ -175,6 +168,13 @@ namespace Inventories
             }
 
             return true;
+        }
+        
+        private void SetStack(ItemId id, int slotIndex, int newSize)
+        {
+            ItemStacks[slotIndex].ItemId = id;
+            ItemStacks[slotIndex].Size = newSize;
+            IsDirty = true;
         }
     }
 }

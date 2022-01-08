@@ -13,6 +13,7 @@ namespace Inventories
         [SerializeField] private RectTransform contentTransform = null;
 
         private bool toggled = false;
+        private PlayerInventory playerInventory = null;
         
         public void Awake()
         {
@@ -21,7 +22,28 @@ namespace Inventories
 
         public void OnBuildingItemClicked(BuildingRecipe recipe)
         {
-            Debug.Log(recipe.FinalItem);
+            if(!playerInventory.CanBuildRecipe(recipe)) return;
+
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                int remaining = ingredient.Amount;
+                var slots = playerInventory.SlotsOfItem(ingredient.ItemId);
+                foreach (var slot in slots)
+                {
+                    int toRemove = remaining > playerInventory.ItemStackAt(slot).Size
+                        ? playerInventory.ItemStackAt(slot).Size
+                        : remaining; 
+                    playerInventory.RemoveFromItemStack(slot, toRemove);
+                    remaining -= toRemove;
+                    
+                    if(remaining <= 0) break;
+                }
+            }
+
+            playerInventory.TryAddItem(recipe.FinalItem.ItemId, recipe.FinalItem.Amount);
+            
+            DestroyRecipeIcons();
+            CreateRecipeIcons();
         }
         
         private void OnDestroy()
@@ -33,22 +55,24 @@ namespace Inventories
         {
             if(toggled)
             {
+                this.playerInventory = null;
                 DestroyRecipeIcons();
                 CloseInventory();
             } else
             {
-                CreateRecipeIcons(playerInventory);
+                this.playerInventory = playerInventory;
+                CreateRecipeIcons();
                 OpenInventory();
             }
             
             toggled = !toggled;
         }
 
-        private void CreateRecipeIcons(PlayerInventory inventory)
+        private void CreateRecipeIcons()
         {
             foreach (var recipe in Register.GetAllBuildingRecipes())
             {
-                if (inventory.CanBuildRecipe(recipe))
+                if (playerInventory.CanBuildRecipe(recipe))
                 {
                     var icon = Instantiate(buildingItemPrefab, contentTransform).GetComponent<BuildingItemUI>();
                     icon.Init(OnBuildingItemClicked, recipe);
