@@ -28,6 +28,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3786220007454095671}
   m_RootOrder: 1
@@ -102,6 +103,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 45638323530593135}
   m_RootOrder: 0
@@ -162,6 +164,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8622480148403573602}
   - {fileID: 127808940}
@@ -191,8 +194,8 @@ MonoBehaviour:
   inventoryItemPrefab: {fileID: 6195981408798853130, guid: f351304e594bc2342a44489b84acbf9d,
     type: 3}
   contentTransform: {fileID: 6897256475441182503}
-  emptySlotSprite: {fileID: 21300000, guid: 8196e66c2d14208458afa4802e37ba0b, type: 3}
   slotPointer: {fileID: 127808939}
+  buildingUI: {fileID: 0}
 --- !u!1 &4096547314062854097
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +225,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6897256475441182503}
   m_Father: {fileID: 8622480148403573602}
@@ -312,6 +316,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 45638323530593135}
   m_Father: {fileID: 3786220007454095671}

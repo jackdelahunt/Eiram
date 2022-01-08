@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Eiram;
 using Items;
+using Recipes;
 using Registers;
 
 namespace Inventories
@@ -27,13 +28,6 @@ namespace Inventories
         
         public int TryAddItem(ItemId itemId, int size)
         {
-            void _setStack(ItemId id, int slotIndex, int newSize)
-            {
-                ItemStacks[slotIndex].ItemId = id;
-                ItemStacks[slotIndex].Size = newSize;
-                IsDirty = true;
-            }
-
             var item = Register.GetItemByItemId(itemId);
             for (int i = 0; i < ItemStacks.Count; i++)
             {
@@ -45,13 +39,13 @@ namespace Inventories
                         int total = ItemStacks[i].Size + size;
                         if (total > item.maxStack)
                         {
-                            _setStack(itemId, i, item.maxStack);
+                            SetStack(itemId, i, item.maxStack);
                             int remainder = total - item.maxStack;
                             return TryAddItem(itemId, remainder);
                         }
                         else
                         {
-                            _setStack(itemId, i, total);
+                            SetStack(itemId, i, total);
                             return 0;
                         }
                     }
@@ -63,7 +57,7 @@ namespace Inventories
                 // check for empty slot
                 if (ItemStacks[i].IsEmpty())
                 {
-                    _setStack(itemId, i, size);
+                    SetStack(itemId, i, size);
                     return 0;
                 }
             }
@@ -138,6 +132,48 @@ namespace Inventories
         public void ClearSlot(int slotIndex)
         {
             ItemStacks[slotIndex] = new ItemStack();
+            IsDirty = true;
+        }
+
+        public int TotalOfItem(ItemId id)
+        {
+            int total = 0;
+            foreach (var itemStack in ItemStacks)
+            {
+                if (itemStack.ItemId == id)
+                    total += itemStack.Size;
+            }
+
+            return total;
+        }
+        
+        public List<int> SlotsOfItem(ItemId id)
+        {
+            var slots = new List<int>();
+            for (int i = 0; i < ItemStacks.Count; i++)
+            {
+                if (ItemStacks[i].ItemId == id)
+                    slots.Add(i);
+            }
+
+            return slots;
+        }
+
+        public bool CanBuildRecipe(BuildingRecipe recipe)
+        {
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                if (ingredient.Amount > TotalOfItem(ingredient.ItemId))
+                    return false;
+            }
+
+            return true;
+        }
+        
+        private void SetStack(ItemId id, int slotIndex, int newSize)
+        {
+            ItemStacks[slotIndex].ItemId = id;
+            ItemStacks[slotIndex].Size = newSize;
             IsDirty = true;
         }
     }

@@ -9,6 +9,7 @@ TagManager:
   - ItemEntity
   - Canvas
   - InventoryItem
+  - BuildingUI
   layers:
   - Default
   - TransparentFX
