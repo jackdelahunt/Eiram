@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Eiram;
 using Items;
+using Recipes;
 using Registers;
 
 namespace Inventories
@@ -139,6 +140,41 @@ namespace Inventories
         {
             ItemStacks[slotIndex] = new ItemStack();
             IsDirty = true;
+        }
+
+        public int TotalOfItem(ItemId id)
+        {
+            int total = 0;
+            foreach (var itemStack in ItemStacks)
+            {
+                if (itemStack.ItemId == id)
+                    total += itemStack.Size;
+            }
+
+            return total;
+        }
+        
+        public List<int> SlotsOfItem(ItemId id)
+        {
+            var slots = new List<int>();
+            for (int i = 0; i < ItemStacks.Count; i++)
+            {
+                if (ItemStacks[i].ItemId == id)
+                    slots.Add(i);
+            }
+
+            return slots;
+        }
+
+        public bool CanBuildRecipe(BuildingRecipe recipe)
+        {
+            foreach (var ingredient in recipe.Ingredients)
+            {
+                if (ingredient.Amount > TotalOfItem(ingredient.ItemId))
+                    return false;
+            }
+
+            return true;
         }
     }
 }
