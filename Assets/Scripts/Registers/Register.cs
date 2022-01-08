@@ -18,11 +18,13 @@ namespace Registers
         private static Item[] items;
         private static Biome[] biomes;
         private static CropRecipe[] cropRecipes;
+        private static BuildingRecipe[] buildingRecipes;
         
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
         [SerializeField] private Item[] itemArray;
         [SerializeField] private Biome[] biomeArray;
         [SerializeField] private CropRecipe[] cropRecipeArray;
+        [SerializeField] private BuildingRecipe[] buildingRecipeArray;
 
         public static AbstractTile GetTileByTileId(TileId tileId)
         {
@@ -57,7 +59,12 @@ namespace Registers
         public static int ActiveTiles() => tiles.Length;
         public static int ActiveItems() => items.Length;
         public static int ActiveBiomes() => biomes.Length;
-        
+
+        public static BuildingRecipe[] GetAllBuildingRecipes()
+        {
+            return buildingRecipes;
+        }
+
         public void Awake()
         {
             tiles = new AbstractTile[] {
@@ -86,6 +93,7 @@ namespace Registers
             items = itemArray;
             biomes = biomeArray;
             cropRecipes = cropRecipeArray;
+            buildingRecipes = buildingRecipeArray;
 
 #if UNITY_EDITOR
             if (tiles.Length != concreteTileDataArray.Length)

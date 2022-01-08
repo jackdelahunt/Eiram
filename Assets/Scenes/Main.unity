@@ -712,7 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2807d425fe14baaac9807e7242dcf2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staticImagePrefab: {fileID: 5188228882476442811, guid: 6380ab2d2d062f24eb540d8c302bed9f,
+  buildingItemPrefab: {fileID: 5188228882476442811, guid: 6380ab2d2d062f24eb540d8c302bed9f,
     type: 3}
   contentTransform: {fileID: 412712346}
 --- !u!1 &1127531771
@@ -1328,9 +1328,20 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: buildingRecipeArray.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: concreteTileDataArray.Array.size
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: buildingRecipeArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 467d407599a5aa34ca67c1a35f011f38,
+        type: 2}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: concreteTileDataArray.Array.data[9]

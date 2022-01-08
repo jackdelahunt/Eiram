@@ -1,5 +1,6 @@
 ﻿using System;
 using Eiram;
+using Recipes;
 using Registers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +10,8 @@ namespace Inventories
     public class BuildingItemUI : MonoBehaviour
     {
         private Image iconImage;
-        private Action<ItemId> callback;
-        private ItemId id;
+        private Action<BuildingRecipe> callback;
+        private BuildingRecipe recipe;
 
         public void Awake()
         {
@@ -19,14 +20,14 @@ namespace Inventories
 
         public void OnItemClicked()
         {
-            callback(id);
+            callback(recipe);
         }
 
-        public void Init(Action<ItemId> callback, ItemId id)
+        public void Init(Action<BuildingRecipe> callback, BuildingRecipe recipe)
         {
             this.callback = callback;
-            this.id = id;
-            this.iconImage.sprite = Register.GetItemByItemId(id).sprite;
+            this.recipe = recipe;
+            this.iconImage.sprite = Register.GetItemByItemId(recipe.FinalItem.ItemId).sprite;
         }
     }
 }

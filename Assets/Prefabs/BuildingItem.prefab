@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -5234934747638873605}
   - component: {fileID: -2884568591672372067}
   m_Layer: 5
-  m_Name: ClickableImagePrefab
+  m_Name: BuildingItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
