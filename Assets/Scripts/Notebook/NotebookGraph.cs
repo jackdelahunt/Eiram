@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Eiram;
 using Recipes;
+using Tiles;
 using UnityEngine;
 using XNode;
 
@@ -15,10 +17,10 @@ namespace Notebook
         public Sprite thumbnail;
         public string title;
         public string description;
+        public AchievementStatus status;
         public ItemCountPair[] rewards;
         [Output] public AchievementNode children;
-
-        public int depth { get; private set; }
+        public static event Action<AchievementStatus> AcheivmentStatusUpdate;
 
         public List<AchievementNode> ChildAchievements()
         {
@@ -31,9 +33,17 @@ namespace Notebook
             return childs;
         }
         
-        public void SetDepth(int depth)
+        public void SetStatus(AchievementStatus status)
         {
-            this.depth = depth;
+            this.status = status;
+            AcheivmentStatusUpdate?.Invoke(status);
         }
+    }
+
+    public enum AchievementStatus
+    {
+        LOCKED = 0,
+        AVAILABLE = 1,
+        COMPLETE = 2
     }
 }
