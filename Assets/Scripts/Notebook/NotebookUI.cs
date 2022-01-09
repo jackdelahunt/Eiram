@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Events;
 using Notebook;
 using UnityEngine;
 
@@ -13,16 +14,23 @@ namespace Notebook
 
         private AchievementNode root = null;
         private List<AchievementNodeUI> childAchievementNodes = new List<AchievementNodeUI>();
+        private bool toggled = false;
 
         private void Awake()
         {
+            EiramEvents.PlayerToggleNotebookEvent += OnNotebookToggleEvent;
             GetRootNode();
             GetAllAchievementNodeUI();
         }
 
-        void Start()
+        private void Start()
         {
             PopulateUI();
+        }
+
+        private void OnDestroy()
+        {
+            EiramEvents.PlayerToggleNotebookEvent -= OnNotebookToggleEvent;
         }
 
         private void PopulateUI()
@@ -62,6 +70,26 @@ namespace Notebook
                 if(childAchievementNode != null)
                     childAchievementNodes.Add(childAchievementNode);
             }
+        }
+
+        private void OnNotebookToggleEvent()
+        {
+            if(toggled)
+                CloseNotebook();
+            else
+                OpenNotebook();
+
+            toggled = !toggled;
+        }
+        
+        private void OpenNotebook()
+        {
+            LeanTween.moveY(gameObject, transform.position.y + 500.0f, 0.4f);
+        }
+        
+        private void CloseNotebook()
+        {
+            LeanTween.moveY(gameObject, transform.position.y - 500.0f, 0.4f);
         }
     }
 }

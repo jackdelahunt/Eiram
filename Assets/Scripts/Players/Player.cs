@@ -47,6 +47,7 @@ namespace Players
             CheckForMouseInput();
             CheckPlayerJump();
             CheckPlayerIdle();
+            CheckPlayerUIInteraction();
         }
 
         public void ApplyPlayerData(PlayerData playerData)
@@ -66,11 +67,6 @@ namespace Players
             {
                 isPlayerIdle = false;
                 controller.Move(Input.GetAxisRaw("Horizontal") * movementSpeed);
-            }
-            
-            if (Input.GetButtonDown("ToggleInventory"))
-            {
-                EiramEvents.OnPlayerToggleInventory(playerInventory);
             }
         }
         
@@ -145,6 +141,19 @@ namespace Players
         {
             return mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y, -mainCamera.transform.position.z));
+        }
+
+        private void CheckPlayerUIInteraction()
+        {
+            if (Input.GetButtonDown("ToggleInventory"))
+            {
+                EiramEvents.OnPlayerToggleInventory(playerInventory);
+            }
+            
+            if (Input.GetButtonDown("ToggleNotebook"))
+            {
+                EiramEvents.OnPlayerToggleNotebook();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
