@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Events;
+using Graphics;
 using Notebook;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace Notebook
     {
         [SerializeField] private NotebookGraph graph;
         [SerializeField] private GameObject achievementNodeUIPrefab = null;
+        [SerializeField] private float achievementFocalLength;
+
 
         private AchievementNode root = null;
         private List<AchievementNodeUI> childAchievementNodes = new List<AchievementNodeUI>();
@@ -74,10 +77,16 @@ namespace Notebook
 
         private void OnNotebookToggleEvent()
         {
-            if(toggled)
+            if (toggled)
+            {
                 CloseNotebook();
+                PostProcessing.instance.DefaultFocalLength();
+            }
             else
+            {
                 OpenNotebook();
+                PostProcessing.instance.AchievementFocalLength(achievementFocalLength);
+            }
 
             toggled = !toggled;
         }

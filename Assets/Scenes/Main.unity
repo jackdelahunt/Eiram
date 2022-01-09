@@ -480,6 +480,69 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 898827947}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &442075584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 442075586}
+  - component: {fileID: 442075585}
+  - component: {fileID: 442075587}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &442075585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442075584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: b14da18e357578582972ed8052796ab4, type: 2}
+--- !u!4 &442075586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442075584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 648.6044, y: 294.05728, z: -52.06333}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &442075587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442075584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17055d1220cc41d2b559b5bb14df6a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultFocalLength: 1
+  volume: {fileID: 442075585}
 --- !u!224 &609649136 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9136848234480179493, guid: 4b0522e08b89973119b41b9d6502b389,
@@ -842,7 +905,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1192,6 +1255,7 @@ MonoBehaviour:
   graph: {fileID: 11400000, guid: 7e6ad7c81e5ab1a13a1e04166da9b991, type: 2}
   achievementNodeUIPrefab: {fileID: 9136848234480179514, guid: 4b0522e08b89973119b41b9d6502b389,
     type: 3}
+  achievementFocalLength: 300
 --- !u!222 &1266529206
 CanvasRenderer:
   m_ObjectHideFlags: 0
