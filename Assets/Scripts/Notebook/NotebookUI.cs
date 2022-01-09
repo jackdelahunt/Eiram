@@ -13,6 +13,10 @@ namespace Notebook
         [SerializeField] private NotebookGraph graph;
         [SerializeField] private GameObject achievementNodeUIPrefab = null;
         [SerializeField] private float achievementFocalLength;
+        [SerializeField] private float startYPosition;
+        [SerializeField] private float scrollSensitivity;
+        [SerializeField] private RectTransform start;
+        [SerializeField] private RectTransform end;
 
 
         private AchievementNode root = null;
@@ -30,10 +34,24 @@ namespace Notebook
         {
             PopulateUI();
         }
+        
+        public void Update()
+        {
+            if(!toggled) return;
+            
+            float scrollAmount = Input.GetAxisRaw("Scroll");
+            if(scrollAmount < -0.001f || scrollAmount > 0.001f)
+                ScrollGraph(scrollAmount * -scrollSensitivity);
+        }
 
         private void OnDestroy()
         {
             EiramEvents.PlayerToggleNotebookEvent -= OnNotebookToggleEvent;
+        }
+
+        private void ScrollGraph(float amount)
+        {
+            transform.position += new Vector3(0.0f,  amount * -scrollSensitivity, 0.0f);
         }
 
         private void PopulateUI()
@@ -93,12 +111,12 @@ namespace Notebook
         
         private void OpenNotebook()
         {
-            LeanTween.moveY(gameObject, transform.position.y + 500.0f, 0.4f);
+            LeanTween.moveY(gameObject, start.position.y, 0.4f);
         }
         
         private void CloseNotebook()
         {
-            LeanTween.moveY(gameObject, transform.position.y - 500.0f, 0.4f);
+            LeanTween.moveY(gameObject, end.position.y, 0.4f);
         }
     }
 }
