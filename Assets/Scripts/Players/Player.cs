@@ -17,6 +17,9 @@ namespace Players
         
         [SerializeField] private float jumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
+
+        private bool inInventory = false;
+        private bool inNotebook = false;
         
         private Camera mainCamera = null;
         private CharacterController controller = null;
@@ -43,10 +46,14 @@ namespace Players
         void Update()
         {
             isPlayerIdle = true;
-            CheckPlayerMovement();
-            CheckForMouseInput();
-            CheckPlayerJump();
-            CheckPlayerIdle();
+            if (!(inInventory || inNotebook))
+            {
+                CheckPlayerMovement();
+                CheckForMouseInput();
+                CheckPlayerJump();
+                CheckPlayerIdle();
+            }
+
             CheckPlayerUIInteraction();
         }
 
@@ -148,11 +155,13 @@ namespace Players
             if (Input.GetButtonDown("ToggleInventory"))
             {
                 EiramEvents.OnPlayerToggleInventory(playerInventory);
+                inInventory = !inInventory;
             }
             
             if (Input.GetButtonDown("ToggleNotebook"))
             {
                 EiramEvents.OnPlayerToggleNotebook();
+                inNotebook = !inNotebook;
             }
         }
 

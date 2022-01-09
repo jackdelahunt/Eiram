@@ -97,7 +97,8 @@ namespace Inventories
 
         private void OnSelectedSlotChanged(int slotIndex)
         {
-            MovePointer(slotIndex);
+            if(!toggled)
+                MovePointer(slotIndex);
         }
 
         private void Refresh()
