@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Eiram;
 using Recipes;
 using UnityEngine;
@@ -11,9 +12,28 @@ namespace Notebook
     public class AchievementNode : Node
     {
         [Input] public AchievementNode parent;
+        public Sprite thumbnail;
         public string title;
         public string description;
         public ItemCountPair[] rewards;
         [Output] public AchievementNode children;
+
+        public int depth { get; private set; }
+
+        public List<AchievementNode> ChildAchievements()
+        {
+            var childs = new List<AchievementNode>();
+            foreach (var childPort in GetOutputPort("children").GetConnections())
+            {
+                childs.Add(childPort.node as AchievementNode);
+            }
+
+            return childs;
+        }
+        
+        public void SetDepth(int depth)
+        {
+            this.depth = depth;
+        }
     }
 }

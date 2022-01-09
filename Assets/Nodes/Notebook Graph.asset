@@ -41,6 +41,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  thumbnail: {fileID: 0}
   title: Stone
   description: Break a stone tile with your hands
   rewards:
@@ -91,6 +92,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  thumbnail: {fileID: 21300000, guid: 58e4deb545693dc4497e5c352441e6a1, type: 3}
   title: Dirt
   description: Break a dirt tile with your hands
   rewards:
@@ -138,6 +140,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   parent: {fileID: 0}
+  thumbnail: {fileID: 21300000, guid: 9610e8cc84303db42b2ad85e26b9519b, type: 3}
   title: Grass
   description: Break a grass tile with your hands
   rewards:
