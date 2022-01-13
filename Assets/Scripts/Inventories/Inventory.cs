@@ -169,6 +169,12 @@ namespace Inventories
 
             return true;
         }
+
+        public void Sort()
+        {
+            ItemStacks.Sort();
+            IsDirty = true;
+        }
         
         private void SetStack(ItemId id, int slotIndex, int newSize)
         {

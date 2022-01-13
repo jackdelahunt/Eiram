@@ -92,7 +92,6 @@ namespace Inventories
             Debug.Assert(PlayerInventory.Slots == itemSlots.Count);
             if(toggled) CloseInventory(); else OpenInventory();
             toggled = !toggled;
-            Refresh();
         }
 
         private void OnSelectedSlotChanged(int slotIndex)
@@ -106,7 +105,8 @@ namespace Inventories
             {
                 var itemStack = playerInventory.ItemStacks[i];
                 var itemSlot = itemSlots[i];
-                if (!itemStack.IsEmpty() && itemSlot.IsEmpty())
+                itemSlot.Clear();
+                if (!itemStack.IsEmpty())
                 {
                     var inventoryItemGo = Instantiate(inventoryItemPrefab, itemSlots[i].transform);
                     var inventoryItem = inventoryItemGo.GetComponent<InventoryItem>();
@@ -116,11 +116,6 @@ namespace Inventories
                     
                     itemSlot.InventoryItemOption = inventoryItem;
                 }
-
-                if (itemStack.IsEmpty())
-                {
-                    itemSlot.Clear();
-                }
                 
                 itemSlot.Refresh();
             }
@@ -129,7 +124,7 @@ namespace Inventories
         private void OpenInventory()
         {
             LeanTween.moveY(gameObject, transform.position.y - 460.0f, 0.4f);
-            Refresh();
+            playerInventory.Sort();
         }
         
         private void CloseInventory()
