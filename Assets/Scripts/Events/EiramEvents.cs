@@ -29,6 +29,13 @@ namespace Events
             PlayerToggleInventoryEvent?.Invoke(playerInventory);
         }
         
+        public static event Action PlayerToggleNotebookEvent;
+
+        public static void OnPlayerToggleNotebook()
+        {
+            PlayerToggleNotebookEvent?.Invoke();
+        }
+        
         public static event Action<int> SelectedSlotChangedEvent;
 
         public static void SelectedSlotChanged(int slotIndex)

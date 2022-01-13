@@ -17,6 +17,9 @@ namespace Players
         
         [SerializeField] private float jumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
+
+        private bool inInventory = false;
+        private bool inNotebook = false;
         
         private Camera mainCamera = null;
         private CharacterController controller = null;
@@ -43,10 +46,15 @@ namespace Players
         void Update()
         {
             isPlayerIdle = true;
-            CheckPlayerMovement();
-            CheckForMouseInput();
-            CheckPlayerJump();
-            CheckPlayerIdle();
+            if (!(inInventory || inNotebook))
+            {
+                CheckPlayerMovement();
+                CheckForMouseInput();
+                CheckPlayerJump();
+                CheckPlayerIdle();
+            }
+
+            CheckPlayerUIInteraction();
         }
 
         public void ApplyPlayerData(PlayerData playerData)
@@ -66,11 +74,6 @@ namespace Players
             {
                 isPlayerIdle = false;
                 controller.Move(Input.GetAxisRaw("Horizontal") * movementSpeed);
-            }
-            
-            if (Input.GetButtonDown("ToggleInventory"))
-            {
-                EiramEvents.OnPlayerToggleInventory(playerInventory);
             }
         }
         
@@ -145,6 +148,21 @@ namespace Players
         {
             return mainCamera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
                 Input.mousePosition.y, -mainCamera.transform.position.z));
+        }
+
+        private void CheckPlayerUIInteraction()
+        {
+            if (Input.GetButtonDown("ToggleInventory"))
+            {
+                EiramEvents.OnPlayerToggleInventory(playerInventory);
+                inInventory = !inInventory;
+            }
+            
+            if (Input.GetButtonDown("ToggleNotebook"))
+            {
+                EiramEvents.OnPlayerToggleNotebook();
+                inNotebook = !inNotebook;
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)

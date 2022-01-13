@@ -9,32 +9,30 @@ using static Eiram.Handles;
 
 namespace Inventories
 {
-    public class InventoryItem : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+    public class InventoryItem : CountableItem, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
         public ItemStack ItemStack;
         public Option<ItemSlot> ItemSlot = None<ItemSlot>();
     
-        [SerializeField] private TMP_Text count = null;
         [SerializeField] private float onDragAlpha = 1.0f;
     
         private Option<ItemSlot> lastItemSlot = None<ItemSlot>();
         private RectTransform rectTransform = null;
         private Canvas canvas = null;
         private CanvasGroup canvasGroup = null;
-        private Image image = null;
 
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
             canvasGroup = GetComponent<CanvasGroup>();
             canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
-            image = GetComponent<Image>();
+            Image = GetComponent<Image>();
         }
 
         public void Refresh()
         {
-            count.text = ItemStack.Size.ToString();
-            image.sprite = Register.GetItemByItemId(ItemStack.ItemId).sprite;
+            Count.text = ItemStack.Size.ToString();
+            Image.sprite = Register.GetItemByItemId(ItemStack.ItemId).sprite;
         }
 
         public void OnPointerDown(PointerEventData eventData)

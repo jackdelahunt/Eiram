@@ -89,16 +89,16 @@ namespace Inventories
             return new ItemStack();
         }
 
-        public int Contains(ItemId itemId)
+        public int CountOf(ItemId itemId)
         {
+            int total = 0;
             for (int i = 0; i < ItemStacks.Count; i++)
             {
-                var currentStack = ItemStacks[i];
-                if (currentStack.ItemId == itemId) 
-                    return i;
+                if (ItemStacks[i].ItemId == itemId) 
+                    total += ItemStacks[i].Size;
             }
 
-            return -1;
+            return total;
         }
 
         public ItemStack ItemStackAt(int slotIndex)
