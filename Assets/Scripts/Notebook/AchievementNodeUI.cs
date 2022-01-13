@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Inventories;
 using Notebook;
+using Registers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,6 +21,9 @@ namespace Notebook
         [SerializeField] private Image background = null;
         [SerializeField] private TMP_Text description = null;
         [SerializeField] private GameObject hoverCard = null;
+        [SerializeField] private ScrollableListUI requirementsList = null;
+        [SerializeField] private ScrollableListUI rewardList = null;
+        [SerializeField] private GameObject countableItemPrefab = null;
         private AchievementNode node;
 
         public void Start()
@@ -39,6 +44,22 @@ namespace Notebook
                 AchievementStatus.COMPLETE => completeColour,
                 _ => Color.black
             };
+
+            foreach (var itemCountPair in node.requirements)
+            {
+                var icon = requirementsList.Add(countableItemPrefab);
+                var countableItem = icon.GetComponent<CountableItem>();
+                countableItem.Image.sprite = Register.GetItemByItemId(itemCountPair.ItemId).sprite;
+                countableItem.Count.text = itemCountPair.Amount.ToString();
+            }
+            
+            foreach (var itemCountPair in node.rewards)
+            {
+                var icon = rewardList.Add(countableItemPrefab);
+                var countableItem = icon.GetComponent<CountableItem>();
+                countableItem.Image.sprite = Register.GetItemByItemId(itemCountPair.ItemId).sprite;
+                countableItem.Count.text = itemCountPair.Amount.ToString();
+            }
         }
 
         public void OnPointerEnter(PointerEventData eventData)

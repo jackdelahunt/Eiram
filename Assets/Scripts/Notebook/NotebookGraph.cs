@@ -18,6 +18,7 @@ namespace Notebook
         public string title;
         public string description;
         public AchievementStatus status;
+        public ItemCountPair[] requirements;
         public ItemCountPair[] rewards;
         [Output] public AchievementNode children;
         public static event Action<AchievementStatus> AcheivmentStatusUpdate;
