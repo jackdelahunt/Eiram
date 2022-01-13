@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Inventories;
 using Notebook;
+using Players;
 using Registers;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,7 @@ using UnityEngine.UI;
 
 namespace Notebook
 {
-    public class AchievementNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class AchievementNodeUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private Color lockedColour;
         [SerializeField] private Color availableColour;
@@ -70,6 +71,38 @@ namespace Notebook
         public void OnPointerExit(PointerEventData eventData)
         {
             hoverCard.SetActive(false);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (node.status != AchievementStatus.AVAILABLE)
+                return;
+            
+            var playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().playerInventory;
+            foreach (var itemCountPair in node.requirements)
+            {
+                if(playerInventory.CountOf(itemCountPair.ItemId) < itemCountPair.Amount)
+                    return;
+            }
+
+            foreach (var itemCountPair in node.rewards)
+            {
+                playerInventory.TryAddItem(itemCountPair.ItemId, itemCountPair.Amount);
+            }
+
+            node.status = AchievementStatus.COMPLETE;
+            Refresh();
+        }
+
+        private void Refresh()
+        {
+            background.color = node.status switch
+            {
+                AchievementStatus.LOCKED => lockedColour,
+                AchievementStatus.AVAILABLE => availableColour,
+                AchievementStatus.COMPLETE => completeColour,
+                _ => Color.black
+            };
         }
     }
 }

@@ -21,8 +21,6 @@ namespace Notebook
         public ItemCountPair[] requirements;
         public ItemCountPair[] rewards;
         [Output] public AchievementNode children;
-        public static event Action<AchievementStatus> AcheivmentStatusUpdate;
-
         public List<AchievementNode> ChildAchievements()
         {
             var childs = new List<AchievementNode>();
@@ -32,12 +30,6 @@ namespace Notebook
             }
 
             return childs;
-        }
-        
-        public void SetStatus(AchievementStatus status)
-        {
-            this.status = status;
-            AcheivmentStatusUpdate?.Invoke(status);
         }
     }
 
