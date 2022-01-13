@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using Eiram;
 using Recipes;
 using Registers;
-using Tiles;
 using UnityEngine;
-using XNode;
 
 namespace Notebook
 {
