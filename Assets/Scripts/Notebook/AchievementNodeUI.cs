@@ -27,14 +27,25 @@ namespace Notebook
         [SerializeField] private GameObject countableItemPrefab = null;
         private AchievementNode node;
 
+        private AchievementStatus lastStatus;
+
         public void Start()
         {
             hoverCard.SetActive(false);
         }
 
+        public void Update()
+        {
+            if(lastStatus != node.status)
+                Refresh();
+
+            lastStatus = node.status;
+        }
+
         public void Init(AchievementNode node)
         {
             this.node = node;
+            lastStatus = node.status;
             title.text = this.node.title;
             thumbnail.sprite = this.node.thumbnail;
             description.text = this.node.description;
@@ -91,7 +102,15 @@ namespace Notebook
             }
 
             node.status = AchievementStatus.COMPLETE;
-            Refresh();
+            MakeChildrenAvailable();
+        }
+
+        private void MakeChildrenAvailable()
+        {
+            foreach (var child in node.ChildAchievements())
+            {
+                child.status = AchievementStatus.AVAILABLE;
+            }
         }
 
         private void Refresh()

@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockedColour: {r: 0.3962264, g: 0.35323957, b: 0.35323957, a: 1}
-  availableColour: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+  availableColour: {r: 0.11614456, g: 0.793338, b: 0.8490566, a: 1}
   completeColour: {r: 1, g: 0.7572637, b: 0.042452812, a: 1}
   title: {fileID: 9136848233739855522}
   thumbnail: {fileID: 3186663899650819499}
