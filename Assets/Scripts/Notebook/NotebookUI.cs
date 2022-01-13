@@ -10,7 +10,6 @@ namespace Notebook
 {
     public class NotebookUI : MonoBehaviour
     {
-        [SerializeField] private NotebookGraph graph;
         [SerializeField] private GameObject achievementNodeUIPrefab = null;
         [SerializeField] private float achievementFocalLength;
         [SerializeField] private float startYPosition;
@@ -19,15 +18,15 @@ namespace Notebook
         [SerializeField] private RectTransform end;
 
 
-        private AchievementNode root = null;
+        private Achievement root = null;
         private List<AchievementNodeUI> childAchievementNodes = new List<AchievementNodeUI>();
         private bool toggled = false;
 
         private void Awake()
         {
             EiramEvents.PlayerToggleNotebookEvent += OnNotebookToggleEvent;
-            GetRootNode();
             GetAllAchievementNodeUI();
+            root = Achievement.NewTree();
         }
 
         private void Start()
@@ -56,30 +55,14 @@ namespace Notebook
 
         private void PopulateUI()
         {
-            foreach (var node in graph.nodes)
+            foreach (var node in root.AllAchievements())
             {
-                var aNode = node as AchievementNode;
-                Debug.Assert(aNode);
                 foreach (var achievementNodeUI in childAchievementNodes)
                 {
-                    if (achievementNodeUI.gameObject.name.Equals(aNode.title))
+                    if (achievementNodeUI.gameObject.name.Equals(node.title))
                     {
-                        achievementNodeUI.Init(aNode);
+                        achievementNodeUI.Init(node);
                     }
-                }
-            }
-        }
-
-        private void GetRootNode()
-        {
-            if(graph.nodes.Count == 0) return;
-            
-            foreach (var node in graph.nodes)
-            {
-                if (node.GetInputPort("parent").ConnectionCount == 0)
-                {
-                    root = node as AchievementNode;
-                    break;
                 }
             }
         }

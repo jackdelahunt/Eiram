@@ -25,7 +25,7 @@ namespace Notebook
         [SerializeField] private ScrollableListUI requirementsList = null;
         [SerializeField] private ScrollableListUI rewardList = null;
         [SerializeField] private GameObject countableItemPrefab = null;
-        private AchievementNode node;
+        private Achievement achievement;
 
         private AchievementStatus lastStatus;
 
@@ -36,20 +36,20 @@ namespace Notebook
 
         public void Update()
         {
-            if(lastStatus != node.status)
+            if(lastStatus != achievement.status)
                 Refresh();
 
-            lastStatus = node.status;
+            lastStatus = achievement.status;
         }
 
-        public void Init(AchievementNode node)
+        public void Init(Achievement achievement)
         {
-            this.node = node;
-            lastStatus = node.status;
-            title.text = this.node.title;
-            thumbnail.sprite = this.node.thumbnail;
-            description.text = this.node.description;
-            background.color = node.status switch
+            this.achievement = achievement;
+            lastStatus = this.achievement.status;
+            title.text = this.achievement.title;
+            thumbnail.sprite = this.achievement.thumbnail;
+            description.text = this.achievement.description;
+            background.color = this.achievement.status switch
             {
                 AchievementStatus.LOCKED => lockedColour,
                 AchievementStatus.AVAILABLE => availableColour,
@@ -57,7 +57,7 @@ namespace Notebook
                 _ => Color.black
             };
 
-            foreach (var itemCountPair in node.requirements)
+            foreach (var itemCountPair in this.achievement.requirements)
             {
                 var icon = requirementsList.Add(countableItemPrefab);
                 var countableItem = icon.GetComponent<CountableItem>();
@@ -65,7 +65,7 @@ namespace Notebook
                 countableItem.Count.text = itemCountPair.Amount.ToString();
             }
             
-            foreach (var itemCountPair in node.rewards)
+            foreach (var itemCountPair in this.achievement.rewards)
             {
                 var icon = rewardList.Add(countableItemPrefab);
                 var countableItem = icon.GetComponent<CountableItem>();
@@ -86,28 +86,28 @@ namespace Notebook
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (node.status != AchievementStatus.AVAILABLE)
+            if (achievement.status != AchievementStatus.AVAILABLE)
                 return;
             
             var playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().playerInventory;
-            foreach (var itemCountPair in node.requirements)
+            foreach (var itemCountPair in achievement.requirements)
             {
                 if(playerInventory.CountOf(itemCountPair.ItemId) < itemCountPair.Amount)
                     return;
             }
 
-            foreach (var itemCountPair in node.rewards)
+            foreach (var itemCountPair in achievement.rewards)
             {
                 playerInventory.TryAddItem(itemCountPair.ItemId, itemCountPair.Amount);
             }
 
-            node.status = AchievementStatus.COMPLETE;
+            achievement.status = AchievementStatus.COMPLETE;
             MakeChildrenAvailable();
         }
 
         private void MakeChildrenAvailable()
         {
-            foreach (var child in node.ChildAchievements())
+            foreach (var child in achievement.children)
             {
                 child.status = AchievementStatus.AVAILABLE;
             }
@@ -115,7 +115,7 @@ namespace Notebook
 
         private void Refresh()
         {
-            background.color = node.status switch
+            background.color = achievement.status switch
             {
                 AchievementStatus.LOCKED => lockedColour,
                 AchievementStatus.AVAILABLE => availableColour,

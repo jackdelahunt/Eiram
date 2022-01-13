@@ -654,7 +654,7 @@ PrefabInstance:
     - target: {fileID: 9136848234480179514, guid: 4b0522e08b89973119b41b9d6502b389,
         type: 3}
       propertyPath: m_Name
-      value: Dirt
+      value: Mining Dirt
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b0522e08b89973119b41b9d6502b389, type: 3}
@@ -898,7 +898,7 @@ PrefabInstance:
     - target: {fileID: 9136848234480179514, guid: 4b0522e08b89973119b41b9d6502b389,
         type: 3}
       propertyPath: m_Name
-      value: Grass
+      value: Mining Grass
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b0522e08b89973119b41b9d6502b389, type: 3}
@@ -1288,7 +1288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 442b4d36b3dffb457b8e288823422ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 11400000, guid: fce23145dbed8c91591fb0d3c13a2e73, type: 2}
   achievementNodeUIPrefab: {fileID: 9136848234480179514, guid: 4b0522e08b89973119b41b9d6502b389,
     type: 3}
   achievementFocalLength: 300
