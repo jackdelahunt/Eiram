@@ -125,6 +125,35 @@ namespace Worlds
 
         }
         
+        public void AddFatTile(Vector3Int worldPosition, SerialFatTileData serialFatTileData)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.AddFatTile(serialFatTileData);
+            }
+        }
+
+        public void RemoveFatTile(Vector3Int worldPosition)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                chunk.RemoveFatTile(worldPosition);
+            }
+        }
+
+        public Option<SerialFatTileData> GetFatTileAt(Vector3Int worldPosition)
+        {
+            var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
+            if (activeChunks.TryGetValue(chunkX, out var chunk))
+            {
+                return chunk.GetFatTileAt(worldPosition);
+            }
+
+            return None<SerialFatTileData>();
+        }
+        
         /*
          * Returns a tile in a given location
          */
