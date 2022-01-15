@@ -176,7 +176,8 @@ namespace Chunks
             return new ChunkData
             {
                 ChunkX = this.ChunkX,
-                TileDataArray = this.tileDataArray
+                TileDataArray = this.tileDataArray,
+                FatTileArray = this.fatTileArray
             };
         }
     }
