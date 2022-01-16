@@ -29,6 +29,13 @@ namespace Events
             PlayerToggleInventoryEvent?.Invoke(playerInventory);
         }
         
+        public static event Action<ChestInventory> PlayerToggleChestEvent;
+
+        public static void OnPlayerToggleChest(ChestInventory chestInventory)
+        {
+            PlayerToggleChestEvent?.Invoke(chestInventory);
+        }
+        
         public static event Action PlayerToggleNotebookEvent;
 
         public static void OnPlayerToggleNotebook()

@@ -1,4 +1,5 @@
 using System;
+using Inventories;
 
 namespace Tiles
 {
@@ -7,5 +8,10 @@ namespace Tiles
     {
         public int X;
         public int Y;
+    }
+
+    public class SerialChestTileData : SerialFatTileData
+    {
+        public ChestInventory ChestInventory;
     }
 }
