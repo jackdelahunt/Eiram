@@ -9,7 +9,7 @@ namespace Inventories
     {
         public Option<InventoryItem> InventoryItemOption = None<InventoryItem>();
         public int slotNumber = -1;
-        public IInventoryUI InventoryUI;
+        public InventoryUI InventoryUI;
     
         private RectTransform rectTransform;
     
