@@ -40,9 +40,9 @@ namespace Players
 
         public void Start()
         {
-            playerInventory.TryAddItem(ItemId.THORNS, 5);
-            playerInventory.TryAddItem(ItemId.TRELLIS, 5);
-            playerInventory.TryAddItem(ItemId.CHEST, 5);
+            playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
+            playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
+            playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
         }
 
         public void OnDestroy()

@@ -40,6 +40,9 @@ namespace Eiram
         THORNS = 2,
         TRELLIS = 3,
         CHEST = 4,
+        WOOD_SHOVEL = 5,
+        WOOD_PICKAXE = 6,
+        WOOD_AXE = 7,
     }
     
     public enum BiomeId

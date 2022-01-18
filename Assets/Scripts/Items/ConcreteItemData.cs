@@ -14,12 +14,5 @@ namespace Items
             public int maxStack = 64;
             public Sprite sprite;
         }
-        
-        [CreateAssetMenu(fileName = "Eiram", menuName = "Eiram/ToolItem")]
-        public class ToolItemData : ConcreteItemData
-        {
-            public ToolType toolType;
-            public ToolLevel toolLevel;
-        }
     }
 }
