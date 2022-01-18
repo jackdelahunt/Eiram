@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Eiram;
 using Events;
 using IO;
@@ -10,6 +11,7 @@ using TerrainGeneration;
 using Tiles;
 using Utils;
 using Worlds;
+using static Eiram.Handles;
 using Random = System.Random;
 
 namespace Chunks
@@ -22,6 +24,7 @@ namespace Chunks
         public readonly BiomeId BiomeId;
         public readonly int ChunkX;
         private readonly SerialTileData[,] tileDataArray;
+        private readonly List<SerialFatTileData> fatTileArray;
 
         public Chunk(int chunkX)
         {
@@ -29,6 +32,7 @@ namespace Chunks
             this.BiomeId = (BiomeId)Mathf.Round(Noise.TerrainNoise(chunkX, 0, 0) * (float)(Register.ActiveBiomes() - 1));
             this.ChunkX = chunkX;
             tileDataArray = TerrainGenerator.GenerateChunkData(this);
+            fatTileArray = new List<SerialFatTileData>();
             EiramTilemap.Foreground.DrawChunk(this);
         }
 
@@ -36,6 +40,7 @@ namespace Chunks
         {
             this.ChunkX = loadedData.ChunkX;
             this.tileDataArray = loadedData.TileDataArray;
+            this.fatTileArray = loadedData.FatTileArray;
             EiramTilemap.Foreground.DrawChunk(this);
         }
         
@@ -119,6 +124,37 @@ namespace Chunks
             }
         }
 
+        public void AddFatTile(SerialFatTileData serialFatTileData)
+        {
+            fatTileArray.Add(serialFatTileData);
+        }
+
+        public void RemoveFatTile(Vector3Int worldPosition)
+        {
+            SerialFatTileData found = null;
+            foreach (var fatTile in fatTileArray)
+            {
+                if (fatTile.Y == worldPosition.y && fatTile.X == worldPosition.x)
+                {
+                    found = fatTile;
+                    break;
+                }
+            }
+
+            fatTileArray.Remove(found);
+        }
+
+        public Option<SerialFatTileData> GetFatTileAt(Vector3Int worldPosition)
+        {
+            foreach (var tileEntity in fatTileArray)
+            {
+                if (tileEntity.Y == worldPosition.y && tileEntity.X == worldPosition.x)
+                    return tileEntity;
+            }
+
+            return None<SerialFatTileData>();
+        }
+
         public SerialTileData GetTileData(Vector3Int worldPosition)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
@@ -140,7 +176,8 @@ namespace Chunks
             return new ChunkData
             {
                 ChunkX = this.ChunkX,
-                TileDataArray = this.tileDataArray
+                TileDataArray = this.tileDataArray,
+                FatTileArray = this.fatTileArray
             };
         }
     }
@@ -149,6 +186,7 @@ namespace Chunks
     public class ChunkData
     {
         public int ChunkX;
-        public SerialTileData[,] TileDataArray; 
+        public SerialTileData[,] TileDataArray;
+        public List<SerialFatTileData> FatTileArray;
     }
 }

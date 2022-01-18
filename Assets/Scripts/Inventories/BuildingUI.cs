@@ -17,7 +17,7 @@ namespace Inventories
         
         public void Awake()
         {
-            EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
+            EiramEvents.PlayerTogglePlayerInventoryEvent += OnPlayerTogglePlayerInventoryEvent;
         }
 
         public void OnBuildingItemClicked(BuildingRecipe recipe)
@@ -48,10 +48,10 @@ namespace Inventories
         
         private void OnDestroy()
         {
-            EiramEvents.PlayerToggleInventoryEvent -= OnPlayerToggleInventoryEvent;
+            EiramEvents.PlayerTogglePlayerInventoryEvent -= OnPlayerTogglePlayerInventoryEvent;
         }
 
-        private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
+        private void OnPlayerTogglePlayerInventoryEvent(PlayerInventory playerInventory)
         {
             if(toggled)
             {

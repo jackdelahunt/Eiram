@@ -71,8 +71,6 @@ namespace Inventories
             }
             canvasGroup.blocksRaycasts = true;
             canvasGroup.alpha = 1.0f;
-            Debug.Log("drag end");
-
         }
     }
 }

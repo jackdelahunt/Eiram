@@ -29,6 +29,7 @@ namespace Eiram
         TILLED_SOIL = 17,
         THORNS = 18,
         TRELLIS = 19,
+        CHEST = 20,
     }
     
     public enum ItemId
@@ -38,6 +39,7 @@ namespace Eiram
         GRASS = 1,
         THORNS = 2,
         TRELLIS = 3,
+        CHEST = 4,
     }
     
     public enum BiomeId
