@@ -48,4 +48,18 @@ namespace Eiram
         GRASS_HILLS = 0,
         STONE_FLATS = 1
     }
+    
+    public enum ToolType
+    {
+        NONE = -1,
+        PICKAXE = 0,
+        AXE = 1,
+        SHOVEL = 2
+    }
+    
+    public enum ToolLevel
+    {
+        WOOD = 0,
+        STONE = 1,
+    }
 }

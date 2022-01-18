@@ -96,7 +96,7 @@ namespace Players
             {
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
-                World.Current.RemoveTileAt(tilePos);
+                World.Current.RemoveTileAtAsPlayer(tilePos, playerInventory.PeekSelectedItem());
             }
 
             

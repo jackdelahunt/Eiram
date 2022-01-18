@@ -15,13 +15,13 @@ namespace Registers
     public class Register : MonoBehaviour
     {
         private static AbstractTile[] tiles;
-        private static Item[] items;
+        private static ConcreteItemData[] items;
         private static Biome[] biomes;
         private static CropRecipe[] cropRecipes;
         private static BuildingRecipe[] buildingRecipes;
         
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
-        [SerializeField] private Item[] itemArray;
+        [SerializeField] private ConcreteItemData[] itemArray;
         [SerializeField] private Biome[] biomeArray;
         [SerializeField] private CropRecipe[] cropRecipeArray;
         [SerializeField] private BuildingRecipe[] buildingRecipeArray;
@@ -31,7 +31,7 @@ namespace Registers
             return tiles[(int)tileId];
         }
         
-        public static Item GetItemByItemId(ItemId itemId)
+        public static ConcreteItemData GetItemByItemId(ItemId itemId)
         {
             return items[(int)itemId];
         }

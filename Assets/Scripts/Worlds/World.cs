@@ -58,6 +58,15 @@ namespace Worlds
             return false;
         }
 
+        public void RemoveTileAtAsPlayer(Vector3Int worldPosition, ItemStack inHand)
+        {
+            if (GetTileData(worldPosition).IsSome(out var tileData))
+            {
+                if(Register.GetTileByTileId(tileData.TileId).CanBeBrokenBy(inHand.ItemId))
+                    RemoveTileAt(worldPosition);
+            }
+        }
+
         public void RemoveTileAt(Vector3Int worldPosition)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);

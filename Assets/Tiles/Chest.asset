@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Chest
   TileId: 20
+  RequiredToolType: 1
+  RequiredToolLevel: 0
   TileBase: {fileID: 11400000, guid: 6a0b6ccf32257d043b56b7865e742d98, type: 2}
   Drops:
   - ItemId: 4

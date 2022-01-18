@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Log
   TileId: 9
+  RequiredToolType: 1
+  RequiredToolLevel: 0
   TileBase: {fileID: 11400000, guid: 00afcd1f807031a48ad59d85fe782e85, type: 2}
   Drops: []
