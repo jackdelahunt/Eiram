@@ -10,30 +10,28 @@ namespace Inventories
     {
         protected override void Awake()
         {
-            EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
             EiramEvents.PlayerOpenChestEvent += OnPlayerOpenChestEvent;
+            EiramEvents.PlayerInteractEvent += OnPlayerInteractEvent;
             AwakeInventoryUI();
         }
 
         private new void OnDestroy()
         {
-            EiramEvents.PlayerToggleInventoryEvent -= OnPlayerToggleInventoryEvent;
             EiramEvents.PlayerOpenChestEvent -= OnPlayerOpenChestEvent;
+            EiramEvents.PlayerInteractEvent -= OnPlayerInteractEvent;
         }
 
         private void OnPlayerOpenChestEvent(ChestInventory chestInventory)
         {
-            if(Player.InInventory) return;
-            Player.InInventory = true;
             OpenInventory();
+            EiramEvents.OnPlayerInventoryRequestEvent();
             activeInventory = Some(chestInventory as Inventory);
             toggled = true;
         }
 
-        private void OnPlayerToggleInventoryEvent()
+        private void OnPlayerInteractEvent()
         {
             if (!toggled) return;
-            Player.InInventory = false;
             CloseInventory();
             activeInventory = None<Inventory>();
             toggled = false;

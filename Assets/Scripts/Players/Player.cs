@@ -13,8 +13,6 @@ namespace Players
     //[RequireComponent(typeof(Animator))]
     public class Player : MonoBehaviour
     {
-        public static bool InInventory = false;
-
         public PlayerInventory playerInventory;
         
         [SerializeField] private float jumpForce = 400f;
@@ -34,6 +32,7 @@ namespace Players
 
         private void Awake()
         {
+            EiramEvents.PlayerInventoryRequestEvent += OnPlayerInventoryRequest;
             controller = GetComponent<CharacterController>();
             mainCamera = Camera.main;
             //animator = GetComponent<Animator>();
@@ -44,6 +43,11 @@ namespace Players
             playerInventory.TryAddItem(ItemId.THORNS, 5);
             playerInventory.TryAddItem(ItemId.TRELLIS, 5);
             playerInventory.TryAddItem(ItemId.CHEST, 5);
+        }
+
+        public void OnDestroy()
+        {
+            EiramEvents.PlayerInventoryRequestEvent -= OnPlayerInventoryRequest;
         }
 
         void Update()
@@ -65,6 +69,12 @@ namespace Players
             transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
             this.playerInventory = playerData.PlayerInventory;
             this.playerInventory.IsDirty = true;
+        }
+
+        private void OnPlayerInventoryRequest()
+        {
+            EiramEvents.OnPlayerTogglePlayerInventory(playerInventory);
+            inInventory = !inInventory;
         }
 
         /*
@@ -158,7 +168,7 @@ namespace Players
             if (Input.GetButtonDown("ToggleInventory"))
             {
                 EiramEvents.OnPlayerTogglePlayerInventory(playerInventory);
-                EiramEvents.OnPlayerToggleInventory();
+                EiramEvents.OnPlayerInteractEvent();
                 inInventory = !inInventory;
             }
             

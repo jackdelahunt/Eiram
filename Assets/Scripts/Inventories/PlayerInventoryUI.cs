@@ -19,7 +19,7 @@ namespace Inventories
 
         protected override void Awake()
         {
-            EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
+            EiramEvents.PlayerTogglePlayerInventoryEvent += OnPlayerTogglePlayerInventory;
             EiramEvents.SelectedSlotChangedEvent += OnSelectedSlotChanged;
             
             AwakeInventoryUI();
@@ -44,19 +44,19 @@ namespace Inventories
 
         private new void OnDestroy()
         {
-            EiramEvents.PlayerToggleInventoryEvent -= OnPlayerToggleInventoryEvent;
+            EiramEvents.PlayerTogglePlayerInventoryEvent -= OnPlayerTogglePlayerInventory;
             EiramEvents.SelectedSlotChangedEvent -= OnSelectedSlotChanged;
         }
         
         public override void OpenInventory()
         {
-            LeanTween.moveY(gameObject, transform.position.y - 350.0f, 0.4f);
+            LeanTween.moveY(gameObject, transform.position.y - 323.0f, 0.4f);
             toggled = true;
         }
         
         public override void CloseInventory()
         {
-            LeanTween.moveY(gameObject, transform.position.y + 350.0f, 0.4f);
+            LeanTween.moveY(gameObject, transform.position.y + 323.0f, 0.4f);
             toggled = false;
         }
         
@@ -77,21 +77,12 @@ namespace Inventories
                 MovePointer(slotIndex);
         }
 
-        private void OnPlayerToggleInventoryEvent()
+        private void OnPlayerTogglePlayerInventory(PlayerInventory _)
         {
             if (!toggled)
-            {
-                if(Player.InInventory)
-                {
-                    toggled = false;
-                    return;
-                }
                 OpenInventory();   
-            }
             else
-            {
                 CloseInventory();
-            }
         }
     }
 }
