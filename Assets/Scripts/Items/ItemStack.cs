@@ -1,5 +1,6 @@
 ﻿using System;
 using Eiram;
+using Registers;
 
 namespace Items
 {
@@ -30,6 +31,15 @@ namespace Items
         public bool IsEmpty()
         {
             return (this.Size == 0 && this.ItemId == ItemId.UNKNOWN);
+        }
+
+        public bool CanFit(ItemStack other)
+        {
+            if (ItemId != other.ItemId) 
+                return false;
+
+            var thisItem = Register.GetItemByItemId(ItemId);
+            return thisItem.maxStack > Size + other.Size;
         }
 
         public override string ToString()

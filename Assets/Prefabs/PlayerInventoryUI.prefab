@@ -28,7 +28,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3786220007454095671}
   m_RootOrder: 1
@@ -103,7 +102,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 45638323530593135}
   m_RootOrder: 0
@@ -133,8 +131,8 @@ MonoBehaviour:
   m_ChildAlignment: 6
   m_StartCorner: 2
   m_StartAxis: 0
-  m_CellSize: {x: 40, y: 40}
-  m_Spacing: {x: 21, y: 18}
+  m_CellSize: {x: 30, y: 30}
+  m_Spacing: {x: 12, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 12
 --- !u!1 &3786220007454095670
@@ -164,7 +162,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8622480148403573602}
   - {fileID: 127808940}
@@ -188,14 +185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e85c98afee447019739a710c58aaa0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerOffset: {x: 0, y: -40, z: 0}
   slotPrefab: {fileID: 8828641747527187353, guid: a644058a9d717294a88def6afbe2eb3b,
     type: 3}
   inventoryItemPrefab: {fileID: 6195981408798853130, guid: f351304e594bc2342a44489b84acbf9d,
     type: 3}
   contentTransform: {fileID: 6897256475441182503}
+  pointerOffset: {x: 0, y: -40, z: 0}
   slotPointer: {fileID: 127808939}
-  buildingUI: {fileID: 0}
 --- !u!1 &4096547314062854097
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +221,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6897256475441182503}
   m_Father: {fileID: 8622480148403573602}
@@ -316,7 +311,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 45638323530593135}
   m_Father: {fileID: 3786220007454095671}
@@ -325,7 +319,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 400}
+  m_SizeDelta: {x: 420, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3584200861678498957
 CanvasRenderer:

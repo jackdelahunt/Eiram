@@ -58,12 +58,24 @@ namespace Inventories
             if (eventData == null || eventData.pointerDrag == null) return;
 
             if (!eventData.pointerDrag.CompareTag("InventoryItem")) return;
-        
-        
-            InventoryItemOption = eventData.pointerDrag.GetComponent<InventoryItem>();
-            InventoryItemOption.Value.ItemSlot = this;
-            InventoryUI.ItemPlaced(slotNumber, InventoryItemOption.Value.ItemStack);
-            AlignInventoryItem();
+
+            if (InventoryItemOption.IsSome(out var inventoryItem))
+            {
+                var otherItem = eventData.pointerDrag.GetComponent<InventoryItem>();
+                if (inventoryItem.ItemStack.CanFit(otherItem.ItemStack))
+                {
+                    inventoryItem.ItemStack.Size += otherItem.ItemStack.Size;
+                    InventoryUI.ItemPlaced(slotNumber, inventoryItem.ItemStack);
+                    Destroy(otherItem.gameObject);
+                }
+            }
+            else
+            {   
+                InventoryItemOption = eventData.pointerDrag.GetComponent<InventoryItem>();
+                InventoryItemOption.Unwrap().ItemSlot = this;
+                InventoryUI.ItemPlaced(slotNumber, InventoryItemOption.Value.ItemStack);
+                AlignInventoryItem();
+            }
         }
 
         public void AlignInventoryItem()

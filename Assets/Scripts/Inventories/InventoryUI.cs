@@ -39,6 +39,7 @@ namespace Inventories
         {
             if (activeInventory.IsSome(out var inventory) && inventory.IsDirty)
             {
+                inventory.IsDirty = false;
                 Refresh();
             }
         }

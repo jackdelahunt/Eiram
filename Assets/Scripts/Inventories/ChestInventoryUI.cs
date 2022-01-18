@@ -23,18 +23,16 @@ namespace Inventories
 
         private void OnPlayerOpenChestEvent(ChestInventory chestInventory)
         {
-            OpenInventory();
             EiramEvents.OnPlayerInventoryRequestEvent();
             activeInventory = Some(chestInventory as Inventory);
-            toggled = true;
+            OpenInventory();
         }
 
         private void OnPlayerInteractEvent()
         {
             if (!toggled) return;
-            CloseInventory();
             activeInventory = None<Inventory>();
-            toggled = false;
+            CloseInventory();
         }
     }
 }
