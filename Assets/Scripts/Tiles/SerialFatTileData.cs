@@ -10,6 +10,7 @@ namespace Tiles
         public int Y;
     }
 
+    [Serializable]
     public class SerialChestTileData : SerialFatTileData
     {
         public ChestInventory ChestInventory;

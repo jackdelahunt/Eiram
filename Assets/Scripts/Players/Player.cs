@@ -13,6 +13,8 @@ namespace Players
     //[RequireComponent(typeof(Animator))]
     public class Player : MonoBehaviour
     {
+        public static bool InInventory = false;
+
         public PlayerInventory playerInventory;
         
         [SerializeField] private float jumpForce = 400f;
@@ -155,7 +157,8 @@ namespace Players
         {
             if (Input.GetButtonDown("ToggleInventory"))
             {
-                EiramEvents.OnPlayerToggleInventory(playerInventory);
+                EiramEvents.OnPlayerTogglePlayerInventory(playerInventory);
+                EiramEvents.OnPlayerToggleInventory();
                 inInventory = !inInventory;
             }
             

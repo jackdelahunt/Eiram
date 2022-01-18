@@ -22,18 +22,25 @@ namespace Events
             TileBreakEvent?.Invoke(worldPosition, serialTileData);
         }
         
-        public static event Action<PlayerInventory> PlayerToggleInventoryEvent;
+        public static event Action PlayerToggleInventoryEvent;
 
-        public static void OnPlayerToggleInventory(PlayerInventory playerInventory)
+        public static void OnPlayerToggleInventory()
         {
-            PlayerToggleInventoryEvent?.Invoke(playerInventory);
+            PlayerToggleInventoryEvent?.Invoke();
         }
         
-        public static event Action<ChestInventory> PlayerToggleChestEvent;
+        public static event Action<PlayerInventory> PlayerTogglePlayerInventoryEvent;
 
-        public static void OnPlayerToggleChest(ChestInventory chestInventory)
+        public static void OnPlayerTogglePlayerInventory(PlayerInventory playerInventory)
         {
-            PlayerToggleChestEvent?.Invoke(chestInventory);
+            PlayerTogglePlayerInventoryEvent?.Invoke(playerInventory);
+        }
+        
+        public static event Action<ChestInventory> PlayerOpenChestEvent;
+
+        public static void OnPlayerOpenChest(ChestInventory chestInventory)
+        {
+            PlayerOpenChestEvent?.Invoke(chestInventory);
         }
         
         public static event Action PlayerToggleNotebookEvent;

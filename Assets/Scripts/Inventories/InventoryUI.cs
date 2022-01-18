@@ -25,8 +25,14 @@ namespace Inventories
 
         protected virtual void Awake()
         {
+            AwakeInventoryUI();
+        }
+
+        protected void AwakeInventoryUI()
+        {
             canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
             GenerateUI();
+            gameObject.SetActive(false);
         }
 
         protected virtual void Update()
@@ -36,7 +42,7 @@ namespace Inventories
                 Refresh();
             }
         }
-        
+
         public void ItemPopped(int slotNumber)
         {
             if (activeInventory.IsSome(out var inventory))
@@ -44,7 +50,7 @@ namespace Inventories
                 inventory.ClearSlot(slotNumber);
             }
         }
-
+        
         public void ItemPlaced(int itemSlot, ItemStack itemStack)
         {
             if (activeInventory.IsSome(out var inventory))
@@ -52,6 +58,18 @@ namespace Inventories
                 inventory.ItemStacks[itemSlot] = itemStack;
                 inventory.IsDirty = true;
             }
+        }
+        
+        public virtual void OpenInventory()
+        {
+            toggled = true;
+            gameObject.SetActive(true);
+        }
+        
+        public virtual void CloseInventory()
+        {   
+            toggled = false;
+            gameObject.SetActive(false);
         }
 
         protected void GenerateUI()
@@ -89,16 +107,6 @@ namespace Inventories
                 
                 itemSlot.Refresh();
             }
-        }
-
-        public virtual void OpenInventory()
-        {
-            gameObject.SetActive(true);
-        }
-        
-        public virtual void CloseInventory()
-        {
-            gameObject.SetActive(true);
         }
     }
 }

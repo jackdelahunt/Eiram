@@ -21,9 +21,9 @@ namespace Inventories
         {
             EiramEvents.PlayerToggleInventoryEvent += OnPlayerToggleInventoryEvent;
             EiramEvents.SelectedSlotChangedEvent += OnSelectedSlotChanged;
-
-            canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
-            GenerateUI();
+            
+            AwakeInventoryUI();
+            gameObject.SetActive(true);
         }
 
         private void Start()
@@ -42,10 +42,22 @@ namespace Inventories
             }
         }
 
-        private void OnDestroy()
+        private new void OnDestroy()
         {
             EiramEvents.PlayerToggleInventoryEvent -= OnPlayerToggleInventoryEvent;
             EiramEvents.SelectedSlotChangedEvent -= OnSelectedSlotChanged;
+        }
+        
+        public override void OpenInventory()
+        {
+            LeanTween.moveY(gameObject, transform.position.y - 460.0f, 0.4f);
+            toggled = true;
+        }
+        
+        public override void CloseInventory()
+        {
+            LeanTween.moveY(gameObject, transform.position.y + 460.0f, 0.4f);
+            toggled = false;
         }
         
         private void LateStart()
@@ -59,27 +71,27 @@ namespace Inventories
             slotPointer.transform.position = pos + pointerOffset;
         }
 
-        private void OnPlayerToggleInventoryEvent(PlayerInventory playerInventory)
-        {
-            Debug.Assert(PlayerInventory.Slots == itemSlots.Count);
-            if(toggled) CloseInventory(); else OpenInventory();
-            toggled = !toggled;
-        }
-
         private void OnSelectedSlotChanged(int slotIndex)
         {
             if(!toggled)
                 MovePointer(slotIndex);
         }
 
-        public override void OpenInventory()
+        private void OnPlayerToggleInventoryEvent()
         {
-            LeanTween.moveY(gameObject, transform.position.y - 460.0f, 0.4f);
-        }
-        
-        public override void CloseInventory()
-        {
-            LeanTween.moveY(gameObject, transform.position.y + 460.0f, 0.4f);
+            if (!toggled)
+            {
+                if(Player.InInventory)
+                {
+                    toggled = false;
+                    return;
+                }
+                OpenInventory();   
+            }
+            else
+            {
+                CloseInventory();
+            }
         }
     }
 }
