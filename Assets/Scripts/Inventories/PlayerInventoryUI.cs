@@ -50,13 +50,13 @@ namespace Inventories
         
         public override void OpenInventory()
         {
-            LeanTween.moveY(gameObject, transform.position.y - 460.0f, 0.4f);
+            LeanTween.moveY(gameObject, transform.position.y - 350.0f, 0.4f);
             toggled = true;
         }
         
         public override void CloseInventory()
         {
-            LeanTween.moveY(gameObject, transform.position.y + 460.0f, 0.4f);
+            LeanTween.moveY(gameObject, transform.position.y + 350.0f, 0.4f);
             toggled = false;
         }
         
