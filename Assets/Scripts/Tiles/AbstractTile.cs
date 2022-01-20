@@ -40,7 +40,7 @@ namespace Tiles
             if (concreteTileData.RequiredToolType == ToolType.NONE) return true;
             if (itemId == ItemId.UNKNOWN) return false;
             var item = Register.GetItemByItemId(itemId);
-            if (!(item is ToolItemData toolItem)) return false;
+            if (!item.IsToolItem(out var toolItem)) return false;
             if (toolItem.toolType != concreteTileData.RequiredToolType) return false;
             return toolItem.toolLevel >= concreteTileData.RequiredToolLevel;
 

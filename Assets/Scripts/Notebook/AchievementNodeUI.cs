@@ -61,7 +61,7 @@ namespace Notebook
             {
                 var icon = requirementsList.Add(countableItemPrefab);
                 var countableItem = icon.GetComponent<CountableItem>();
-                countableItem.Image.sprite = Register.GetItemByItemId(itemCountPair.ItemId).sprite;
+                countableItem.Image.sprite = Register.GetItemByItemId(itemCountPair.ItemId).Sprite();
                 countableItem.Count.text = itemCountPair.Amount.ToString();
             }
             
@@ -69,7 +69,7 @@ namespace Notebook
             {
                 var icon = rewardList.Add(countableItemPrefab);
                 var countableItem = icon.GetComponent<CountableItem>();
-                countableItem.Image.sprite = Register.GetItemByItemId(itemCountPair.ItemId).sprite;
+                countableItem.Image.sprite = Register.GetItemByItemId(itemCountPair.ItemId).Sprite();
                 countableItem.Count.text = itemCountPair.Amount.ToString();
             }
         }

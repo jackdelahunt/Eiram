@@ -34,13 +34,13 @@ namespace Inventories
                 // check for same item
                 if (ItemStacks[i].ItemId == itemId)
                 {
-                    if (ItemStacks[i].Size < item.maxStack)
+                    if (ItemStacks[i].Size < item.MaxStack())
                     {
                         int total = ItemStacks[i].Size + size;
-                        if (total > item.maxStack)
+                        if (total > item.MaxStack())
                         {
-                            SetStack(itemId, i, item.maxStack);
-                            int remainder = total - item.maxStack;
+                            SetStack(itemId, i, item.MaxStack());
+                            int remainder = total - item.MaxStack();
                             return TryAddItem(itemId, remainder);
                         }
                         else
@@ -57,7 +57,8 @@ namespace Inventories
                 // check for empty slot
                 if (ItemStacks[i].IsEmpty())
                 {
-                    SetStack(itemId, i, size);
+                    ItemStacks[i] = Register.GetItemByItemId(itemId).DefaultItemStack();
+                    ItemStacks[i].Size = size;
                     return 0;
                 }
             }

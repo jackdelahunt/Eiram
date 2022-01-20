@@ -1,6 +1,7 @@
 using System;
 using Biomes;
 using Eiram;
+using Items;
 using Items.Items;
 using JetBrains.Annotations;
 using Recipes;
@@ -15,7 +16,7 @@ namespace Registers
     public class Register : MonoBehaviour
     {
         private static AbstractTile[] tiles;
-        private static ConcreteItemData[] items;
+        private static AbstractItem[] items;
         private static Biome[] biomes;
         private static CropRecipe[] cropRecipes;
         private static BuildingRecipe[] buildingRecipes;
@@ -31,7 +32,7 @@ namespace Registers
             return tiles[(int)tileId];
         }
         
-        public static ConcreteItemData GetItemByItemId(ItemId itemId)
+        public static AbstractItem GetItemByItemId(ItemId itemId)
         {
             return items[(int)itemId];
         }
@@ -91,7 +92,18 @@ namespace Registers
                 new Chest(concreteTileDataArray[20]),
             };
 
-            items = itemArray;
+            items = new AbstractItem[]
+            {
+                new DirtItem(itemArray[0]),
+                new GrassItem(itemArray[1]),
+                new ThornsItem(itemArray[2]),
+                new TrellisItem(itemArray[3]),
+                new ChestItem(itemArray[4]),
+                new WoodShovel(itemArray[5]),
+                new WoodPickaxe(itemArray[6]),
+                new WoodAxe(itemArray[7]),
+            };
+            
             biomes = biomeArray;
             cropRecipes = cropRecipeArray;
             buildingRecipes = buildingRecipeArray;
@@ -112,7 +124,7 @@ namespace Registers
             {
                 if(items[i] == null) continue;
 
-                if (i != (int) items[i].itemId)
+                if (i != (int) items[i].ItemId())
                     throw new Exception($"ItemId is in the wrong slot index is {i}");
             }
             

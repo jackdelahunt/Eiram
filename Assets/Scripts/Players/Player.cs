@@ -96,7 +96,7 @@ namespace Players
             {
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
-                World.Current.RemoveTileAtAsPlayer(tilePos, playerInventory.PeekSelectedItem());
+                World.Current.RemoveTileAtAsPlayer(tilePos, playerInventory.PeekSelectedItem(), this);
             }
 
             
@@ -109,7 +109,7 @@ namespace Players
                 if (inHandStack.IsEmpty())
                     World.Current.UseTileAt(tilePos, this);    
                 else
-                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(inHandStack.ItemId).tileId);
+                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(inHandStack.ItemId).TileId());
             }
 
             float scrollAmount = Input.GetAxisRaw("Scroll"); 

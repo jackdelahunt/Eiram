@@ -1,6 +1,7 @@
 ﻿using System;
 using Eiram;
 using Registers;
+using Tags;
 
 namespace Items
 {
@@ -22,6 +23,22 @@ namespace Items
             this.Size = size;
         }
 
+        public static ItemStack New(ItemId id, int amount)
+        {
+            var stack = Register.GetItemByItemId(id).DefaultItemStack();
+            stack.Size = amount;
+            return stack;
+        }
+        
+        public virtual object Clone()
+        {
+            return new ItemStack()
+            {
+                ItemId = this.ItemId,
+                Size = this.Size
+            };
+        }
+
         public void Empty()
         {
             this.Size = 0;
@@ -39,7 +56,7 @@ namespace Items
                 return false;
 
             var thisItem = Register.GetItemByItemId(ItemId);
-            return thisItem.maxStack > Size + other.Size;
+            return thisItem.MaxStack() > Size + other.Size;
         }
 
         public override string ToString()
@@ -61,6 +78,22 @@ namespace Items
                 return -1;
             
             return 1;
+        }
+    }
+
+    [Serializable]
+    public class RichItemStack : ItemStack
+    {
+        public Tag Tag;
+        
+        public override object Clone()
+        {
+            return new RichItemStack()
+            {
+                ItemId = this.ItemId,
+                Size = this.Size,
+                Tag = this.Tag.Clone() as Tag
+            };
         }
     }
 }
