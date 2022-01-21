@@ -44,6 +44,7 @@ namespace Players
             playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
             playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
             playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
+            playerInventory.TryAddItem(ItemId.CHEST, 5);
         }
 
         public void OnDestroy()
@@ -113,14 +114,28 @@ namespace Players
             
             if (Input.GetButtonDown("Fire2"))
             {
-                var inHandStack = playerInventory.PopSelectedItem();
+                var inHandStack = playerInventory.PeekSelectedItem();
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
+
+                var tileData = World.Current.GetTileData(tilePos).Unwrap();
+                if (inHandStack.IsEmpty() || tileData.TileId != TileId.AIR)
+                {
+                    World.Current.UseTileAt(tilePos, this);
+                    return;
+                }
                 
-                if (inHandStack.IsEmpty())
-                    World.Current.UseTileAt(tilePos, this);    
+                var item = Register.GetItemByItemId(inHandStack.ItemId);
+                if (item.TileId() == TileId.UNKNOWN)
+                {
+                    World.Current.UseTileAt(tilePos, this);
+                }
                 else
-                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(inHandStack.ItemId).TileId());
+                {
+                    // placing the item, pop item from inventory
+                    var poppedItem = playerInventory.PopSelectedItem();
+                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(poppedItem.ItemId).TileId());
+                }
             }
 
             float scrollAmount = Input.GetAxisRaw("Scroll"); 
