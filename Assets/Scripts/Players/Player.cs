@@ -33,6 +33,7 @@ namespace Players
         private void Awake()
         {
             EiramEvents.PlayerInventoryRequestEvent += OnPlayerInventoryRequest;
+            EiramEvents.ToolBreakEvent += OnToolBreak;
             controller = GetComponent<CharacterController>();
             mainCamera = Camera.main;
             //animator = GetComponent<Animator>();
@@ -48,6 +49,7 @@ namespace Players
         public void OnDestroy()
         {
             EiramEvents.PlayerInventoryRequestEvent -= OnPlayerInventoryRequest;
+            EiramEvents.ToolBreakEvent -= OnToolBreak;
         }
 
         void Update()
@@ -75,6 +77,15 @@ namespace Players
         {
             EiramEvents.OnPlayerTogglePlayerInventory(playerInventory);
             inInventory = !inInventory;
+        }
+
+        private void OnToolBreak(ItemStack itemStack)
+        {
+            var index = playerInventory.SlotOfStack(itemStack);
+            if (index.IsSome(out var i))
+            {
+                playerInventory.ClearSlot(i);
+            }
         }
 
         /*

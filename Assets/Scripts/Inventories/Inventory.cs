@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Eiram;
+using Events;
 using Items;
 using Recipes;
 using Registers;
+using static Eiram.Handles;
 
 namespace Inventories
 {
@@ -25,7 +27,7 @@ namespace Inventories
             }
             IsDirty = true;
         }
-        
+
         public int TryAddItem(ItemId itemId, int size)
         {
             var item = Register.GetItemByItemId(itemId);
@@ -134,6 +136,17 @@ namespace Inventories
         {
             ItemStacks[slotIndex] = new ItemStack();
             IsDirty = true;
+        }
+
+        public Option<int> SlotOfStack(ItemStack itemStack)
+        {
+            for (int i = 0; i < ItemStacks.Count; i++)
+            {
+                if (ItemStacks[i].Equals(itemStack))
+                    return i;
+            }
+
+            return None<int>();
         }
 
         public int TotalOfItem(ItemId id)

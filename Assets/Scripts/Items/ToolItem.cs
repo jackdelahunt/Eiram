@@ -1,4 +1,5 @@
 using System;
+using Events;
 using Items.Items;
 using Players;
 using Tags;
@@ -37,8 +38,12 @@ namespace Items
         {
             if (stack.Tag.HasKey("durability"))
             {
-                stack.Tag.SetInt("durability", stack.Tag.GetInt("durability") - 1);
-                Debug.Log(stack.Tag.GetInt("durability"));
+                int durability = stack.Tag.GetInt("durability");
+                stack.Tag.SetInt("durability", --durability);
+                if(durability <= 0)
+                {
+                    EiramEvents.OnToolBreakEvent(stack);
+                }
             }
             else
             {

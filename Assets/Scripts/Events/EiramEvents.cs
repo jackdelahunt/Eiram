@@ -1,6 +1,7 @@
 ﻿using System;
 using Eiram;
 using Inventories;
+using Items;
 using Tiles;
 using UnityEngine;
 
@@ -45,9 +46,16 @@ namespace Events
         
         public static event Action<ChestInventory> PlayerOpenChestEvent;
 
-        public static void OnPlayerOpenChest(ChestInventory chestInventory)
+        public static void OnPlayerOpenChestEvent(ChestInventory chestInventory)
         {
             PlayerOpenChestEvent?.Invoke(chestInventory);
+        }
+        
+        public static event Action<RichItemStack> ToolBreakEvent;
+
+        public static void OnToolBreakEvent(RichItemStack richItemStack)
+        {
+            ToolBreakEvent?.Invoke(richItemStack);
         }
         
         public static event Action PlayerToggleNotebookEvent;
