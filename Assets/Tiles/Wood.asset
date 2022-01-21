@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Wood
   TileId: 10
+  RequiredToolType: 1
+  RequiredToolLevel: 0
   TileBase: {fileID: 11400000, guid: 1521898ff307dc442b691b4d01d29afb, type: 2}
   Drops: []

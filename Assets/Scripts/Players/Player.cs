@@ -33,6 +33,7 @@ namespace Players
         private void Awake()
         {
             EiramEvents.PlayerInventoryRequestEvent += OnPlayerInventoryRequest;
+            EiramEvents.ToolBreakEvent += OnToolBreak;
             controller = GetComponent<CharacterController>();
             mainCamera = Camera.main;
             //animator = GetComponent<Animator>();
@@ -40,14 +41,16 @@ namespace Players
 
         public void Start()
         {
-            playerInventory.TryAddItem(ItemId.THORNS, 5);
-            playerInventory.TryAddItem(ItemId.TRELLIS, 5);
+            playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
+            playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
+            playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
             playerInventory.TryAddItem(ItemId.CHEST, 5);
         }
 
         public void OnDestroy()
         {
             EiramEvents.PlayerInventoryRequestEvent -= OnPlayerInventoryRequest;
+            EiramEvents.ToolBreakEvent -= OnToolBreak;
         }
 
         void Update()
@@ -77,6 +80,15 @@ namespace Players
             inInventory = !inInventory;
         }
 
+        private void OnToolBreak(ItemStack itemStack)
+        {
+            var index = playerInventory.SlotOfStack(itemStack);
+            if (index.IsSome(out var i))
+            {
+                playerInventory.ClearSlot(i);
+            }
+        }
+
         /*
          * checks for player movement an invokes the
          * player movement event or
@@ -96,20 +108,34 @@ namespace Players
             {
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
-                World.Current.RemoveTileAt(tilePos);
+                World.Current.RemoveTileAtAsPlayer(tilePos, playerInventory.PeekSelectedItem(), this);
             }
 
             
             if (Input.GetButtonDown("Fire2"))
             {
-                var inHandStack = playerInventory.PopSelectedItem();
+                var inHandStack = playerInventory.PeekSelectedItem();
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
+
+                var tileData = World.Current.GetTileData(tilePos).Unwrap();
+                if (inHandStack.IsEmpty() || tileData.TileId != TileId.AIR)
+                {
+                    World.Current.UseTileAt(tilePos, this);
+                    return;
+                }
                 
-                if (inHandStack.IsEmpty())
-                    World.Current.UseTileAt(tilePos, this);    
+                var item = Register.GetItemByItemId(inHandStack.ItemId);
+                if (item.TileId() == TileId.UNKNOWN)
+                {
+                    World.Current.UseTileAt(tilePos, this);
+                }
                 else
-                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(inHandStack.ItemId).tileId);
+                {
+                    // placing the item, pop item from inventory
+                    var poppedItem = playerInventory.PopSelectedItem();
+                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(poppedItem.ItemId).TileId());
+                }
             }
 
             float scrollAmount = Input.GetAxisRaw("Scroll"); 

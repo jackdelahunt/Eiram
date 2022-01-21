@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Eiram;
+using Events;
 using Items;
 using Recipes;
 using Registers;
+using static Eiram.Handles;
 
 namespace Inventories
 {
@@ -25,7 +27,7 @@ namespace Inventories
             }
             IsDirty = true;
         }
-        
+
         public int TryAddItem(ItemId itemId, int size)
         {
             var item = Register.GetItemByItemId(itemId);
@@ -34,13 +36,13 @@ namespace Inventories
                 // check for same item
                 if (ItemStacks[i].ItemId == itemId)
                 {
-                    if (ItemStacks[i].Size < item.maxStack)
+                    if (ItemStacks[i].Size < item.MaxStack())
                     {
                         int total = ItemStacks[i].Size + size;
-                        if (total > item.maxStack)
+                        if (total > item.MaxStack())
                         {
-                            SetStack(itemId, i, item.maxStack);
-                            int remainder = total - item.maxStack;
+                            SetStack(itemId, i, item.MaxStack());
+                            int remainder = total - item.MaxStack();
                             return TryAddItem(itemId, remainder);
                         }
                         else
@@ -57,7 +59,8 @@ namespace Inventories
                 // check for empty slot
                 if (ItemStacks[i].IsEmpty())
                 {
-                    SetStack(itemId, i, size);
+                    ItemStacks[i] = Register.GetItemByItemId(itemId).DefaultItemStack();
+                    ItemStacks[i].Size = size;
                     return 0;
                 }
             }
@@ -133,6 +136,17 @@ namespace Inventories
         {
             ItemStacks[slotIndex] = new ItemStack();
             IsDirty = true;
+        }
+
+        public Option<int> SlotOfStack(ItemStack itemStack)
+        {
+            for (int i = 0; i < ItemStacks.Count; i++)
+            {
+                if (ItemStacks[i].Equals(itemStack))
+                    return i;
+            }
+
+            return None<int>();
         }
 
         public int TotalOfItem(ItemId id)

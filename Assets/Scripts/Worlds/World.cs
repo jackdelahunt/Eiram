@@ -58,6 +58,22 @@ namespace Worlds
             return false;
         }
 
+        public void RemoveTileAtAsPlayer(Vector3Int worldPosition, ItemStack inHand, Player player)
+        {
+            if (GetTileData(worldPosition).IsSome(out var tileData))
+            {
+                if (Register.GetTileByTileId(tileData.TileId).CanBeBrokenBy(inHand.ItemId))
+                {
+                    if (Register.GetItemByItemId(inHand.ItemId).IsToolItem(out var toolItem))
+                    {
+                        Register.GetItemByItemId(toolItem.itemId).OnBreak(worldPosition, inHand, player);
+                    }
+                    
+                    RemoveTileAt(worldPosition);
+                }
+            }
+        }
+
         public void RemoveTileAt(Vector3Int worldPosition)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);

@@ -40,6 +40,9 @@ namespace Eiram
         THORNS = 2,
         TRELLIS = 3,
         CHEST = 4,
+        WOOD_SHOVEL = 5,
+        WOOD_PICKAXE = 6,
+        WOOD_AXE = 7,
     }
     
     public enum BiomeId
@@ -47,5 +50,19 @@ namespace Eiram
         UNKNOWN = -1,
         GRASS_HILLS = 0,
         STONE_FLATS = 1
+    }
+    
+    public enum ToolType
+    {
+        NONE = -1,
+        PICKAXE = 0,
+        AXE = 1,
+        SHOVEL = 2
+    }
+    
+    public enum ToolLevel
+    {
+        WOOD = 0,
+        STONE = 1,
     }
 }

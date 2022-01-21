@@ -1,3 +1,4 @@
+using System;
 using Eiram;
 using Items;
 using Registers;
@@ -15,11 +16,15 @@ namespace Inventories
         public Option<ItemSlot> ItemSlot = None<ItemSlot>();
     
         [SerializeField] private float onDragAlpha = 1.0f;
+        [SerializeField] private Color MaxDurabilityColour;
+        [SerializeField] private Color MinDurabilityColour;
     
         private Option<ItemSlot> lastItemSlot = None<ItemSlot>();
         private RectTransform rectTransform = null;
         private Canvas canvas = null;
         private CanvasGroup canvasGroup = null;
+
+        private bool isItemATool = false;
 
         private void Awake()
         {
@@ -29,10 +34,30 @@ namespace Inventories
             Image = GetComponent<Image>();
         }
 
+        private void Update()
+        {
+            if (isItemATool)
+            {
+                SetDurabilityText();
+            }
+        }
+
         public void Refresh()
         {
-            Count.text = ItemStack.Size.ToString();
-            Image.sprite = Register.GetItemByItemId(ItemStack.ItemId).sprite;
+            var item = Register.GetItemByItemId(ItemStack.ItemId); 
+            Image.sprite = item.Sprite();
+            if (item.IsToolItem(out var _))
+            {
+                isItemATool = true;
+                Count.text = "";
+                SetDurabilityText();
+            }
+            else
+            {
+                isItemATool = false;
+                Durability.text = "";
+                Count.text = ItemStack.Size.ToString();
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -71,6 +96,21 @@ namespace Inventories
             }
             canvasGroup.blocksRaycasts = true;
             canvasGroup.alpha = 1.0f;
+        }
+
+        private void SetDurabilityText()
+        {
+            Debug.Assert(ItemStack is RichItemStack);
+            var richItemStack = ItemStack as RichItemStack;
+            isItemATool = true;
+            int durability = richItemStack.Tag.GetInt("durability");
+            int maxDurability = durability;
+            if(Register.GetItemByItemId(ItemStack.ItemId).IsToolItem(out var toolItemData))
+            {
+                maxDurability = toolItemData.durability;
+            }
+            Durability.text = durability.ToString();
+            Durability.color = Color.Lerp(MinDurabilityColour, MaxDurabilityColour, (float)durability / (float)maxDurability);
         }
     }
 }

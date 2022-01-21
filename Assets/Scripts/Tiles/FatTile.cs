@@ -52,7 +52,7 @@ namespace Tiles
         {
             base.OnUse(worldPosition, currentTileData, serialFatTileData, player);
             Debug.Assert(serialFatTileData is SerialChestTileData);
-            EiramEvents.OnPlayerOpenChest((serialFatTileData as SerialChestTileData).ChestInventory);
+            EiramEvents.OnPlayerOpenChestEvent((serialFatTileData as SerialChestTileData).ChestInventory);
         }
 
         public override SerialFatTileData SerialFatTileData(Vector3Int worldPosition)

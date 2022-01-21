@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f122aa2cf3a50aaf0ae84ae9dd486c3b, type: 3}
-  m_Name: Plank
+  m_Script: {fileID: 11500000, guid: b4286a74653645a5a808088a4bd6d2c3, type: 3}
+  m_Name: WoodAxe
   m_EditorClassIdentifier: 
-  TileName: Plank
-  TileId: 11
-  RequiredToolType: 1
-  RequiredToolLevel: 1
-  TileBase: {fileID: 11400000, guid: c688d8e57a9cf0b4ca41dbb5fb7930d1, type: 2}
-  Drops: []
+  itemName: Wooden Axe
+  itemId: 7
+  tileId: -1
+  maxStack: 1
+  sprite: {fileID: 21300000, guid: 5f53efc56597a6136a9f068f1ae0e2af, type: 3}
+  durability: 32
+  toolType: 1
+  toolLevel: 0

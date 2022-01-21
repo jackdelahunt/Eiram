@@ -27,7 +27,7 @@ namespace Inventories
         {
             this.callback = callback;
             this.recipe = recipe;
-            this.iconImage.sprite = Register.GetItemByItemId(recipe.FinalItem.ItemId).sprite;
+            this.iconImage.sprite = Register.GetItemByItemId(recipe.FinalItem.ItemId).Sprite();
         }
     }
 }

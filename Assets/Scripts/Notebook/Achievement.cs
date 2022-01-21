@@ -23,7 +23,7 @@ namespace Notebook
             var root = new Achievement()
             {
                 parent = null,
-                thumbnail = Register.GetItemByItemId(ItemId.DIRT).sprite,
+                thumbnail = Register.GetItemByItemId(ItemId.DIRT).Sprite(),
                 title = "Mining Dirt",
                 description = "Break dirt with your empty hand",
                 status = AchievementStatus.AVAILABLE,
@@ -38,7 +38,7 @@ namespace Notebook
                     new Achievement()
                     {
                         parent = null,
-                        thumbnail = Register.GetItemByItemId(ItemId.GRASS).sprite,
+                        thumbnail = Register.GetItemByItemId(ItemId.GRASS).Sprite(),
                         title = "Mining Grass",
                         description = "Break dirt with your empty hand",
                         status = AchievementStatus.LOCKED,

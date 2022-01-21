@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Trellis
   TileId: 19
+  RequiredToolType: 1
+  RequiredToolLevel: 0
   TileBase: {fileID: 11400000, guid: fe0fae5edc05c264e8f3ec0d5b483aa9, type: 2}
   Drops:
   - ItemId: 3

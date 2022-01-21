@@ -5,8 +5,8 @@ namespace Items
 {
     namespace Items
     {
-        [CreateAssetMenu(fileName = "Eiram", menuName = "Eiram/Item")]
-        public class Item : ScriptableObject
+        [CreateAssetMenu(fileName = "Eiram", menuName = "Eiram/ConcreteItemData")]
+        public class ConcreteItemData : ScriptableObject
         {
             public string itemName;
             public ItemId itemId;
