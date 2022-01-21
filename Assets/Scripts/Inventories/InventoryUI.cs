@@ -65,6 +65,7 @@ namespace Inventories
         {
             toggled = true;
             gameObject.SetActive(true);
+            Refresh();
         }
         
         public virtual void CloseInventory()
