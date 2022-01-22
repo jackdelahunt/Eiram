@@ -52,18 +52,18 @@ namespace Items
         }
     }
     
-    public class WoodShovel : ToolItem
+    public class WoodShovelItem : ToolItem
     {
-        public WoodShovel(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+        public WoodShovelItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
     
-    public class WoodPickaxe : ToolItem
+    public class WoodPickaxeItem : ToolItem
     {
-        public WoodPickaxe(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+        public WoodPickaxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
     
-    public class WoodAxe : ToolItem
+    public class WoodAxeItem : ToolItem
     {
-        public WoodAxe(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+        public WoodAxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
 }

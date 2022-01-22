@@ -50,6 +50,7 @@ namespace Players
             playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
             playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
             playerInventory.TryAddItem(ItemId.CHEST, 5);
+            playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
         }
 
         public void OnDestroy()
@@ -79,6 +80,27 @@ namespace Players
             this.playerInventory = playerData.PlayerInventory;
             this.hunger = playerData.hunger;
             this.playerInventory.IsDirty = true;
+        }
+        
+        public bool ChangeHunger(int delta)
+        {
+            int startHunger = hunger;
+            
+            hunger += delta;
+            
+            if (hunger <= 0)
+                hunger = 0;
+
+            if (hunger >= 100)
+                hunger = 100;
+            
+            if(startHunger != hunger)
+            {
+                EiramEvents.OnPlayerChangedHungerEvent(hunger);
+                return true;
+            }
+
+            return false;
         }
 
         private void OnPlayerInventoryRequest()
@@ -125,23 +147,27 @@ namespace Players
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
 
-                var tileData = World.Current.GetTileData(tilePos).Unwrap();
-                if (inHandStack.IsEmpty() || tileData.TileId != TileId.AIR)
+                // use tile if empty
+                if (inHandStack.IsEmpty())
                 {
                     World.Current.UseTileAt(tilePos, this);
                     return;
                 }
                 
+                // if can place item then place
                 var item = Register.GetItemByItemId(inHandStack.ItemId);
-                if (item.TileId() == TileId.UNKNOWN)
+                var tileData = World.Current.GetTileData(tilePos).Unwrap();
+                if (item.TileId() != TileId.UNKNOWN && tileData.TileId == TileId.AIR)
                 {
-                    World.Current.UseTileAt(tilePos, this);
+                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(playerInventory.PopSelectedItem().ItemId).TileId());
+                    return;
                 }
-                else
+                
+                // if tile is usable then do not use item, else use item
+                if(!World.Current.UseTileAt(tilePos, this))
                 {
-                    // placing the item, pop item from inventory
-                    var poppedItem = playerInventory.PopSelectedItem();
-                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(poppedItem.ItemId).TileId());
+                    if (item.OnUse(tilePos, inHandStack, this))
+                        playerInventory.PopSelectedItem();
                 }
             }
 
@@ -191,18 +217,6 @@ namespace Players
             }
         }
 
-        private void ChangeHunger(int delta)
-        {
-            if(hunger <= 0) return; // not changing hunger
-
-            hunger += delta;
-            
-            if (hunger <= 0)
-                hunger = 0;
-
-            EiramEvents.OnPlayerChangedHungerEvent(hunger);
-        }
-        
         /*
          * returns a position of a the tile
          * where the players mouse is

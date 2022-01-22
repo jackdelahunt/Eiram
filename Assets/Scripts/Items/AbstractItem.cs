@@ -18,8 +18,11 @@ namespace Items
         }
 
         public virtual void OnBreak(Vector3Int worldPosition, ItemStack stack, Player player) {}
-        
-        public virtual void OnUse(Vector3Int worldPosition, ItemStack stack, Player player) {}
+
+        public virtual bool OnUse(Vector3Int worldPosition, ItemStack stack, Player player)
+        {
+            return false;
+        }
 
         public ItemId ItemId()
         {

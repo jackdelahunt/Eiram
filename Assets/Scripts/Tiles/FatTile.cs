@@ -22,22 +22,22 @@ namespace Tiles
             World.Current.RemoveFatTile(worldPosition);
         }
 
-        public override void OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player)
+        public override bool OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player)
         {
             base.OnUse(worldPosition, currentTileData, player);
             if (World.Current.GetFatTileAt(worldPosition).IsSome(out var fatTileData))
             {
-                this.OnUse(worldPosition, currentTileData, fatTileData, player);
-                return;
+                return this.OnUse(worldPosition, currentTileData, fatTileData, player);
             }
 
             Debug.LogError($"Chunk does not contain fat tile at this world position {worldPosition.x} : {worldPosition.y} ");
+            return false;
         }
 
-        public virtual void OnUse(Vector3Int worldPosition, SerialTileData currentTileData, SerialFatTileData serialFatTileData,
+        public virtual bool OnUse(Vector3Int worldPosition, SerialTileData currentTileData, SerialFatTileData serialFatTileData,
             Player player)
         {
-            
+            return false;
         }
 
         public abstract SerialFatTileData SerialFatTileData(Vector3Int worldPosition);
@@ -47,12 +47,13 @@ namespace Tiles
     {
         public Chest(ConcreteTileData concreteTileData) : base(concreteTileData) {}
 
-        public override void OnUse(Vector3Int worldPosition, SerialTileData currentTileData,
+        public override bool OnUse(Vector3Int worldPosition, SerialTileData currentTileData,
             SerialFatTileData serialFatTileData, Player player)
         {
             base.OnUse(worldPosition, currentTileData, serialFatTileData, player);
             Debug.Assert(serialFatTileData is SerialChestTileData);
             EiramEvents.OnPlayerOpenChestEvent((serialFatTileData as SerialChestTileData).ChestInventory);
+            return true;
         }
 
         public override SerialFatTileData SerialFatTileData(Vector3Int worldPosition)

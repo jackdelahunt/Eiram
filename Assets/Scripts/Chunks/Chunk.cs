@@ -99,10 +99,10 @@ namespace Chunks
             Register.GetTileByTileId(data.TileId).OnUpdate(worldPosition, data);
         }
         
-        public void UseTileAt(Vector3Int worldPosition, Player player)
+        public bool UseTileAt(Vector3Int worldPosition, Player player)
         {
             var data = GetTileData(worldPosition);
-            Register.GetTileByTileId(data.TileId).OnUse(worldPosition, data, player);
+            return Register.GetTileByTileId(data.TileId).OnUse(worldPosition, data, player);
         }
 
         public void RandomUpdateTileAt(Vector3Int worldPosition)

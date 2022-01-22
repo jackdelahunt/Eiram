@@ -99,9 +99,10 @@ namespace Registers
                 new ThornsItem(itemArray[2]),
                 new TrellisItem(itemArray[3]),
                 new ChestItem(itemArray[4]),
-                new WoodShovel(itemArray[5]),
-                new WoodPickaxe(itemArray[6]),
-                new WoodAxe(itemArray[7]),
+                new WoodShovelItem(itemArray[5]),
+                new WoodPickaxeItem(itemArray[6]),
+                new WoodAxeItem(itemArray[7]),
+                new CranberriesItem(itemArray[8]),
             };
             
             biomes = biomeArray;
