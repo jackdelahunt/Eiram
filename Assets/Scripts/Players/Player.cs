@@ -14,6 +14,7 @@ namespace Players
     public class Player : MonoBehaviour
     {
         public PlayerInventory playerInventory;
+        public int hunger = 100;
         
         [SerializeField] private float jumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
@@ -71,6 +72,7 @@ namespace Players
         {
             transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
             this.playerInventory = playerData.PlayerInventory;
+            this.hunger = playerData.hunger;
             this.playerInventory.IsDirty = true;
         }
 
@@ -155,6 +157,7 @@ namespace Players
             {
                 isPlayerIdle = false;
                 controller.Jump(jumpForce);
+                ChangeHunger(-10);
             }
         }
 
@@ -169,6 +172,12 @@ namespace Players
                 // animator.SetBool(IsWalking, false);
                 // animator.SetBool(IsJumping, false);
             }
+        }
+
+        private void ChangeHunger(int delta)
+        {
+            hunger += delta;
+            EiramEvents.OnPlayerChangedHungerEvent(hunger);
         }
         
         /*
@@ -227,6 +236,7 @@ namespace Players
                 X = position.x,
                 Y = position.y,
                 Z = position.z,
+                hunger = hunger,
                 PlayerInventory = playerInventory
             };
         }
@@ -238,6 +248,7 @@ namespace Players
         public float X;
         public float Y;
         public float Z;
+        public int hunger;
         public PlayerInventory PlayerInventory;
     }
 }

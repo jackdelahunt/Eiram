@@ -37,6 +37,13 @@ namespace Events
             PlayerInteractEvent?.Invoke();
         }
         
+        public static event Action<int> PlayerChangedHungerEvent;
+
+        public static void OnPlayerChangedHungerEvent(int hunger)
+        {
+            PlayerChangedHungerEvent?.Invoke(hunger);
+        }
+        
         public static event Action PlayerInventoryRequestEvent;
 
         public static void OnPlayerInventoryRequestEvent()
