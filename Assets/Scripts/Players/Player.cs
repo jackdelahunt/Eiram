@@ -1,6 +1,7 @@
 using System;
 using Eiram;
 using Events;
+using Graphics;
 using Inventories;
 using Items;
 using Registers;
@@ -17,7 +18,9 @@ namespace Players
         public int hunger = 100;
         
         [SerializeField] private float jumpForce = 400f;
+        [SerializeField] private float maxJumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
+        [SerializeField] private float maxMovementSpeed = 10f;
 
         private bool inInventory = false;
         private bool inNotebook = false;
@@ -42,6 +45,7 @@ namespace Players
 
         public void Start()
         {
+            EiramEvents.OnPlayerChangedHungerEvent(hunger);
             playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
             playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
             playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
@@ -63,6 +67,7 @@ namespace Players
                 CheckForMouseInput();
                 CheckPlayerJump();
                 CheckPlayerIdle();
+                CheckPlayerHunger();
             }
 
             CheckPlayerUIInteraction();
@@ -156,15 +161,11 @@ namespace Players
             if (Input.GetButtonDown("Jump"))
             {
                 isPlayerIdle = false;
-                controller.Jump(jumpForce);
-                ChangeHunger(-10);
+                if (controller.Jump(jumpForce))
+                    ChangeHunger(-10);
             }
         }
 
-        /*
-         * checks if the the player has moved or jumped
-         * this frame
-         */
         private void CheckPlayerIdle()
         {
             if (isPlayerIdle)
@@ -174,9 +175,31 @@ namespace Players
             }
         }
 
+        private void CheckPlayerHunger()
+        {
+            if (hunger == 0)
+            {
+                movementSpeed = maxMovementSpeed * 0.7f;
+                jumpForce = maxJumpForce * 0.85f;
+                PostProcessing.instance.Vignette(0.5f);
+            }
+            else
+            {
+                movementSpeed = maxMovementSpeed;
+                jumpForce = maxJumpForce;
+                PostProcessing.instance.ResetVignette();
+            }
+        }
+
         private void ChangeHunger(int delta)
         {
+            if(hunger <= 0) return; // not changing hunger
+
             hunger += delta;
+            
+            if (hunger <= 0)
+                hunger = 0;
+
             EiramEvents.OnPlayerChangedHungerEvent(hunger);
         }
         

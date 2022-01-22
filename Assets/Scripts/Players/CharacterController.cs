@@ -78,14 +78,17 @@ namespace Players
             }
         }
 
-        public void Jump(float jumpForce)
+        public bool Jump(float jumpForce)
         {
             jumpForce *= 50;
             if (isGrounded)
             {
                 isGrounded = false;
                 thisRigidbody.AddForce(new Vector2(0f, jumpForce));
+                return true;
             }
+
+            return false;
         }
 
 

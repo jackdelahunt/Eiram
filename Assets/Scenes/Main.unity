@@ -2209,6 +2209,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9118297347259422755, guid: 47a4621a344a62b1aa032a8ef523c04f,
+        type: 3}
+      propertyPath: maxJumpForce
+      value: 480
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118297347259422755, guid: 47a4621a344a62b1aa032a8ef523c04f,
+        type: 3}
+      propertyPath: maxMovementSpeed
+      value: 1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 9118297347259422780, guid: 47a4621a344a62b1aa032a8ef523c04f,
         type: 3}
       propertyPath: m_RootOrder
