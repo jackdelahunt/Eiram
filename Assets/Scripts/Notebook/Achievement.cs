@@ -68,7 +68,23 @@ namespace Notebook
             
             return achievements;
         }
+
+        public AchievementData GetSerializableData()
+        {
+            return new AchievementData()
+            {
+                name = this.title,
+                status = this.status
+            };
+        }
         
+    }
+
+    [Serializable]
+    public class AchievementData
+    {
+        public string name;
+        public AchievementStatus status;
     }
 
     public enum AchievementStatus
