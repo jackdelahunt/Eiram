@@ -221,9 +221,6 @@ namespace Worlds
                 var chunkData = chunk.SerializableData();
                 Filesystem.SaveTo(chunkData, $"{chunkData.ChunkX}.chunk", Save.Region);
             }
-
-            var playerData = player.SerializableData();
-            Filesystem.SaveTo(playerData, "player.data", Save.Data);
         }
 
         private void RandomUpdateChunks()

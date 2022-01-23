@@ -39,6 +39,7 @@ namespace Players
         {
             EiramEvents.PlayerInventoryRequestEvent += OnPlayerInventoryRequest;
             EiramEvents.ToolBreakEvent += OnToolBreak;
+            EiramEvents.SaveToDiskRequestEvent += SaveData;
             controller = GetComponent<CharacterController>();
             mainCamera = Camera.main;
             //animator = GetComponent<Animator>();
@@ -61,6 +62,7 @@ namespace Players
         {
             EiramEvents.PlayerInventoryRequestEvent -= OnPlayerInventoryRequest;
             EiramEvents.ToolBreakEvent -= OnToolBreak;
+            EiramEvents.SaveToDiskRequestEvent -= SaveData;
         }
 
         void Update()
@@ -223,6 +225,11 @@ namespace Players
                 jumpForce = maxJumpForce;
                 PostProcessing.instance.ResetVignette();
             }
+        }
+
+        private void SaveData()
+        {
+            Filesystem.SaveTo(SerializableData(), "player.data", World.Current.Save.Data);
         }
 
         /*
