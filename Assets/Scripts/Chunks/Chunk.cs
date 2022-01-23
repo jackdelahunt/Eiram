@@ -24,6 +24,7 @@ namespace Chunks
         public readonly BiomeId BiomeId;
         public readonly int ChunkX;
         private readonly SerialTileData[,] tileDataArray;
+        public readonly TileId[,] backgroundTileData;
         private readonly List<SerialFatTileData> fatTileArray;
 
         public Chunk(int chunkX)
@@ -31,17 +32,20 @@ namespace Chunks
             var rand = new Random();
             this.BiomeId = (BiomeId)Mathf.Round(Noise.TerrainNoise(chunkX, 0, 0) * (float)(Register.ActiveBiomes() - 1));
             this.ChunkX = chunkX;
-            tileDataArray = TerrainGenerator.GenerateChunkData(this);
+            (tileDataArray, backgroundTileData) = TerrainGenerator.GenerateChunkData(this);
             fatTileArray = new List<SerialFatTileData>();
             EiramTilemap.Foreground.DrawChunk(this);
+            EiramTilemap.Background.DrawChunk(this);
         }
 
         public Chunk(ChunkData loadedData)
         {
             this.ChunkX = loadedData.ChunkX;
             this.tileDataArray = loadedData.TileDataArray;
+            this.backgroundTileData = loadedData.BackgroundTileData;
             this.fatTileArray = loadedData.FatTileArray;
             EiramTilemap.Foreground.DrawChunk(this);
+            EiramTilemap.Background.DrawChunk(this);
         }
         
         public void Die()
@@ -53,6 +57,12 @@ namespace Chunks
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
             return tileDataArray[chunkPosition.x, chunkPosition.y];
+        }
+        
+        public TileId GetBackgroundTileAt(Vector3Int worldPosition)
+        {
+            var chunkPosition = WorldCoordToChunkCoord(worldPosition);
+            return backgroundTileData[chunkPosition.x, chunkPosition.y];
         }
         
         public bool PlaceTileAt(Vector3Int worldPosition, TileId tileId)
@@ -177,6 +187,7 @@ namespace Chunks
             {
                 ChunkX = this.ChunkX,
                 TileDataArray = this.tileDataArray,
+                BackgroundTileData = this.backgroundTileData,
                 FatTileArray = this.fatTileArray
             };
         }
@@ -187,6 +198,7 @@ namespace Chunks
     {
         public int ChunkX;
         public SerialTileData[,] TileDataArray;
+        public TileId[,] BackgroundTileData;
         public List<SerialFatTileData> FatTileArray;
     }
 }
