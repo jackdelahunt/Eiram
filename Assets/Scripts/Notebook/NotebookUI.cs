@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Events;
 using Graphics;
+using IO;
 using Notebook;
 using UnityEngine;
+using Worlds;
 
 namespace Notebook
 {
@@ -25,12 +27,14 @@ namespace Notebook
         private void Awake()
         {
             EiramEvents.PlayerToggleNotebookEvent += OnNotebookToggleEvent;
+            EiramEvents.SaveToDiskRequestEvent += SaveNotebook;
             GetAllAchievementNodeUI();
             root = Achievement.NewTree();
         }
 
         private void Start()
         {
+            TryApplySave();
             PopulateUI();
         }
         
@@ -46,6 +50,7 @@ namespace Notebook
         private void OnDestroy()
         {
             EiramEvents.PlayerToggleNotebookEvent -= OnNotebookToggleEvent;
+            EiramEvents.SaveToDiskRequestEvent -= SaveNotebook;
         }
 
         private void ScrollGraph(float amount)
@@ -101,5 +106,48 @@ namespace Notebook
         {
             LeanTween.moveY(gameObject, end.position.y, 0.4f);
         }
+
+        private void TryApplySave()
+        {
+            var loadedData =
+                Filesystem.LoadFrom<NoteBookData>("notebook.data", World.Current.Save.Data);
+            
+            if(loadedData.IsNone) return;
+
+            var allCurrentAchievements = root.AllAchievements();
+            foreach (var achievementData in loadedData.Unwrap().AllAchievementData)
+            {
+                foreach (var achievement in allCurrentAchievements)
+                {
+                    if (achievement.title.Equals(achievementData.name))
+                    {
+                        achievement.status = achievementData.status;
+                    }
+                }
+            }
+        }
+
+        private void SaveNotebook()
+        {
+            var all = root.AllAchievements();
+            var achievementDataList = new List<AchievementData>();
+            foreach (var achievement in all)
+            {
+                achievementDataList.Add(achievement.GetSerializableData());
+            }
+
+            var notebookData = new NoteBookData()
+            {
+                AllAchievementData = achievementDataList
+            };
+            
+            Filesystem.SaveTo(notebookData, "notebook.data", World.Current.Save.Data);
+        }
+    }
+    
+    [Serializable]
+    public class NoteBookData
+    {
+        public List<AchievementData> AllAchievementData;
     }
 }

@@ -3,6 +3,7 @@ using Eiram;
 using Events;
 using Graphics;
 using Inventories;
+using IO;
 using Items;
 using Registers;
 using UnityEngine;
@@ -38,6 +39,7 @@ namespace Players
         {
             EiramEvents.PlayerInventoryRequestEvent += OnPlayerInventoryRequest;
             EiramEvents.ToolBreakEvent += OnToolBreak;
+            EiramEvents.SaveToDiskRequestEvent += SaveData;
             controller = GetComponent<CharacterController>();
             mainCamera = Camera.main;
             //animator = GetComponent<Animator>();
@@ -46,17 +48,21 @@ namespace Players
         public void Start()
         {
             EiramEvents.OnPlayerChangedHungerEvent(hunger);
+            
             playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
             playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
             playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
             playerInventory.TryAddItem(ItemId.CHEST, 5);
             playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
+            
+            TryApplySave();
         }
 
         public void OnDestroy()
         {
             EiramEvents.PlayerInventoryRequestEvent -= OnPlayerInventoryRequest;
             EiramEvents.ToolBreakEvent -= OnToolBreak;
+            EiramEvents.SaveToDiskRequestEvent -= SaveData;
         }
 
         void Update()
@@ -72,14 +78,6 @@ namespace Players
             }
 
             CheckPlayerUIInteraction();
-        }
-
-        public void ApplyPlayerData(PlayerData playerData)
-        {
-            transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
-            this.playerInventory = playerData.PlayerInventory;
-            this.hunger = playerData.hunger;
-            this.playerInventory.IsDirty = true;
         }
         
         public bool ChangeHunger(int delta)
@@ -101,6 +99,18 @@ namespace Players
             }
 
             return false;
+        }
+
+        private void TryApplySave()
+        {
+            var loadResult = Filesystem.LoadFrom<PlayerData>("player.data", World.Current.Save.Data);
+            if (loadResult.IsSome(out var playerData))
+            {
+                transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
+                this.playerInventory = playerData.PlayerInventory;
+                this.hunger = playerData.hunger;
+                this.playerInventory.IsDirty = true;
+            }
         }
 
         private void OnPlayerInventoryRequest()
@@ -215,6 +225,11 @@ namespace Players
                 jumpForce = maxJumpForce;
                 PostProcessing.instance.ResetVignette();
             }
+        }
+
+        private void SaveData()
+        {
+            Filesystem.SaveTo(SerializableData(), "player.data", World.Current.Save.Data);
         }
 
         /*
