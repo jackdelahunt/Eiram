@@ -33,7 +33,6 @@ namespace Worlds
             playerObject = GameObject.FindGameObjectWithTag("Player");
             player = playerObject.GetComponent<Player>();
             Save = Filesystem.CreateSave("DEBUG_SAVE");
-            LoadWorld();
         }
 
         void Start()
@@ -120,15 +119,6 @@ namespace Worlds
             if (activeChunks.TryGetValue(chunkX, out var chunk))
             {
                 chunk.RandomUpdateTileAt(worldPosition);
-            }
-        }
-        
-        public void LoadWorld()
-        {
-            var loadResult = Filesystem.LoadFrom<PlayerData>("player.data", Save.Data);
-            if (loadResult.IsSome(out var playerData))
-            {
-                player.ApplyPlayerData(playerData);
             }
         }
 

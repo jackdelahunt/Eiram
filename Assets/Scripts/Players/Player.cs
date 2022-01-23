@@ -3,6 +3,7 @@ using Eiram;
 using Events;
 using Graphics;
 using Inventories;
+using IO;
 using Items;
 using Registers;
 using UnityEngine;
@@ -46,11 +47,14 @@ namespace Players
         public void Start()
         {
             EiramEvents.OnPlayerChangedHungerEvent(hunger);
+            
             playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
             playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
             playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
             playerInventory.TryAddItem(ItemId.CHEST, 5);
             playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
+            
+            TryApplySave();
         }
 
         public void OnDestroy()
@@ -73,14 +77,6 @@ namespace Players
 
             CheckPlayerUIInteraction();
         }
-
-        public void ApplyPlayerData(PlayerData playerData)
-        {
-            transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
-            this.playerInventory = playerData.PlayerInventory;
-            this.hunger = playerData.hunger;
-            this.playerInventory.IsDirty = true;
-        }
         
         public bool ChangeHunger(int delta)
         {
@@ -101,6 +97,18 @@ namespace Players
             }
 
             return false;
+        }
+
+        private void TryApplySave()
+        {
+            var loadResult = Filesystem.LoadFrom<PlayerData>("player.data", World.Current.Save.Data);
+            if (loadResult.IsSome(out var playerData))
+            {
+                transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
+                this.playerInventory = playerData.PlayerInventory;
+                this.hunger = playerData.hunger;
+                this.playerInventory.IsDirty = true;
+            }
         }
 
         private void OnPlayerInventoryRequest()
