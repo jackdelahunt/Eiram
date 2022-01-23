@@ -12,15 +12,17 @@ namespace TerrainGeneration
 {
     public class TerrainGenerator
     {
-        public static SerialTileData[,] GenerateChunkData(Chunk chunk)
+        public static (SerialTileData[,], TileId[,]) GenerateChunkData(Chunk chunk)
         {
             var biome = Register.GetBiomeByBiomeId(chunk.BiomeId);
             var tileDataArray = new SerialTileData[EiramTypes.CHUNK_WIDTH, EiramTypes.CHUNK_HEIGHT];
+            var backgroundTileIds = new TileId[EiramTypes.CHUNK_WIDTH, EiramTypes.CHUNK_HEIGHT];
             for (int i = 0; i < tileDataArray.GetLength(0); i++)
             {
                 for (int j = 0; j < tileDataArray.GetLength(1); j++)
                 {
                     tileDataArray[i, j] = Register.GetTileByTileId(TileId.AIR).DefaultTileData();
+                    backgroundTileIds[i, j] = TileId.AIR;
                 }
             }
             
@@ -28,21 +30,22 @@ namespace TerrainGeneration
             int caveHeight = Mathf.RoundToInt(EiramTypes.CHUNK_HEIGHT * 0.5f);
             int maxTerrainHeight = Mathf.RoundToInt(EiramTypes.CHUNK_HEIGHT * biome.terrainHeightProportion);
 
-            BedrockPass(tileDataArray);
-            CavePass(tileDataArray, chunk, caveHeight);
-            TerrainPass(tileDataArray, chunk, biome, caveHeight, maxTerrainHeight);
+            BedrockPass(tileDataArray, backgroundTileIds);
+            CavePass(tileDataArray, backgroundTileIds, chunk, caveHeight);
+            TerrainPass(tileDataArray, backgroundTileIds, chunk, biome, caveHeight, maxTerrainHeight);
     
-            return tileDataArray;
+            return (tileDataArray, backgroundTileIds);
         }
 
-        private static void BedrockPass(SerialTileData[,] tileDataArray)
+        private static void BedrockPass(SerialTileData[,] tileDataArray, TileId[,] backgroundTileId)
         {
             for (int x = 0; x < EiramTypes.CHUNK_WIDTH; x++)
             {
                 SetTile(x, 0, TileId.BEDROCK, tileDataArray);
+                backgroundTileId[x, 0] = TileId.BEDROCK;
             }
         }
-        private static void CavePass(SerialTileData[,] tileDataArray, Chunk chunk, int caveHeight)
+        private static void CavePass(SerialTileData[,] tileDataArray, TileId[,] backgroundTileIds, Chunk chunk, int caveHeight)
         {
             int xOffset = 0;
             int yOffset = 1;
@@ -53,7 +56,14 @@ namespace TerrainGeneration
             {
                 while (xOffset < EiramTypes.CHUNK_WIDTH)
                 {
-                    SetTile(xOffset, yOffset, Noise.CaveNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y + yOffset, 0.4f, 0) ? TileId.STONE : TileId.AIR, tileDataArray);
+                    var tile =
+                        Noise.CaveNoise(firstTileWorldPos.x + xOffset,
+                            firstTileWorldPos.y + yOffset, 0.45f, 0, scale: 0.2f)
+                            ? TileId.STONE
+                            : TileId.AIR;
+                    
+                    SetTile(xOffset, yOffset, tile, tileDataArray);
+                    backgroundTileIds[xOffset, yOffset] = TileId.STONE;
                     xOffset++;
                 }
 
@@ -62,7 +72,7 @@ namespace TerrainGeneration
             }
         }
 
-        private static void TerrainPass(SerialTileData[,] tileDataArray, Chunk chunk, Biome biome, int caveHeight,
+        private static void TerrainPass(SerialTileData[,] tileDataArray, TileId[,] backgroundTileIds, Chunk chunk, Biome biome, int caveHeight,
             int maxTerrainHeight)
         {
             int xOffset = 0;
@@ -77,7 +87,12 @@ namespace TerrainGeneration
 
                 for (int y = highestPoint; y >= caveHeight; y--)
                 {
-                    SetTile(xOffset, y, y > highestPoint - biome.surfaceThickness ? biome.surfaceTile : biome.subSurfaceTile, tileDataArray);
+                    var tile = y > highestPoint - biome.surfaceThickness
+                        ? biome.surfaceTile
+                        : biome.subSurfaceTile;
+                    
+                    SetTile(xOffset, y, tile, tileDataArray);
+                    backgroundTileIds[xOffset, y] = tile;
                 }
                 
                 // plant some trees

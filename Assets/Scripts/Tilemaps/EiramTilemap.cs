@@ -12,6 +12,9 @@ namespace Tilemaps
     public class EiramTilemap : MonoBehaviour
     {
         public static EiramTilemap Foreground = null;
+        public static EiramTilemap Background = null;
+
+        public bool IsForeground;
 
         private Tilemap tilemap;
         private readonly List<TileBase> tileBaseCache = new List<TileBase>();
@@ -19,7 +22,15 @@ namespace Tilemaps
 
         public void Awake()
         {
-            Foreground = this;
+            if(IsForeground)
+            {
+                Foreground = this;
+            }
+            else
+            {
+                Background = this;
+            }
+            
             tilemap = GetComponent<Tilemap>();
         }
 
@@ -40,7 +51,10 @@ namespace Tilemaps
                 for (int j = 0; j < EiramTypes.CHUNK_HEIGHT; j++)
                 {
                     var worldPos = new Vector3Int((chunk.ChunkX * EiramTypes.CHUNK_WIDTH) + i, j, 0);
-                    SetTile(worldPos, chunk.GetTileAt(worldPos));
+                    if(IsForeground)
+                        SetTile(worldPos, chunk.GetTileAt(worldPos));
+                    else
+                        SetTile(worldPos, chunk.GetBackgroundTileAt(worldPos));
                 }
             }
         }
