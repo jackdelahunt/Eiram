@@ -27,6 +27,7 @@ namespace Notebook
         private void Awake()
         {
             EiramEvents.PlayerToggleNotebookEvent += OnNotebookToggleEvent;
+            EiramEvents.SaveToDiskRequestEvent += SaveNotebook;
             GetAllAchievementNodeUI();
             root = Achievement.NewTree();
         }
@@ -49,6 +50,7 @@ namespace Notebook
         private void OnDestroy()
         {
             EiramEvents.PlayerToggleNotebookEvent -= OnNotebookToggleEvent;
+            EiramEvents.SaveToDiskRequestEvent -= SaveNotebook;
         }
 
         private void ScrollGraph(float amount)
@@ -103,7 +105,6 @@ namespace Notebook
         private void CloseNotebook()
         {
             LeanTween.moveY(gameObject, end.position.y, 0.4f);
-            SaveNotebook();
         }
 
         private void TryApplySave()

@@ -28,6 +28,7 @@ namespace Worlds
         {
             EiramEvents.TilePlaceEvent += OnTilePlace;
             EiramEvents.TileBreakEvent += OnTileBreak;
+            EiramEvents.SaveToDiskRequestEvent += SaveAllData;
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
             player = playerObject.GetComponent<Player>();
@@ -45,6 +46,7 @@ namespace Worlds
         {
             EiramEvents.TilePlaceEvent -= OnTilePlace;
             EiramEvents.TileBreakEvent -= OnTileBreak;
+            EiramEvents.SaveToDiskRequestEvent -= SaveAllData;
         }
         
         public bool PlaceTileAt(Vector3Int worldPosition, TileId tileId)
@@ -132,17 +134,9 @@ namespace Worlds
 
         public void SaveWorld()
         {
-            foreach (var chunk in activeChunks.Values)
-            {
-                var chunkData = chunk.SerializableData();
-                Filesystem.SaveTo(chunkData, $"{chunkData.ChunkX}.chunk", Save.Region);
-            }
-
-            var playerData = player.SerializableData();
-            Filesystem.SaveTo(playerData, "player.data", Save.Data);
-
+            EiramEvents.OnSaveToDiskRequest();
         }
-        
+
         public void AddFatTile(Vector3Int worldPosition, SerialFatTileData serialFatTileData)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
@@ -228,6 +222,18 @@ namespace Worlds
                 activeChunks.Remove(chunk.ChunkX);
                 chunk.Die();
             }
+        }
+        
+        private void SaveAllData()
+        {
+            foreach (var chunk in activeChunks.Values)
+            {
+                var chunkData = chunk.SerializableData();
+                Filesystem.SaveTo(chunkData, $"{chunkData.ChunkX}.chunk", Save.Region);
+            }
+
+            var playerData = player.SerializableData();
+            Filesystem.SaveTo(playerData, "player.data", Save.Data);
         }
 
         private void RandomUpdateChunks()

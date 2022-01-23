@@ -74,9 +74,16 @@ namespace Events
         
         public static event Action<int> SelectedSlotChangedEvent;
 
-        public static void SelectedSlotChanged(int slotIndex)
+        public static void OnSelectedSlotChanged(int slotIndex)
         {
             SelectedSlotChangedEvent?.Invoke(slotIndex);
+        }
+        
+        public static event Action SaveToDiskRequestEvent;
+
+        public static void OnSaveToDiskRequest()
+        {
+            SaveToDiskRequestEvent?.Invoke();
         }
         
     }
