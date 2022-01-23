@@ -58,7 +58,7 @@ namespace TerrainGeneration
                 {
                     var tile =
                         Noise.CaveNoise(firstTileWorldPos.x + xOffset,
-                            firstTileWorldPos.y + yOffset, 0.4f, 0)
+                            firstTileWorldPos.y + yOffset, 0.45f, 0, scale: 0.2f)
                             ? TileId.STONE
                             : TileId.AIR;
                     
