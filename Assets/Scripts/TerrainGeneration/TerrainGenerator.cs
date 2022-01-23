@@ -62,6 +62,18 @@ namespace TerrainGeneration
                             ? TileId.STONE
                             : TileId.AIR;
                     
+                    foreach (var lode in Register.lodes)
+                    {
+                        if(firstTileWorldPos.y + yOffset < lode.MinHeight || firstTileWorldPos.y + yOffset > lode.MaxHeight) continue;
+                        
+                        if (Noise.CaveNoise(firstTileWorldPos.x + xOffset,
+                            firstTileWorldPos.y + yOffset, lode.Threshold, 0, lode.Scale))
+                        {   
+                            tile = lode.TileId;
+                            break;
+                        }    
+                    }
+
                     SetTile(xOffset, yOffset, tile, tileDataArray);
                     backgroundTileIds[xOffset, yOffset] = TileId.STONE;
                     xOffset++;

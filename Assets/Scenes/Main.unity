@@ -1324,18 +1324,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1954218599, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
-      propertyPath: m_Color.b
-      value: 0.6320754
-      objectReference: {fileID: 0}
-    - target: {fileID: 1954218599, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
-      propertyPath: m_Color.g
-      value: 0.6320754
-      objectReference: {fileID: 0}
-    - target: {fileID: 1954218599, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
-      propertyPath: m_Color.r
-      value: 0.6320754
-      objectReference: {fileID: 0}
     - target: {fileID: 253499352068151, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
       propertyPath: m_Name
       value: World
@@ -2102,6 +2090,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: lodeArray.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: biomeArray.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -2149,6 +2142,18 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: lodeArray.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 84ae5918e6700e8e6bc50918183ce7f4,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: lodeArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: d136dbaf716a64f9bba8616db12865ea,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: biomeArray.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 13a8546a20a6086948818ed3e27c1395,
@@ -2178,7 +2183,7 @@ PrefabInstance:
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: concreteTileDataArray.Array.size
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
@@ -2234,6 +2239,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 03ed391c2eee6e2f0bbd64cd64642846,
         type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: concreteTileDataArray.Array.data[21]
+      value: 
+      objectReference: {fileID: 11400000, guid: afa6cacc53c8e2775be615cd89db9e78,
+        type: 2}
     - target: {fileID: 8447453227687814862, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: m_Name
@@ -2256,6 +2267,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118297347259422752, guid: 47a4621a344a62b1aa032a8ef523c04f,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118297347259422752, guid: 47a4621a344a62b1aa032a8ef523c04f,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9118297347259422752, guid: 47a4621a344a62b1aa032a8ef523c04f,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1712398315
       objectReference: {fileID: 0}
     - target: {fileID: 9118297347259422754, guid: 47a4621a344a62b1aa032a8ef523c04f,
         type: 3}

@@ -30,6 +30,7 @@ namespace Eiram
         THORNS = 18,
         TRELLIS = 19,
         CHEST = 20,
+        COPPER = 21,
     }
     
     public enum ItemId
