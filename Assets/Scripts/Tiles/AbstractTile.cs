@@ -211,4 +211,9 @@ namespace Tiles
         }
 
     }
+    
+    public class Copper : AbstractTile
+    {
+        public Copper(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
 }

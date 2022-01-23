@@ -88,6 +88,7 @@ namespace Registers
                 new Thorns(concreteTileDataArray[18]),
                 new Trellis(concreteTileDataArray[19]),
                 new Chest(concreteTileDataArray[20]),
+                new Copper(concreteTileDataArray[21]),
             };
 
             items = new AbstractItem[]
