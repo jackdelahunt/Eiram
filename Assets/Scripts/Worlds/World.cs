@@ -101,13 +101,15 @@ namespace Worlds
             }
         }
         
-        public void UseTileAt(Vector3Int worldPosition, Player player)
+        public bool UseTileAt(Vector3Int worldPosition, Player player)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
             if (activeChunks.TryGetValue(chunkX, out var chunk))
             {
-                chunk.UseTileAt(worldPosition, player);
+                return chunk.UseTileAt(worldPosition, player);
             }
+
+            return false;
         }
         
         public void RandomUpdateTileAt(Vector3Int worldPosition)

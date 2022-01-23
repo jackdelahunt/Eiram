@@ -59,7 +59,11 @@ namespace Tiles
             UpdateNeighbours(worldPosition);
         }
 
-        public virtual void OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player) {}
+        public virtual bool OnUse(Vector3Int worldPosition, SerialTileData currentTileData,
+            Player player)
+        {
+            return false;
+        }
 
         public virtual void OnRandomUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
 
@@ -118,10 +122,11 @@ namespace Tiles
     {
         public Dirt(ConcreteTileData concreteTileData) : base(concreteTileData){}
 
-        public override void OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player)
+        public override bool OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player)
         {
             base.OnUse(worldPosition, currentTileData, player);
             World.Current.ReplaceTileAt(worldPosition, Eiram.TileId.TILLED_SOIL);
+            return true;
         }
     }
     

@@ -1,6 +1,7 @@
 using System;
 using Eiram;
 using Events;
+using Graphics;
 using Inventories;
 using Items;
 using Registers;
@@ -14,9 +15,12 @@ namespace Players
     public class Player : MonoBehaviour
     {
         public PlayerInventory playerInventory;
+        public int hunger = 100;
         
         [SerializeField] private float jumpForce = 400f;
+        [SerializeField] private float maxJumpForce = 400f;
         [SerializeField] private float movementSpeed = 10f;
+        [SerializeField] private float maxMovementSpeed = 10f;
 
         private bool inInventory = false;
         private bool inNotebook = false;
@@ -41,10 +45,12 @@ namespace Players
 
         public void Start()
         {
+            EiramEvents.OnPlayerChangedHungerEvent(hunger);
             playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
             playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
             playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
             playerInventory.TryAddItem(ItemId.CHEST, 5);
+            playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
         }
 
         public void OnDestroy()
@@ -62,6 +68,7 @@ namespace Players
                 CheckForMouseInput();
                 CheckPlayerJump();
                 CheckPlayerIdle();
+                CheckPlayerHunger();
             }
 
             CheckPlayerUIInteraction();
@@ -71,7 +78,29 @@ namespace Players
         {
             transform.position = new Vector3(playerData.X, playerData.Y, playerData.Z);
             this.playerInventory = playerData.PlayerInventory;
+            this.hunger = playerData.hunger;
             this.playerInventory.IsDirty = true;
+        }
+        
+        public bool ChangeHunger(int delta)
+        {
+            int startHunger = hunger;
+            
+            hunger += delta;
+            
+            if (hunger <= 0)
+                hunger = 0;
+
+            if (hunger >= 100)
+                hunger = 100;
+            
+            if(startHunger != hunger)
+            {
+                EiramEvents.OnPlayerChangedHungerEvent(hunger);
+                return true;
+            }
+
+            return false;
         }
 
         private void OnPlayerInventoryRequest()
@@ -118,23 +147,27 @@ namespace Players
                 var mousePos = GetMousePosition();
                 var tilePos = ConvertPositionToTile(mousePos);
 
-                var tileData = World.Current.GetTileData(tilePos).Unwrap();
-                if (inHandStack.IsEmpty() || tileData.TileId != TileId.AIR)
+                // use tile if empty
+                if (inHandStack.IsEmpty())
                 {
                     World.Current.UseTileAt(tilePos, this);
                     return;
                 }
                 
+                // if can place item then place
                 var item = Register.GetItemByItemId(inHandStack.ItemId);
-                if (item.TileId() == TileId.UNKNOWN)
+                var tileData = World.Current.GetTileData(tilePos).Unwrap();
+                if (item.TileId() != TileId.UNKNOWN && tileData.TileId == TileId.AIR)
                 {
-                    World.Current.UseTileAt(tilePos, this);
+                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(playerInventory.PopSelectedItem().ItemId).TileId());
+                    return;
                 }
-                else
+                
+                // if tile is usable then do not use item, else use item
+                if(!World.Current.UseTileAt(tilePos, this))
                 {
-                    // placing the item, pop item from inventory
-                    var poppedItem = playerInventory.PopSelectedItem();
-                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(poppedItem.ItemId).TileId());
+                    if (item.OnUse(tilePos, inHandStack, this))
+                        playerInventory.PopSelectedItem();
                 }
             }
 
@@ -154,14 +187,11 @@ namespace Players
             if (Input.GetButtonDown("Jump"))
             {
                 isPlayerIdle = false;
-                controller.Jump(jumpForce);
+                if (controller.Jump(jumpForce))
+                    ChangeHunger(-10);
             }
         }
 
-        /*
-         * checks if the the player has moved or jumped
-         * this frame
-         */
         private void CheckPlayerIdle()
         {
             if (isPlayerIdle)
@@ -170,7 +200,23 @@ namespace Players
                 // animator.SetBool(IsJumping, false);
             }
         }
-        
+
+        private void CheckPlayerHunger()
+        {
+            if (hunger == 0)
+            {
+                movementSpeed = maxMovementSpeed * 0.7f;
+                jumpForce = maxJumpForce * 0.85f;
+                PostProcessing.instance.Vignette(0.5f);
+            }
+            else
+            {
+                movementSpeed = maxMovementSpeed;
+                jumpForce = maxJumpForce;
+                PostProcessing.instance.ResetVignette();
+            }
+        }
+
         /*
          * returns a position of a the tile
          * where the players mouse is
@@ -227,6 +273,7 @@ namespace Players
                 X = position.x,
                 Y = position.y,
                 Z = position.z,
+                hunger = hunger,
                 PlayerInventory = playerInventory
             };
         }
@@ -238,6 +285,7 @@ namespace Players
         public float X;
         public float Y;
         public float Z;
+        public int hunger;
         public PlayerInventory PlayerInventory;
     }
 }

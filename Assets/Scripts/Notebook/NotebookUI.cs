@@ -81,12 +81,12 @@ namespace Notebook
             if (toggled)
             {
                 CloseNotebook();
-                PostProcessing.instance.DefaultFocalLength();
+                PostProcessing.instance.ResetFocalLength();
             }
             else
             {
                 OpenNotebook();
-                PostProcessing.instance.AchievementFocalLength(achievementFocalLength);
+                PostProcessing.instance.FocalLength(achievementFocalLength);
             }
 
             toggled = !toggled;
