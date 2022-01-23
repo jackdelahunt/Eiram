@@ -1,5 +1,6 @@
 using System;
 using Biomes;
+using Chunks;
 using Eiram;
 using Items;
 using Items.Items;
@@ -15,17 +16,19 @@ namespace Registers
 {
     public class Register : MonoBehaviour
     {
-        private static AbstractTile[] tiles;
-        private static AbstractItem[] items;
-        private static Biome[] biomes;
-        private static CropRecipe[] cropRecipes;
-        private static BuildingRecipe[] buildingRecipes;
+        public static AbstractTile[] tiles;
+        public static AbstractItem[] items;
+        public static Biome[] biomes;
+        public static CropRecipe[] cropRecipes;
+        public static BuildingRecipe[] buildingRecipes;
+        public static Lode[] lodes;
         
         [SerializeField] private ConcreteTileData[] concreteTileDataArray;
         [SerializeField] private ConcreteItemData[] itemArray;
         [SerializeField] private Biome[] biomeArray;
         [SerializeField] private CropRecipe[] cropRecipeArray;
         [SerializeField] private BuildingRecipe[] buildingRecipeArray;
+        [SerializeField] private Lode[] lodeArray;
 
         public static AbstractTile GetTileByTileId(TileId tileId)
         {
@@ -60,12 +63,7 @@ namespace Registers
         public static int ActiveTiles() => tiles.Length;
         public static int ActiveItems() => items.Length;
         public static int ActiveBiomes() => biomes.Length;
-
-        public static BuildingRecipe[] GetAllBuildingRecipes()
-        {
-            return buildingRecipes;
-        }
-
+        
         public void Awake()
         {
             tiles = new AbstractTile[] {
@@ -108,6 +106,7 @@ namespace Registers
             biomes = biomeArray;
             cropRecipes = cropRecipeArray;
             buildingRecipes = buildingRecipeArray;
+            lodes = lodeArray;
 
 #if UNITY_EDITOR
             if (tiles.Length != concreteTileDataArray.Length)

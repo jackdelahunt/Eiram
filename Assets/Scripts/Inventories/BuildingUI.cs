@@ -70,7 +70,7 @@ namespace Inventories
 
         private void CreateRecipeIcons()
         {
-            foreach (var recipe in Register.GetAllBuildingRecipes())
+            foreach (var recipe in Register.buildingRecipes)
             {
                 if (playerInventory.CanBuildRecipe(recipe))
                 {
