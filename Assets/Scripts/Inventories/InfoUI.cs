@@ -11,6 +11,7 @@ namespace Inventories
     public class InfoUI : MonoBehaviour
     {
         [SerializeField] private TMP_Text title;
+        [SerializeField] private TMP_Text description;
         [SerializeField] private GameObject infoPanel;
 
         private Coroutine infoPanelReset;
@@ -35,7 +36,9 @@ namespace Inventories
             StopCoroutine(infoPanelReset);
             infoPanelReset = StartCoroutine(nameof(InfoPanelDead));
             infoPanel.SetActive(true);
-            title.text = Register.GetTileByTileId(tileData.TileId).TileName();
+            var tile = Register.GetTileByTileId(tileData.TileId);
+            title.text = tile.TileName();
+            description.text = $"ID: {(int)tile.TileId()}\nTool: {tile.RequiredToolType()}\nLevel: {tile.RequiredToolLevel()}";
         }
 
         private IEnumerator InfoPanelDead()

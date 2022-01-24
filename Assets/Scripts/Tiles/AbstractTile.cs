@@ -104,6 +104,10 @@ namespace Tiles
 
         public string TileName() => concreteTileData.TileName;
 
+        public ToolType RequiredToolType() => concreteTileData.RequiredToolType;
+
+        public ToolLevel RequiredToolLevel() => concreteTileData.RequiredToolLevel;
+
         public TileId TileId() => concreteTileData.TileId;
 
         public virtual TileBase TileBase(SerialTileData currentTileData)
