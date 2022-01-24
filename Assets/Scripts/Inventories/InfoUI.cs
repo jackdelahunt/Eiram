@@ -43,7 +43,7 @@ namespace Inventories
 
         private IEnumerator InfoPanelDead()
         {
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(0.8f);
             infoPanel.SetActive(false);
         }
     }
