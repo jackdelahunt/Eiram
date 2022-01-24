@@ -27,14 +27,14 @@ namespace Inventories
         {
             SelectedSlot++;
             if (SelectedSlot >= hotbarSlotsCount) SelectedSlot = 0;
-            EiramEvents.OnSelectedSlotChanged(SelectedSlot);
+            EiramEvents.OnSelectedSlotChangedEvent(SelectedSlot);
         }
         
         public void SelectPrevious()
         {
             SelectedSlot--;
             if (SelectedSlot < 0) SelectedSlot = hotbarSlotsCount - 1;
-            EiramEvents.OnSelectedSlotChanged(SelectedSlot);
+            EiramEvents.OnSelectedSlotChangedEvent(SelectedSlot);
         }
 
         public ItemStack PopSelectedItem()

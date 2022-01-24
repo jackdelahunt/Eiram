@@ -67,23 +67,30 @@ namespace Events
         
         public static event Action PlayerToggleNotebookEvent;
 
-        public static void OnPlayerToggleNotebook()
+        public static void OnPlayerToggleNotebookEvent()
         {
             PlayerToggleNotebookEvent?.Invoke();
         }
         
         public static event Action<int> SelectedSlotChangedEvent;
 
-        public static void OnSelectedSlotChanged(int slotIndex)
+        public static void OnSelectedSlotChangedEvent(int slotIndex)
         {
             SelectedSlotChangedEvent?.Invoke(slotIndex);
         }
         
         public static event Action SaveToDiskRequestEvent;
 
-        public static void OnSaveToDiskRequest()
+        public static void OnSaveToDiskRequestEvent()
         {
             SaveToDiskRequestEvent?.Invoke();
+        }
+        
+        public static event Action<SerialTileData> TileInfoRequestEvent;
+
+        public static void OnTileInfoRequestEvent(SerialTileData tileData)
+        {
+            TileInfoRequestEvent?.Invoke(tileData);
         }
         
     }

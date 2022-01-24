@@ -1,3 +1,4 @@
+using System;
 using Eiram;
 using Items.Items;
 using Players;
@@ -22,6 +23,11 @@ namespace Items
         public virtual bool OnUse(Vector3Int worldPosition, ItemStack stack, Player player)
         {
             return false;
+        }
+        
+        public string ItemName()
+        {
+            return concreteItemData.itemName;
         }
 
         public ItemId ItemId()

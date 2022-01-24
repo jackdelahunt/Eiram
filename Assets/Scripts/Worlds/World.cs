@@ -124,7 +124,7 @@ namespace Worlds
 
         public void SaveWorld()
         {
-            EiramEvents.OnSaveToDiskRequest();
+            EiramEvents.OnSaveToDiskRequestEvent();
         }
 
         public void AddFatTile(Vector3Int worldPosition, SerialFatTileData serialFatTileData)

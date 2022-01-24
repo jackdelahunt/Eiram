@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39fb2f650cad7b44daec14cde6791573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotNumber: -1
+  InventoryUI: {fileID: 0}
 --- !u!222 &7163577800468536673
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -72,7 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
