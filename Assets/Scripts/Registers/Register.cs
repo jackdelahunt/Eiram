@@ -104,6 +104,7 @@ namespace Registers
                 new WoodAxeItem(itemArray[7]),
                 new CranberriesItem(itemArray[8]),
                 new StickItem(itemArray[9]),
+                new WoodClumpItem(itemArray[10]),
             };
             
             biomes = biomeArray;

@@ -34,7 +34,25 @@ namespace Notebook
                     new ItemCountPair() { ItemId = ItemId.STICK, Amount = 2}
                 },
                 children = new Achievement[]
-                {}
+                {
+                    new Achievement()
+                    {
+                        parent = null,
+                        thumbnail = Register.GetItemByItemId(ItemId.WOOD_CLUMP).Sprite(),
+                        title = "Picking up the scraps",
+                        description = "Go to a biome with grass and find some scrap on the floor",
+                        status = AchievementStatus.LOCKED,
+                        requirements = new [] {
+                            new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 5},
+                        },
+                        rewards = new [] {
+                            new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 5},
+                            new ItemCountPair() { ItemId = ItemId.STICK, Amount = 2},
+                        },
+                        children = new Achievement[]
+                            {}
+                    }
+                }
             };
 
             return root;
