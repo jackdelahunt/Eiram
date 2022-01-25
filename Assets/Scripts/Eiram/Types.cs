@@ -64,6 +64,7 @@ namespace Eiram
     
     public enum ToolLevel
     {
+        NONE = -1,
         WOOD = 0,
         STONE = 1,
     }

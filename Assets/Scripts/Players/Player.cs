@@ -1,7 +1,7 @@
 using System;
 using Eiram;
 using Events;
-using Graphics;
+using Effects;
 using Inventories;
 using IO;
 using Items;
@@ -143,40 +143,45 @@ namespace Players
         
         private void CheckForMouseInput()
         {
+            var mousePos = GetMousePosition();
+            var tileWorldPos = ConvertPositionToTile(mousePos);
+
+            if (World.Current.GetTileData(tileWorldPos).IsSome(out var tileDataAtMouse))
+            {
+                if (tileDataAtMouse.TileId != TileId.AIR && !inInventory && !inNotebook)
+                    EiramEvents.OnTileInfoRequestEvent(tileDataAtMouse);
+            }
+            
             if (Input.GetButtonDown("Fire1"))
             {
-                var mousePos = GetMousePosition();
-                var tilePos = ConvertPositionToTile(mousePos);
-                World.Current.RemoveTileAtAsPlayer(tilePos, playerInventory.PeekSelectedItem(), this);
+                World.Current.RemoveTileAtAsPlayer(tileWorldPos, playerInventory.PeekSelectedItem(), this);
             }
 
             
             if (Input.GetButtonDown("Fire2"))
             {
                 var inHandStack = playerInventory.PeekSelectedItem();
-                var mousePos = GetMousePosition();
-                var tilePos = ConvertPositionToTile(mousePos);
 
                 // use tile if empty
                 if (inHandStack.IsEmpty())
                 {
-                    World.Current.UseTileAt(tilePos, this);
+                    World.Current.UseTileAt(tileWorldPos, this);
                     return;
                 }
                 
                 // if can place item then place
                 var item = Register.GetItemByItemId(inHandStack.ItemId);
-                var tileData = World.Current.GetTileData(tilePos).Unwrap();
+                var tileData = World.Current.GetTileData(tileWorldPos).Unwrap();
                 if (item.TileId() != TileId.UNKNOWN && tileData.TileId == TileId.AIR)
                 {
-                    World.Current.PlaceTileAt(tilePos, Register.GetItemByItemId(playerInventory.PopSelectedItem().ItemId).TileId());
+                    World.Current.PlaceTileAt(tileWorldPos, Register.GetItemByItemId(playerInventory.PopSelectedItem().ItemId).TileId());
                     return;
                 }
                 
                 // if tile is usable then do not use item, else use item
-                if(!World.Current.UseTileAt(tilePos, this))
+                if(!World.Current.UseTileAt(tileWorldPos, this))
                 {
-                    if (item.OnUse(tilePos, inHandStack, this))
+                    if (item.OnUse(tileWorldPos, inHandStack, this))
                         playerInventory.PopSelectedItem();
                 }
             }
@@ -261,7 +266,7 @@ namespace Players
             
             if (Input.GetButtonDown("ToggleNotebook"))
             {
-                EiramEvents.OnPlayerToggleNotebook();
+                EiramEvents.OnPlayerToggleNotebookEvent();
                 inNotebook = !inNotebook;
             }
         }

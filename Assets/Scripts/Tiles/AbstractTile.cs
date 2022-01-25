@@ -102,10 +102,13 @@ namespace Tiles
             return clone;
         }
 
-        public TileId TileId()
-        {
-            return concreteTileData.TileId;
-        }
+        public string TileName() => concreteTileData.TileName;
+
+        public ToolType RequiredToolType() => concreteTileData.RequiredToolType;
+
+        public ToolLevel RequiredToolLevel() => concreteTileData.RequiredToolLevel;
+
+        public TileId TileId() => concreteTileData.TileId;
 
         public virtual TileBase TileBase(SerialTileData currentTileData)
         {

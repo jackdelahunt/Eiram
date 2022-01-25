@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-namespace Graphics
+namespace Effects
 {
     public class PostProcessing : MonoBehaviour
     {
