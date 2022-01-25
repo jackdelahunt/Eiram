@@ -53,14 +53,38 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 11400000, guid: 87bd91e06982449c2ab1edac22d0b7f6, type: 2}
+  - {fileID: 11400000, guid: f787c0b3e0bedd8079404e4bc6bcbdd1, type: 2}
+  - {fileID: 11400000, guid: 0ce5905245ba3b5fda0eba6e8091d013, type: 2}
+  - {fileID: 11400000, guid: 29e7808e4f7db0bc3bf64647317774ca, type: 2}
+  - {fileID: 11400000, guid: 6ee8f0d13c9f992e8a637be8539986e8, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 59b86b9dce48cd34ab287bb87f9ea73a, type: 2}
+  - {fileID: 11400000, guid: 7183a70838f82da40b1754c084447ba0, type: 2}
+  - {fileID: 11400000, guid: a461ee85bf3d0f5f9b18101c4e4d778c, type: 2}
+  - {fileID: 11400000, guid: 03ed391c2eee6e2f0bbd64cd64642846, type: 2}
+  - {fileID: 11400000, guid: afa6cacc53c8e2775be615cd89db9e78, type: 2}
+  - {fileID: 11400000, guid: 3f2e3c51a6b268110ab4e15f496cf2e5, type: 2}
   itemArray:
   - {fileID: 11400000, guid: c0db3b987e8599e42a2378090d61001c, type: 2}
   - {fileID: 11400000, guid: d66a43e6a416cd349934999223eba1a4, type: 2}
+  - {fileID: 11400000, guid: d98461b5fb9eecc4aa2bb2053d02d1c1, type: 2}
+  - {fileID: 11400000, guid: 233a30f6af3a6d235a6d76b336f76c91, type: 2}
+  - {fileID: 11400000, guid: 8d8534c9ec2a4a8ebae4f3a43db7fcf0, type: 2}
+  - {fileID: 11400000, guid: 9591fdc25763a74b49981df9f6d82a95, type: 2}
+  - {fileID: 11400000, guid: 362fe1769226e9089a04fe6e4d7823e7, type: 2}
+  - {fileID: 11400000, guid: b5a857e54588d210ab0ba34b48faba00, type: 2}
+  - {fileID: 11400000, guid: 5bc8c9573e7e56a92bef7acfc6ad05e0, type: 2}
+  - {fileID: 11400000, guid: aa7216d27abe4c3dba685934eea5c07b, type: 2}
+  biomeArray:
+  - {fileID: 11400000, guid: 13a8546a20a6086948818ed3e27c1395, type: 2}
+  - {fileID: 11400000, guid: 2c402c0be218f214c8b36eb38269cb93, type: 2}
+  cropRecipeArray:
+  - {fileID: 11400000, guid: 27d09c78e4980c2789d0890d69796d97, type: 2}
+  buildingRecipeArray:
+  - {fileID: 11400000, guid: 467d407599a5aa34ca67c1a35f011f38, type: 2}
+  lodeArray:
+  - {fileID: 11400000, guid: 84ae5918e6700e8e6bc50918183ce7f4, type: 2}
+  - {fileID: 11400000, guid: d136dbaf716a64f9bba8616db12865ea, type: 2}

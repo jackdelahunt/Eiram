@@ -31,6 +31,7 @@ namespace Eiram
         TRELLIS = 19,
         CHEST = 20,
         COPPER = 21,
+        SCRAP = 22,
     }
     
     public enum ItemId

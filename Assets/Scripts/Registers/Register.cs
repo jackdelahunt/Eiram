@@ -89,6 +89,7 @@ namespace Registers
                 new Trellis(concreteTileDataArray[19]),
                 new Chest(concreteTileDataArray[20]),
                 new Copper(concreteTileDataArray[21]),
+                new Scrap(concreteTileDataArray[22]),
             };
 
             items = new AbstractItem[]
