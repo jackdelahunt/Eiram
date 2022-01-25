@@ -148,7 +148,7 @@ namespace Players
 
             if (World.Current.GetTileData(tileWorldPos).IsSome(out var tileDataAtMouse))
             {
-                if (tileDataAtMouse.TileId != TileId.AIR)
+                if (tileDataAtMouse.TileId != TileId.AIR && !inInventory && !inNotebook)
                     EiramEvents.OnTileInfoRequestEvent(tileDataAtMouse);
             }
             

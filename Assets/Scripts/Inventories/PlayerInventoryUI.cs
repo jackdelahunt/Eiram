@@ -73,8 +73,14 @@ namespace Inventories
 
         private void OnSelectedSlotChanged(int slotIndex)
         {
-            if(!toggled)
+            if (!toggled)
+            {
                 MovePointer(slotIndex);
+                if (itemSlots[slotIndex].InventoryItemOption.IsSome(out var item))
+                {
+                    EiramEvents.OnItemInfoRequestEvent(item.ItemStack.ItemId);
+                }
+            }
         }
 
         private void OnPlayerTogglePlayerInventory(PlayerInventory _)

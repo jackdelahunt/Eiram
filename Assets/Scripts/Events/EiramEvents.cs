@@ -93,5 +93,12 @@ namespace Events
             TileInfoRequestEvent?.Invoke(tileData);
         }
         
+        public static event Action<ItemId> ItemInfoRequestEvent;
+
+        public static void OnItemInfoRequestEvent(ItemId itemId)
+        {
+            ItemInfoRequestEvent?.Invoke(itemId);
+        }
+        
     }
 }
