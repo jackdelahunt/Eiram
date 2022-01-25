@@ -14,8 +14,8 @@ namespace Inventories
         [SerializeField] private TMP_Text description;
         [SerializeField] private GameObject infoPanel;
 
-        private Coroutine infoPanelReset;
-
+        private bool dontCloseInfo = false;
+        
         public void Awake()
         {
             EiramEvents.TileInfoRequestEvent += OnTileInfoRequest;
@@ -23,7 +23,7 @@ namespace Inventories
 
         public void Start()
         {
-            infoPanelReset = StartCoroutine(nameof(InfoPanelDead));
+            InvokeRepeating(nameof(InfoPanelDead), 0.0f, 0.5f);
         }
 
         public void OnDestroy()
@@ -33,17 +33,21 @@ namespace Inventories
 
         private void OnTileInfoRequest(SerialTileData tileData)
         {
-            StopCoroutine(infoPanelReset);
-            infoPanelReset = StartCoroutine(nameof(InfoPanelDead));
+            dontCloseInfo = true;
             infoPanel.SetActive(true);
             var tile = Register.GetTileByTileId(tileData.TileId);
             title.text = tile.TileName();
             description.text = $"ID: {(int)tile.TileId()}\nTool: {tile.RequiredToolType()}\nLevel: {tile.RequiredToolLevel()}";
         }
 
-        private IEnumerator InfoPanelDead()
+        private void InfoPanelDead()
         {
-            yield return new WaitForSeconds(0.8f);
+            if (dontCloseInfo)
+            {
+                dontCloseInfo = false;
+                return;
+            }
+            
             infoPanel.SetActive(false);
         }
     }
