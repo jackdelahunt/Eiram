@@ -50,10 +50,8 @@ namespace Players
             EiramEvents.OnPlayerChangedHungerEvent(hunger);
             
             playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
-            playerInventory.TryAddItem(ItemId.WOOD_AXE, 1);
-            playerInventory.TryAddItem(ItemId.WOOD_PICKAXE, 1);
-            playerInventory.TryAddItem(ItemId.CHEST, 5);
             playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
+            playerInventory.TryAddItem(ItemId.STICK, 5);
             
             TryApplySave();
         }

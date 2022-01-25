@@ -45,6 +45,7 @@ namespace Eiram
         WOOD_PICKAXE = 6,
         WOOD_AXE = 7,
         CRANBERRIES = 8,
+        STICK = 9,
     }
     
     public enum BiomeId

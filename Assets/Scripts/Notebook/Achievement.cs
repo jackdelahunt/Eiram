@@ -23,34 +23,18 @@ namespace Notebook
             var root = new Achievement()
             {
                 parent = null,
-                thumbnail = Register.GetItemByItemId(ItemId.DIRT).Sprite(),
-                title = "Mining Dirt",
-                description = "Break dirt with your empty hand",
+                thumbnail = Register.GetItemByItemId(ItemId.STICK).Sprite(),
+                title = "Get a stick",
+                description = "Break leaves from a tree with your hand to get some sticks",
                 status = AchievementStatus.AVAILABLE,
                 requirements = new [] {
-                    new ItemCountPair() { ItemId = ItemId.GRASS, Amount = 1},
+                    new ItemCountPair() { ItemId = ItemId.STICK, Amount = 4},
                 },
                 rewards = new [] {
-                    new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 10}
+                    new ItemCountPair() { ItemId = ItemId.STICK, Amount = 2}
                 },
-                children = new []
-                {
-                    new Achievement()
-                    {
-                        parent = null,
-                        thumbnail = Register.GetItemByItemId(ItemId.GRASS).Sprite(),
-                        title = "Mining Grass",
-                        description = "Break dirt with your empty hand",
-                        status = AchievementStatus.LOCKED,
-                        requirements = new [] {
-                            new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 1},
-                        },
-                        rewards = new [] {
-                            new ItemCountPair() { ItemId = ItemId.GRASS, Amount = 10}
-                        },
-                        children = new Achievement[] { }
-                    }
-                }
+                children = new Achievement[]
+                {}
             };
 
             return root;
