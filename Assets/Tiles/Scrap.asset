@@ -16,6 +16,7 @@ MonoBehaviour:
   TileId: 22
   RequiredToolType: -1
   RequiredToolLevel: -1
+  Hardness: 2
   TileBase: {fileID: 11400000, guid: ecc009c4be375dbf2b6aff3828a12f78, type: 2}
   Drops:
   - ItemId: 10

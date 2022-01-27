@@ -104,6 +104,8 @@ namespace Tiles
 
         public string TileName() => concreteTileData.TileName;
 
+        public int Hardness() => concreteTileData.Hardness;
+
         public ToolType RequiredToolType() => concreteTileData.RequiredToolType;
 
         public ToolLevel RequiredToolLevel() => concreteTileData.RequiredToolLevel;

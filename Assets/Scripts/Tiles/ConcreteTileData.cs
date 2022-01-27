@@ -13,6 +13,7 @@ namespace Tiles
         public TileId TileId;
         public ToolType RequiredToolType;
         public ToolLevel RequiredToolLevel;
+        public int Hardness;
         public TileBase TileBase;
         public List<LootItem> Drops;
     }

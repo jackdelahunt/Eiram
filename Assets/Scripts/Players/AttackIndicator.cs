@@ -15,8 +15,8 @@ namespace Players
         private bool attackedThisFrame = false;
         private Option<AttackStatus> CurrentAttack = None<AttackStatus>();
         private SpriteRenderer spriteRenderer;
-        
-        public const float BASE_DAMAGE = 0.8f;
+
+        public const float BASE_DAMAGE = 10.0f;
 
         public void Awake()
         {
@@ -57,7 +57,7 @@ namespace Players
             // if we have an active attack and it is in the same position increase percentage else reset
             if (CurrentAttack.IsSome(out var status) && status.WorldPosition == worldPosition)
             {
-                float damage = BASE_DAMAGE;
+                float damage = BASE_DAMAGE * (1.0f / tile.Hardness());
                 if (inHand.ItemId != ItemId.UNKNOWN)
                 {
                     var item = Register.GetItemByItemId(inHand.ItemId);
