@@ -46,7 +46,7 @@ namespace Inventories
         {
             var item = Register.GetItemByItemId(ItemStack.ItemId); 
             Image.sprite = item.Sprite();
-            if (item.IsToolItem(out var _))
+            if (item.IsToolItem(out var _, out var _))
             {
                 isItemATool = true;
                 Count.text = "";
@@ -105,7 +105,7 @@ namespace Inventories
             isItemATool = true;
             int durability = richItemStack.Tag.GetInt("durability");
             int maxDurability = durability;
-            if(Register.GetItemByItemId(ItemStack.ItemId).IsToolItem(out var toolItemData))
+            if(Register.GetItemByItemId(ItemStack.ItemId).IsToolItem(out var _, out var toolItemData))
             {
                 maxDurability = toolItemData.durability;
             }

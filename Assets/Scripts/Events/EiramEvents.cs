@@ -2,6 +2,7 @@
 using Eiram;
 using Inventories;
 using Items;
+using Players;
 using Tiles;
 using UnityEngine;
 
@@ -98,6 +99,13 @@ namespace Events
         public static void OnItemInfoRequestEvent(ItemId itemId)
         {
             ItemInfoRequestEvent?.Invoke(itemId);
+        }
+        
+        public static event Action<Vector3Int, ItemStack, Player> PlayerAttackEvent;
+
+        public static void OnPlayerAttackEvent(Vector3Int worldPosition, ItemStack inHand, Player player)
+        {
+            PlayerAttackEvent?.Invoke(worldPosition, inHand, player);
         }
         
     }

@@ -10,5 +10,6 @@ namespace Items
         public int durability;
         public ToolType toolType;
         public ToolLevel toolLevel;
+        public float attackMultiplier;
     }
 }

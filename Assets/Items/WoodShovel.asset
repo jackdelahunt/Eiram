@@ -20,3 +20,4 @@ MonoBehaviour:
   durability: 32
   toolType: 2
   toolLevel: 0
+  attackMultiplier: 2
