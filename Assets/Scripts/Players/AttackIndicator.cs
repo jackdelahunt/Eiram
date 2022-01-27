@@ -47,8 +47,6 @@ namespace Players
 
             var tile = Register.GetTileByTileId(tileData.TileId);
             
-            var item = Register.GetItemByItemId(inHand.ItemId);
-            
             attackedThisFrame = true;
 
             // if we have an active attack and it is in the same position increase percentage else reset
@@ -57,11 +55,19 @@ namespace Players
                 // TODO: check for required tool type
                 float damage = 1.0f;
 
-                if (item.IsToolItem(out var toolItem, out var _) && tile.RequiredToolType() == toolItem.ToolType && tile.RequiredToolLevel() >= toolItem.ToolLevel)
+                if (inHand.ItemId != ItemId.UNKNOWN)
                 {
-                    damage *= toolItem.AttackMultipler;
+                    var item = Register.GetItemByItemId(inHand.ItemId);
+
+
+                    if (item.IsToolItem(out var toolItem, out var _) &&
+                        tile.RequiredToolType() == toolItem.ToolType &&
+                        tile.RequiredToolLevel() >= toolItem.ToolLevel)
+                    {
+                        damage *= toolItem.AttackMultipler;
+                    }
                 }
-                
+
                 status.Percentage += damage;
                 if (!(status.Percentage >= 100.0f)) return;
                 

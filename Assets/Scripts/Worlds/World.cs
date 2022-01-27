@@ -63,7 +63,7 @@ namespace Worlds
         {
             if (GetTileData(worldPosition).IsSome(out var tileData))
             {
-                if (Register.GetItemByItemId(inHand.ItemId).IsToolItem(out var _, out var toolItem))
+                if (inHand.ItemId != ItemId.UNKNOWN &&  Register.GetItemByItemId(inHand.ItemId).IsToolItem(out var _, out var toolItem))
                 {
                     Register.GetItemByItemId(toolItem.itemId).OnBreak(worldPosition, inHand, player);
                 }
