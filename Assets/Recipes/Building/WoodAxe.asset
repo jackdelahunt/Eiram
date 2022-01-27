@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 363c24c6c47447cb8b1b3a134429dfe8, type: 3}
-  m_Name: Grass
+  m_Name: WoodAxe
   m_EditorClassIdentifier: 
   FinalItem:
-    ItemId: 1
-    Amount: 5
+    ItemId: 7
+    Amount: 1
   Ingredients:
-  - ItemId: 3
-    Amount: 1
-  - ItemId: 0
-    Amount: 1
+  - ItemId: 9
+    Amount: 2
+  - ItemId: 10
+    Amount: 5

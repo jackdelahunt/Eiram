@@ -201,7 +201,7 @@ namespace Players
             {
                 isPlayerIdle = false;
                 if (controller.Jump(jumpForce))
-                    ChangeHunger(-10);
+                    ChangeHunger(-1);
             }
         }
 

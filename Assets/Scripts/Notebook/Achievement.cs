@@ -50,7 +50,56 @@ namespace Notebook
                             new ItemCountPair() { ItemId = ItemId.STICK, Amount = 2},
                         },
                         children = new Achievement[]
-                            {}
+                        {
+                            new Achievement()
+                            {
+                                parent = null,
+                                thumbnail = Register.GetItemByItemId(ItemId.WOOD_SHOVEL).Sprite(),
+                                title = "Wooden Shovel",
+                                description = "Use sticks and wood scrap to make a shovel by going to your inventory",
+                                status = AchievementStatus.LOCKED,
+                                requirements = new [] {
+                                    new ItemCountPair() { ItemId = ItemId.WOOD_SHOVEL, Amount = 1},
+                                },
+                                rewards = new [] {
+                                    new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 10},
+                                },
+                                children = new Achievement[]
+                                    {}
+                            },
+                            new Achievement()
+                            {
+                                parent = null,
+                                thumbnail = Register.GetItemByItemId(ItemId.WOOD_AXE).Sprite(),
+                                title = "Wooden Axe",
+                                description = "Use sticks and wood scrap to make an axe by going to your inventory",
+                                status = AchievementStatus.LOCKED,
+                                requirements = new [] {
+                                    new ItemCountPair() { ItemId = ItemId.WOOD_AXE, Amount = 1},
+                                },
+                                rewards = new [] {
+                                    new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 10},
+                                },
+                                children = new Achievement[]
+                                    {}
+                            },
+                            new Achievement()
+                            {
+                                parent = null,
+                                thumbnail = Register.GetItemByItemId(ItemId.WOOD_PICKAXE).Sprite(),
+                                title = "Wooden Pickaxe",
+                                description = "Use sticks and wood scrap to make a pickaxe by going to your inventory",
+                                status = AchievementStatus.LOCKED,
+                                requirements = new [] {
+                                    new ItemCountPair() { ItemId = ItemId.WOOD_PICKAXE, Amount = 1},
+                                },
+                                rewards = new [] {
+                                    new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 10},
+                                },
+                                children = new Achievement[]
+                                    {}
+                            }
+                        }
                     }
                 }
             };
