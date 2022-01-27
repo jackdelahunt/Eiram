@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileName: Stone
   TileId: 3
+  RequiredToolType: 0
+  RequiredToolLevel: 0
+  Hardness: 25
   TileBase: {fileID: 11400000, guid: 1521898ff307dc442b691b4d01d29afb, type: 2}
   Drops: []

@@ -151,9 +151,10 @@ namespace Players
                     EiramEvents.OnTileInfoRequestEvent(tileDataAtMouse);
             }
             
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButton("Fire1"))
             {
-                World.Current.RemoveTileAtAsPlayer(tileWorldPos, playerInventory.PeekSelectedItem(), this);
+                // Debug.Log("PLAYER:: clicked");
+                EiramEvents.OnPlayerAttackEvent(tileWorldPos, playerInventory.PeekSelectedItem(), this);
             }
 
             

@@ -51,14 +51,16 @@ namespace Items
         }
 
 
-        public bool IsToolItem(out ToolItemData itemData)
+        public bool IsToolItem(out ToolItem toolItem, out ToolItemData itemData)
         {
             if (concreteItemData is ToolItemData data)
             {
                 itemData = data;
+                toolItem = this as ToolItem;
                 return true;
             }
 
+            toolItem = null;
             itemData = null;
             return false;
         }

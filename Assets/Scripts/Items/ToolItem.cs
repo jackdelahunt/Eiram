@@ -1,4 +1,5 @@
 using System;
+using Eiram;
 using Events;
 using Items.Items;
 using Players;
@@ -50,6 +51,14 @@ namespace Items
                 Debug.LogError("Tool item has no durability tag, cannot decrease");
             }
         }
+
+        public ToolLevel ToolLevel => ToolItemData.toolLevel;
+
+        public ToolType ToolType => ToolItemData.toolType;
+
+        public float AttackMultipler => ToolItemData.attackMultiplier;
+        
+        public ToolItemData ToolItemData => concreteItemData as ToolItemData;
     }
     
     public class WoodShovelItem : ToolItem
