@@ -4,6 +4,7 @@ using Events;
 using Items;
 using Players;
 using Registers;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using static Eiram.Handles;
@@ -14,6 +15,9 @@ namespace Inventories
     {
         [SerializeField] private Vector3 pointerOffset = new Vector3();
         [SerializeField] private GameObject slotPointer = null;
+        
+        [SerializeField] private RectTransform openPosition;
+        [SerializeField] private RectTransform closePosition;
 
         private PlayerInventory playerInventory => activeInventory.Unwrap() as PlayerInventory;
 
@@ -30,6 +34,7 @@ namespace Inventories
         {
             activeInventory = Some(GameObject.FindGameObjectWithTag("Player").GetComponent<Player>()
                 .playerInventory as Inventory);
+            transform.position = closePosition.position;
             Invoke(nameof(LateStart), 0.05f); // TODO: fix this crap
         }
 
@@ -50,13 +55,13 @@ namespace Inventories
         
         public override void OpenInventory()
         {
-            LeanTween.moveY(gameObject, transform.position.y - 323.0f, 0.4f);
+            LeanTween.moveY(gameObject, openPosition.position.y, 0.4f);
             toggled = true;
         }
         
         public override void CloseInventory()
         {
-            LeanTween.moveY(gameObject, transform.position.y + 323.0f, 0.4f);
+            LeanTween.moveY(gameObject, closePosition.position.y, 0.4f);
             toggled = false;
         }
         

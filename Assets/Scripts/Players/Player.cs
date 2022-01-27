@@ -51,6 +51,7 @@ namespace Players
             
             playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
             playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
+            playerInventory.TryAddItem(ItemId.CHEST, 5);
             playerInventory.TryAddItem(ItemId.STICK, 5);
             
             TryApplySave();
