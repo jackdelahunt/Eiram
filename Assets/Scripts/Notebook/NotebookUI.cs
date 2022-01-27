@@ -6,6 +6,7 @@ using Effects;
 using IO;
 using Notebook;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Worlds;
 
 namespace Notebook
@@ -29,15 +30,15 @@ namespace Notebook
             EiramEvents.PlayerToggleNotebookEvent += OnNotebookToggleEvent;
             EiramEvents.SaveToDiskRequestEvent += SaveNotebook;
             GetAllAchievementNodeUI();
-            root = Achievement.NewTree();
         }
 
-        private void Start()
+        public void Start()
         {
+            root = Achievement.NewTree();
             TryApplySave();
             PopulateUI();
         }
-        
+
         public void Update()
         {
             if(!toggled) return;

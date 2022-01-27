@@ -37,6 +37,7 @@ namespace Registers
         
         public static AbstractItem GetItemByItemId(ItemId itemId)
         {
+            Debug.Log($"Registering this --------> {itemId} with index of {(int)itemId} :: {items}");
             return items[(int)itemId];
         }
 

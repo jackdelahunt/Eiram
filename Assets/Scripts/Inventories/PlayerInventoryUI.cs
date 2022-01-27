@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Events;
 using Items;
 using Players;
-using Registers;
-using TreeEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using static Eiram.Handles;
