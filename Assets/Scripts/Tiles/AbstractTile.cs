@@ -219,4 +219,9 @@ namespace Tiles
     {
         public Copper(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
+    
+    public class Scrap : AbstractTile
+    {
+        public Scrap(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
 }

@@ -108,10 +108,21 @@ namespace TerrainGeneration
                 }
                 
                 // plant some trees
-                if (Noise.CaveNoise(xOffset, highestPoint + 1, biome.treeThreshold, 0, biome.treeScale))
+                if (Noise.CaveNoise(firstTileWorldPos.x + xOffset, highestPoint + 1, biome.treeThreshold, 0, biome.treeScale))
                 {
                     MakeTree(tileDataArray, biome, xOffset, highestPoint + 1);
-                }  
+                }
+                else // plant some foliage
+                {
+                    foreach (var foliage in biome.foliageList)
+                    {
+                        if (Noise.CaveNoise(firstTileWorldPos.x + xOffset, highestPoint + 1, foliage.threshold, 0,
+                            foliage.scale))
+                        {
+                            SetTile(xOffset, highestPoint + 1, foliage.tileID, tileDataArray);
+                        }
+                    }
+                }
 
                 xOffset++;
             }

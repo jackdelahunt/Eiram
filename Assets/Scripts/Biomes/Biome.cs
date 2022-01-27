@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Chunks;
 using Eiram;
 using Tiles;
 using UnityEngine;
@@ -18,5 +19,6 @@ namespace Biomes
         public float scale;
         public float treeThreshold;
         public float treeScale;
+        public List<Foliage> foliageList;
     }
 }

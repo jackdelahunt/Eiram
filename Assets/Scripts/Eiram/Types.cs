@@ -31,6 +31,7 @@ namespace Eiram
         TRELLIS = 19,
         CHEST = 20,
         COPPER = 21,
+        SCRAP = 22,
     }
     
     public enum ItemId
@@ -45,6 +46,8 @@ namespace Eiram
         WOOD_PICKAXE = 6,
         WOOD_AXE = 7,
         CRANBERRIES = 8,
+        STICK = 9,
+        WOOD_CLUMP = 10,
     }
     
     public enum BiomeId

@@ -90,4 +90,14 @@ namespace Items
     {
         public ChestItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
+    
+    public class StickItem : AbstractItem
+    {
+        public StickItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class WoodClumpItem : AbstractItem
+    {
+        public WoodClumpItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
 }

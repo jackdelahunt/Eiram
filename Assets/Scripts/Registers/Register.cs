@@ -89,6 +89,7 @@ namespace Registers
                 new Trellis(concreteTileDataArray[19]),
                 new Chest(concreteTileDataArray[20]),
                 new Copper(concreteTileDataArray[21]),
+                new Scrap(concreteTileDataArray[22]),
             };
 
             items = new AbstractItem[]
@@ -102,6 +103,8 @@ namespace Registers
                 new WoodPickaxeItem(itemArray[6]),
                 new WoodAxeItem(itemArray[7]),
                 new CranberriesItem(itemArray[8]),
+                new StickItem(itemArray[9]),
+                new WoodClumpItem(itemArray[10]),
             };
             
             biomes = biomeArray;

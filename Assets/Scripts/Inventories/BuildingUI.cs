@@ -11,6 +11,9 @@ namespace Inventories
     {
         [SerializeField] private GameObject buildingItemPrefab = null;
         [SerializeField] private RectTransform contentTransform = null;
+        
+        [SerializeField] private RectTransform openPosition;
+        [SerializeField] private RectTransform closePosition;
 
         private bool toggled = false;
         private PlayerInventory playerInventory = null;
@@ -18,6 +21,11 @@ namespace Inventories
         public void Awake()
         {
             EiramEvents.PlayerTogglePlayerInventoryEvent += OnPlayerTogglePlayerInventoryEvent;
+        }
+
+        public void Start()
+        {
+            transform.position = closePosition.transform.position;
         }
 
         public void OnBuildingItemClicked(BuildingRecipe recipe)
@@ -90,12 +98,12 @@ namespace Inventories
         
         private void OpenInventory()
         {
-            LeanTween.moveX(gameObject, gameObject.transform.position.x - 50.0f, 0.4f);
+            LeanTween.moveX(gameObject, openPosition.transform.position.x, 0.4f);
         }
         
         private void CloseInventory()
         {
-            LeanTween.moveX(gameObject, gameObject.transform.position.x + 50.0f, 0.4f);
+            LeanTween.moveX(gameObject, closePosition.transform.position.x, 0.4f);
         }
     }
 }
