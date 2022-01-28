@@ -9,16 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f122aa2cf3a50aaf0ae84ae9dd486c3b, type: 3}
+  m_Script: {fileID: 11500000, guid: a018140fa9764cbea773bbc0916ffdb5, type: 3}
   m_Name: Plank
   m_EditorClassIdentifier: 
-  TileName: Plank
-  TileId: 11
-  RequiredToolType: 1
-  RequiredToolLevel: 0
-  Hardness: 15
-  TileBase: {fileID: 11400000, guid: 124fb85677c639a5f830ceee888bfcb9, type: 2}
-  Drops:
-  - ItemId: 12
-    Quantity: 1
-    Chance: 1
+  itemName: Plank
+  itemId: 12
+  tileId: 11
+  maxStack: 64
+  sprite: {fileID: 21300000, guid: 438ea70b949a8c14496bd49cf8d49f67, type: 3}

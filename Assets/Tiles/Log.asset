@@ -18,4 +18,7 @@ MonoBehaviour:
   RequiredToolLevel: 0
   Hardness: 15
   TileBase: {fileID: 11400000, guid: 00afcd1f807031a48ad59d85fe782e85, type: 2}
-  Drops: []
+  Drops:
+  - ItemId: 11
+    Quantity: 1
+    Chance: 1

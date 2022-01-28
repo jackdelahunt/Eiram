@@ -9,16 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f122aa2cf3a50aaf0ae84ae9dd486c3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 363c24c6c47447cb8b1b3a134429dfe8, type: 3}
   m_Name: Plank
   m_EditorClassIdentifier: 
-  TileName: Plank
-  TileId: 11
-  RequiredToolType: 1
-  RequiredToolLevel: 0
-  Hardness: 15
-  TileBase: {fileID: 11400000, guid: 124fb85677c639a5f830ceee888bfcb9, type: 2}
-  Drops:
-  - ItemId: 12
-    Quantity: 1
-    Chance: 1
+  FinalItem:
+    ItemId: 12
+    Amount: 5
+  Ingredients:
+  - ItemId: 11
+    Amount: 1

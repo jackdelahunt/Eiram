@@ -59,8 +59,7 @@ namespace Inventories
                 // check for empty slot
                 if (ItemStacks[i].IsEmpty())
                 {
-                    ItemStacks[i] = Register.GetItemByItemId(itemId).DefaultItemStack();
-                    ItemStacks[i].Size = size;
+                    SetStack(itemId, i, size);
                     return 0;
                 }
             }
@@ -190,9 +189,9 @@ namespace Inventories
             IsDirty = true;
         }
         
-        private void SetStack(ItemId id, int slotIndex, int newSize)
+        private void SetStack(ItemId itemId, int slotIndex, int newSize)
         {
-            ItemStacks[slotIndex].ItemId = id;
+            ItemStacks[slotIndex] = Register.GetItemByItemId(itemId).DefaultItemStack();
             ItemStacks[slotIndex].Size = newSize;
             IsDirty = true;
         }
