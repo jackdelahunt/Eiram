@@ -25,7 +25,8 @@ namespace Inventories
         private CanvasGroup canvasGroup = null;
 
         private bool isItemATool = false;
-
+        private int lastDurability = -1; // durabilty lsat frame cache
+        
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
@@ -104,13 +105,21 @@ namespace Inventories
             var richItemStack = ItemStack as RichItemStack;
             isItemATool = true;
             int durability = richItemStack.Tag.GetInt("durability");
-            int maxDurability = durability;
-            if(Register.GetItemByItemId(ItemStack.ItemId).IsToolItem(out var _, out var toolItemData))
+            if (durability != lastDurability)
             {
-                maxDurability = toolItemData.durability;
+                int maxDurability = durability;
+                if (Register.GetItemByItemId(ItemStack.ItemId)
+                    .IsToolItem(out var _, out var toolItemData))
+                {
+                    maxDurability = toolItemData.durability;
+                }
+
+                Durability.text = durability.ToString();
+                Durability.color = Color.Lerp(MinDurabilityColour, MaxDurabilityColour,
+                    (float)durability / (float)maxDurability);
             }
-            Durability.text = durability.ToString();
-            Durability.color = Color.Lerp(MinDurabilityColour, MaxDurabilityColour, (float)durability / (float)maxDurability);
+
+            lastDurability = durability;
         }
     }
 }
