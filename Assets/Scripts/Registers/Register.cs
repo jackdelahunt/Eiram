@@ -37,7 +37,6 @@ namespace Registers
         
         public static AbstractItem GetItemByItemId(ItemId itemId)
         {
-            Debug.Log($"Registering this --------> {itemId} with index of {(int)itemId} :: {items}");
             return items[(int)itemId];
         }
 
@@ -106,6 +105,7 @@ namespace Registers
                 new CranberriesItem(itemArray[8]),
                 new StickItem(itemArray[9]),
                 new WoodClumpItem(itemArray[10]),
+                new WoodItem(itemArray[11]),
             };
             
             biomes = biomeArray;

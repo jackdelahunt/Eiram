@@ -81,7 +81,24 @@ namespace Notebook
                                     new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 10},
                                 },
                                 children = new Achievement[]
-                                    {}
+                                {
+                                    new Achievement()
+                                    {
+                                        parent = null,
+                                        thumbnail = Register.GetItemByItemId(ItemId.WOOD).Sprite(),
+                                        title = "Break it to pulp",
+                                        description = "Use your newly acquired axe to chop down a tree to get some wood",
+                                        status = AchievementStatus.LOCKED,
+                                        requirements = new [] {
+                                            new ItemCountPair() { ItemId = ItemId.WOOD, Amount = 10},
+                                        },
+                                        rewards = new [] {
+                                            new ItemCountPair() { ItemId = ItemId.WOOD_AXE, Amount = 1},
+                                        },
+                                        children = new Achievement[]
+                                            {}
+                                    }
+                                }
                             },
                             new Achievement()
                             {
