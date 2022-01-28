@@ -107,4 +107,9 @@ namespace Items
     {
         public WoodItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
+    
+    public class PlankItem : AbstractItem
+    {
+        public PlankItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
 }

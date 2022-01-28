@@ -106,6 +106,7 @@ namespace Registers
                 new StickItem(itemArray[9]),
                 new WoodClumpItem(itemArray[10]),
                 new WoodItem(itemArray[11]),
+                new PlankItem(itemArray[12]),
             };
             
             biomes = biomeArray;
