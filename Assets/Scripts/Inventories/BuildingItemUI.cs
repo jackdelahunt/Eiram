@@ -2,6 +2,7 @@
 using Eiram;
 using Recipes;
 using Registers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace Inventories
         private Image iconImage;
         private Action<BuildingRecipe> callback;
         private BuildingRecipe recipe;
+        [SerializeField] private TMP_Text count;
         [SerializeField] private GameObject hoverCard;
         [SerializeField] private GameObject countableItemPrefab = null;
         [SerializeField] private ScrollableListUI requirementsList;
@@ -32,6 +34,7 @@ namespace Inventories
             this.callback = callback;
             this.recipe = recipe;
             this.iconImage.sprite = Register.GetItemByItemId(recipe.FinalItem.ItemId).Sprite();
+            count.text = recipe.FinalItem.Amount.ToString();
             
             foreach (var itemCountPair in recipe.Ingredients)
             {
