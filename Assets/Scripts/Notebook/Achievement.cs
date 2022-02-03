@@ -96,7 +96,24 @@ namespace Notebook
                                             new ItemCountPair() { ItemId = ItemId.WOOD_AXE, Amount = 1},
                                         },
                                         children = new Achievement[]
-                                            {}
+                                        {
+                                            new Achievement()
+                                            {
+                                                parent = null,
+                                                thumbnail = Register.GetItemByItemId(ItemId.PLANK).Sprite(),
+                                                title = "Do the plank",
+                                                description = "Create planks from the wood you have gathered, planks are more efficient replacement for wood clumps",
+                                                status = AchievementStatus.LOCKED,
+                                                requirements = new [] {
+                                                    new ItemCountPair() { ItemId = ItemId.PLANK, Amount = 50},
+                                                },
+                                                rewards = new [] {
+                                                    new ItemCountPair() { ItemId = ItemId.WOOD, Amount = 5},
+                                                },
+                                                children = new Achievement[]
+                                                    {}
+                                            }
+                                        }
                                     }
                                 }
                             },
