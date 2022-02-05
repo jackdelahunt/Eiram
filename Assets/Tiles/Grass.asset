@@ -18,6 +18,8 @@ MonoBehaviour:
   RequiredToolLevel: 0
   Hardness: 5
   TileBase: {fileID: 11400000, guid: 45aded2aa25ec634e90b539bf88dbf54, type: 2}
+  BreakingSound: {fileID: 8300000, guid: 0dc985b9b75dda85e9a4fcfcc01e1047, type: 3}
+  BreakSound: {fileID: 8300000, guid: 3bb7838588cad67f3b43fc461bf1458c, type: 3}
   Drops:
   - ItemId: 1
     Quantity: 1
