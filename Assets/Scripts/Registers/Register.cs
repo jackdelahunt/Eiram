@@ -90,6 +90,7 @@ namespace Registers
                 new Chest(concreteTileDataArray[20]),
                 new Copper(concreteTileDataArray[21]),
                 new Scrap(concreteTileDataArray[22]),
+                new MiniTree(concreteTileDataArray[23]),
             };
 
             items = new AbstractItem[]
@@ -107,6 +108,8 @@ namespace Registers
                 new WoodClumpItem(itemArray[10]),
                 new WoodItem(itemArray[11]),
                 new PlankItem(itemArray[12]),
+                new OrganicMassItem(itemArray[13]),
+                new MiniTreeItem(itemArray[14]),
             };
             
             biomes = biomeArray;

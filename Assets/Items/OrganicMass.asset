@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de8aaa3cce6c4199a671a18a0ee310df, type: 3}
-  m_Name: Thorns
+  m_Script: {fileID: 11500000, guid: a018140fa9764cbea773bbc0916ffdb5, type: 3}
+  m_Name: OrganicMass
   m_EditorClassIdentifier: 
-  FinalCrop: 20
-  LeftCrop: 18
-  RightCrop: 18
-  Strict: 0
+  itemName: Organic Mass
+  itemId: 13
+  tileId: -1
+  maxStack: 64
+  sprite: {fileID: 21300000, guid: a710ca79de1d07a9b8ce0348e638e34a, type: 3}

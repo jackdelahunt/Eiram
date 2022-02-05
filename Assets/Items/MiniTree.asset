@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de8aaa3cce6c4199a671a18a0ee310df, type: 3}
-  m_Name: Thorns
+  m_Script: {fileID: 11500000, guid: a018140fa9764cbea773bbc0916ffdb5, type: 3}
+  m_Name: MiniTree
   m_EditorClassIdentifier: 
-  FinalCrop: 20
-  LeftCrop: 18
-  RightCrop: 18
-  Strict: 0
+  itemName: Mini Tree
+  itemId: 14
+  tileId: 23
+  maxStack: 64
+  sprite: {fileID: 21300000, guid: 8eecd74ce65c369819b733d28fe357d0, type: 3}

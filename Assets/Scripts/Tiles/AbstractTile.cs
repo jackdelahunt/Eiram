@@ -226,4 +226,9 @@ namespace Tiles
     {
         public Scrap(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
+    
+    public class MiniTree : CropTile
+    {
+        public MiniTree(ConcreteTileData concreteTileData) : base(concreteTileData) {}
+    }
 }

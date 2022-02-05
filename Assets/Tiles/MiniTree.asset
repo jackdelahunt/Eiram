@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb387c67cd0840fc8bf6d42a2abb3eda, type: 3}
+  m_Name: MiniTree
+  m_EditorClassIdentifier: 
+  TileName: Mini Tree
+  TileId: 23
+  RequiredToolType: 1
+  RequiredToolLevel: 0
+  Hardness: 10
+  TileBase: {fileID: 11400000, guid: 9bdcf84d487175df89e5b53e2cef2cb5, type: 2}
+  Drops:
+  - ItemId: 14
+    Quantity: 1
+    Chance: 1
+  - ItemId: 14
+    Quantity: 1
+    Chance: 0.1
+  - ItemId: 11
+    Quantity: 2
+    Chance: 1
+  maxAge: 2
+  tileBases:
+  - {fileID: 11400000, guid: 9bdcf84d487175df89e5b53e2cef2cb5, type: 2}
+  - {fileID: 11400000, guid: c7cee2260ec00278181a1bb04309976c, type: 2}
+  - {fileID: 11400000, guid: d81f0073caca13703a8f850387f664b6, type: 2}
+  SeedItemId: 14
