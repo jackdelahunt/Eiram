@@ -111,7 +111,25 @@ namespace Notebook
                                                     new ItemCountPair() { ItemId = ItemId.WOOD, Amount = 5},
                                                 },
                                                 children = new Achievement[]
-                                                    {}
+                                                {
+                                                    new Achievement()
+                                                    {
+                                                        parent = null,
+                                                        thumbnail = Register.GetItemByItemId(ItemId.THORNS).Sprite(),
+                                                        title = "Getting Prickly",
+                                                        description = "Create a thorn bush with wood clumps and sticks to get renewable sticks",
+                                                        status = AchievementStatus.LOCKED,
+                                                        requirements = new [] {
+                                                            new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
+                                                        },
+                                                        rewards = new [] {
+                                                            new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 3},
+                                                            new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 10},
+                                                        },
+                                                        children = new Achievement[]
+                                                            {}
+                                                    }
+                                                }
                                             }
                                         }
                                     }
