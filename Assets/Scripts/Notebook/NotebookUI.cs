@@ -45,7 +45,7 @@ namespace Notebook
             
             float scrollAmount = Input.GetAxisRaw("Scroll");
             if(scrollAmount < -0.001f || scrollAmount > 0.001f)
-                ScrollGraph(scrollAmount * -scrollSensitivity);
+                ScrollGraph(scrollAmount * scrollSensitivity);
         }
 
         private void OnDestroy()
