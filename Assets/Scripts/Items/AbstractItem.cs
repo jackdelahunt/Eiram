@@ -4,6 +4,7 @@ using Items.Items;
 using Players;
 using Tags;
 using UnityEngine;
+using Worlds;
 
 namespace Items
 {
@@ -111,5 +112,35 @@ namespace Items
     public class PlankItem : AbstractItem
     {
         public PlankItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    } 
+    
+    public class OrganicMassItem : AbstractItem
+    {
+        public OrganicMassItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+        
+        public override bool OnUse(Vector3Int worldPosition, ItemStack stack, Player player)
+        {
+            if (!World.Current.GetTileData(worldPosition).IsSome(out var tileData)) return false;
+
+            if (tileData.TileId == Eiram.TileId.DIRT)
+            {
+                World.Current.ReplaceTileAt(worldPosition, Eiram.TileId.TILLED_SOIL);
+                return true;
+            }
+
+            if (tileData.TileId == Eiram.TileId.TILLED_SOIL)
+            {
+                tileData.Tag.SetInt("life", tileData.Tag.GetInt("life") + 10);
+                return true;
+            }
+
+            return false;
+        }
+        
+    }
+    
+    public class MiniTreeItem : AbstractItem
+    {
+        public MiniTreeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
 }

@@ -96,7 +96,60 @@ namespace Notebook
                                             new ItemCountPair() { ItemId = ItemId.WOOD_AXE, Amount = 1},
                                         },
                                         children = new Achievement[]
-                                            {}
+                                        {
+                                            new Achievement()
+                                            {
+                                                parent = null,
+                                                thumbnail = Register.GetItemByItemId(ItemId.PLANK).Sprite(),
+                                                title = "Do the plank",
+                                                description = "Create planks from the wood you have gathered, planks are more efficient replacement for wood clumps",
+                                                status = AchievementStatus.LOCKED,
+                                                requirements = new [] {
+                                                    new ItemCountPair() { ItemId = ItemId.PLANK, Amount = 50},
+                                                },
+                                                rewards = new [] {
+                                                    new ItemCountPair() { ItemId = ItemId.WOOD, Amount = 5},
+                                                },
+                                                children = new Achievement[]
+                                                {
+                                                    new Achievement()
+                                                    {
+                                                        parent = null,
+                                                        thumbnail = Register.GetItemByItemId(ItemId.THORNS).Sprite(),
+                                                        title = "Getting Prickly",
+                                                        description = "Create a thorn bush with wood clumps and sticks to get renewable sticks. Use Organic mass to create tilled soil to plant on.",
+                                                        status = AchievementStatus.LOCKED,
+                                                        requirements = new [] {
+                                                            new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
+                                                        },
+                                                        rewards = new [] {
+                                                            new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 3},
+                                                            new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 10},
+                                                        },
+                                                        children = new Achievement[]
+                                                        {}
+                                                    },
+                                                    new Achievement()
+                                                    {
+                                                        parent = null,
+                                                        thumbnail = Register.GetItemByItemId(ItemId.ORGANIC_MASS).Sprite(),
+                                                        title = "Vegan Meal Deal",
+                                                        description = "Gather some organic mass by harvesting natural items like dirt and grass, to start your first farm. Use more organic mass on tilled soil to keep your crops from turning tilled soil to dirt.",
+                                                        status = AchievementStatus.LOCKED,
+                                                        requirements = new [] {
+                                                            new ItemCountPair() { ItemId = ItemId.ORGANIC_MASS, Amount = 10},
+                                                        },
+                                                        rewards = new [] {
+                                                            new ItemCountPair() { ItemId = ItemId.STICK, Amount = 3},
+                                                            new ItemCountPair() { ItemId = ItemId.ORGANIC_MASS, Amount = 3},
+                                                            new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
+                                                        },
+                                                        children = new Achievement[]
+                                                            {}
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             },

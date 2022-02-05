@@ -32,6 +32,7 @@ namespace Eiram
         CHEST = 20,
         COPPER = 21,
         SCRAP = 22,
+        MINI_TREE = 23,
     }
     
     public enum ItemId
@@ -50,6 +51,8 @@ namespace Eiram
         WOOD_CLUMP = 10,
         WOOD = 11,
         PLANK = 12,
+        ORGANIC_MASS = 13,
+        MINI_TREE = 14,
     }
     
     public enum BiomeId

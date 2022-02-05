@@ -76,7 +76,8 @@ namespace Notebook
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            hoverCard.SetActive(true);
+            if(achievement.status != AchievementStatus.LOCKED)
+                hoverCard.SetActive(true);
         }
         
         public void OnPointerExit(PointerEventData eventData)

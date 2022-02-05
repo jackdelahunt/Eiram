@@ -15,12 +15,15 @@ MonoBehaviour:
   TileName: Thorns
   TileId: 18
   RequiredToolType: -1
-  RequiredToolLevel: 0
+  RequiredToolLevel: -1
   Hardness: 2
   TileBase: {fileID: 11400000, guid: ab43ac5364ab7ed4a946c22d8b0cb097, type: 2}
   Drops:
   - ItemId: 2
     Quantity: 2
+    Chance: 1
+  - ItemId: 9
+    Quantity: 1
     Chance: 1
   maxAge: 1
   tileBases:

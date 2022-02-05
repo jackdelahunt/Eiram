@@ -67,7 +67,7 @@ namespace Tiles
 
         public virtual void OnRandomUpdate(Vector3Int worldPosition, SerialTileData currentTileData) {}
 
-        private void UpdateNeighbours(Vector3Int worldPosition)
+        protected void UpdateNeighbours(Vector3Int worldPosition)
         {
             World.Current.UpdateTileAt(worldPosition.Up());
             World.Current.UpdateTileAt(worldPosition.Right());
@@ -88,6 +88,12 @@ namespace Tiles
             }
 
             return drops;
+        }
+        
+        public Option<T> Is<T>() where T: AbstractTile
+        {
+            if (this is T t) return t;
+            return None<T>();
         }
 
         public Option<T> As<T>() where T: ConcreteTileData
@@ -126,13 +132,6 @@ namespace Tiles
     public class Dirt : AbstractTile
     {
         public Dirt(ConcreteTileData concreteTileData) : base(concreteTileData){}
-
-        public override bool OnUse(Vector3Int worldPosition, SerialTileData currentTileData, Player player)
-        {
-            base.OnUse(worldPosition, currentTileData, player);
-            World.Current.ReplaceTileAt(worldPosition, Eiram.TileId.TILLED_SOIL);
-            return true;
-        }
     }
     
     public class Grass : AbstractTile
@@ -182,9 +181,32 @@ namespace Tiles
     
     public class TilledSoil : AbstractTile
     {
-        public TilledSoil(ConcreteTileData concreteTileData) : base(concreteTileData){}
+        public TilledSoil(ConcreteTileData concreteTileData) : base(concreteTileData)
+        {
+            defaultTileData = new SerialTileData
+            {
+                TileId = concreteTileData.TileId,
+                Tag = new Tag(("life", 10))
+            };
+        }
+
+        public override void OnUpdate(Vector3Int worldPosition, SerialTileData currentTileData)
+        {
+            base.OnUpdate(worldPosition, currentTileData);
+            if (currentTileData.Tag.GetInt("life") <= 0)
+            {
+                World.Current.ReplaceTileAt(worldPosition, Eiram.TileId.DIRT);
+                if (World.Current.GetTileData(worldPosition.Up()).IsSome(out var aboveData))
+                {
+                    if (Register.GetTileByTileId(aboveData.TileId).Is<CropTile>().IsSome(out var _))
+                    {
+                        World.Current.RemoveTileAt(worldPosition.Up());
+                    }
+                }
+            }
+        }
     }
-    
+        
     public class Thorns : CropTile
     {
         public Thorns(ConcreteTileData concreteTileData) : base(concreteTileData) {}
@@ -225,5 +247,10 @@ namespace Tiles
     public class Scrap : AbstractTile
     {
         public Scrap(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
+    public class MiniTree : CropTile
+    {
+        public MiniTree(ConcreteTileData concreteTileData) : base(concreteTileData) {}
     }
 }

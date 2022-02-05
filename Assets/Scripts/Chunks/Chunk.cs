@@ -99,8 +99,16 @@ namespace Chunks
         public void ReplaceTileAt(Vector3Int worldPosition, TileId tileId)
         {
             var chunkPosition = WorldCoordToChunkCoord(worldPosition);
-            tileDataArray[chunkPosition.x, chunkPosition.y] = Register.GetTileByTileId(tileId).DefaultTileData();
-            EiramTilemap.Foreground.SetTile(worldPosition, tileId);
+            var tile = Register.GetTileByTileId(tileId);
+            var data = tile.DefaultTileData();
+            
+            if (tile.CanPlace(worldPosition, data))
+            {
+                tileDataArray[chunkPosition.x, chunkPosition.y] = data;
+                EiramTilemap.Foreground.SetTile(worldPosition, data);
+
+                EiramEvents.OnTilePlace(worldPosition, data);
+            }
         }
         
         public void UpdateTileAt(Vector3Int worldPosition)

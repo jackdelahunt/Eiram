@@ -49,11 +49,15 @@ namespace Players
         {
             EiramEvents.OnPlayerChangedHungerEvent(hunger);
             
-            playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
-            playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
-            playerInventory.TryAddItem(ItemId.CHEST, 5);
-            playerInventory.TryAddItem(ItemId.STICK, 5);
+            // playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
+            // playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
+            // playerInventory.TryAddItem(ItemId.ORGANIC_MASS, 5);
+            // playerInventory.TryAddItem(ItemId.STICK, 5);
+            // playerInventory.TryAddItem(ItemId.THORNS, 5);
+            // playerInventory.TryAddItem(ItemId.TRELLIS, 5);
+            // playerInventory.TryAddItem(ItemId.MINI_TREE, 5);
             
+
             TryApplySave();
         }
 

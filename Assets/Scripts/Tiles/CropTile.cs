@@ -63,7 +63,12 @@ namespace Tiles
             
             // if we did not grow this frame
             if (startAge != maxAge)
+            {
                 RefreshTile(worldPosition, startAge + 1);
+                var soilLifeTag = World.Current.GetTileData(worldPosition.Down()).Unwrap().Tag; 
+                soilLifeTag.SetInt("life", soilLifeTag.GetInt("life") - 1);
+                UpdateNeighbours(worldPosition);
+            }
         }
 
         public override List<ItemId> GenerateDrops(SerialTileData currentTileData)
