@@ -118,6 +118,9 @@ namespace Tiles
 
         public TileId TileId() => concreteTileData.TileId;
 
+        public AudioClip BreakingSound() => concreteTileData.BreakingSound;
+        public AudioClip BreakSound() => concreteTileData.BreakSound;
+
         public virtual TileBase TileBase(SerialTileData currentTileData)
         {
             return concreteTileData.TileBase;

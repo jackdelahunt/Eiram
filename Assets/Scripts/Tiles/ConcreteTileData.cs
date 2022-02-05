@@ -15,6 +15,8 @@ namespace Tiles
         public ToolLevel RequiredToolLevel;
         public int Hardness;
         public TileBase TileBase;
+        public AudioClip BreakingSound;
+        public AudioClip BreakSound;
         public List<LootItem> Drops;
     }
 

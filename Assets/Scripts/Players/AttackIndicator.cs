@@ -15,13 +15,15 @@ namespace Players
         private bool attackedThisFrame = false;
         private Option<AttackStatus> CurrentAttack = None<AttackStatus>();
         private SpriteRenderer spriteRenderer;
-
+        private AudioSource audioSource;
+        
         public const float BASE_DAMAGE = 10.0f;
 
         public void Awake()
         {
             EiramEvents.PlayerAttackEvent += PlayerClicking;
             spriteRenderer = GetComponent<SpriteRenderer>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         public void LateUpdate()
@@ -73,14 +75,52 @@ namespace Players
 
                 status.Percentage += damage;
                 TryChangeFrame(status.Percentage);
+                PlayBreakingSound();
                 if (!(status.Percentage >= 100.0f)) return;
                 
-                World.Current.RemoveTileAtAsPlayer(worldPosition, inHand, player);
+                // break the tile
+                PlayBreakSound();
                 StopAttack();
+                World.Current.RemoveTileAtAsPlayer(worldPosition, inHand, player);
                 return;
             }
             
             RestAttackTo(worldPosition);
+        }
+
+        private void PlayBreakingSound()
+        {
+            if(audioSource.isPlaying) return;
+            if (CurrentAttack.IsSome(out var attackStatus))
+            {
+                if (World.Current.GetTileData(attackStatus.WorldPosition).IsSome(out var tileData))
+                {
+                    var audioClip = Register.GetTileByTileId(tileData.TileId).BreakingSound();
+                    if (audioClip != null)
+                    {
+                        audioSource.clip = audioClip;
+                        audioSource.Play();
+                    }
+                }
+            }
+        }
+        
+        private void PlayBreakSound()
+        {
+            audioSource.Stop();
+            audioSource.clip = null;
+
+            if (CurrentAttack.IsSome(out var attackStatus))
+            {
+                if (World.Current.GetTileData(attackStatus.WorldPosition).IsSome(out var tileData))
+                {
+                    var audioClip = Register.GetTileByTileId(tileData.TileId).BreakSound();
+                    if (audioClip != null)
+                    {
+                        audioSource.PlayOneShot(audioClip);
+                    }
+                }
+            }
         }
 
         private void TryChangeFrame(float percentage)
