@@ -16,7 +16,7 @@ namespace Menus
                 childList.Add(contentTransform.GetChild(i));
             }
             
-            childList.ForEach(t => Destroy(t.gameObject));y
+            childList.ForEach(t => Destroy(t.gameObject));
             
             Debug.Log("Enable");
             // create new levelselect for each save
