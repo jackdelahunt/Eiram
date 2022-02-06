@@ -56,8 +56,6 @@ namespace Players
             // playerInventory.TryAddItem(ItemId.THORNS, 5);
             // playerInventory.TryAddItem(ItemId.TRELLIS, 5);
             // playerInventory.TryAddItem(ItemId.MINI_TREE, 5);
-            
-
             TryApplySave();
         }
 
