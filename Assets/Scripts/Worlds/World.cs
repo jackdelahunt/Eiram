@@ -36,7 +36,7 @@ namespace Worlds
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
             player = playerObject.GetComponent<Player>();
-            Save = Filesystem.CreateSave("DEBUG_SAVE");
+            Save = Filesystem.CreateSave(PlayerPrefs.GetString("save_name"));
         }
 
         void Start()
