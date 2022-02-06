@@ -16,25 +16,25 @@ namespace Menus
         public void OnEnable()
         {
             ResolutionDropdown.options.Clear();
-            foreach (var resolution in Screen.resolutions)
+            for(int i = 0; i < Screen.resolutions.Length; i++)
             {
+                var resolution = Screen.resolutions[i];
                 ResolutionDropdown.options.Add(new TMP_Dropdown.OptionData(resolution.width + " x " + resolution.height));
+                
+                if (resolution.Equals(Screen.currentResolution)) // set current resolution
+                {
+                    ResolutionDropdown.value = i;
+                }
             }
-            
+
+            ScreenOptionsDropdown.value = (int)Screen.fullScreenMode;
+
         }
         
         public void ApplyClicked()
         {
             var selectedResolution = Screen.resolutions[ResolutionDropdown.value];
-            Screen.SetResolution(selectedResolution.width, selectedResolution.height, 
-                ScreenOptionsDropdown.value switch
-                {
-                    0 => FullScreenMode.ExclusiveFullScreen,
-                    1 => FullScreenMode.FullScreenWindow,
-                    2 => FullScreenMode.Windowed,
-                    _ => FullScreenMode.ExclusiveFullScreen
-                }
-                );
+            Screen.SetResolution(selectedResolution.width, selectedResolution.height, (FullScreenMode)ScreenOptionsDropdown.value);
         }
 
         public void BackClicked()
