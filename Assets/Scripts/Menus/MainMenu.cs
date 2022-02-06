@@ -7,19 +7,30 @@ namespace Menus
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private GameObject StartMenu = null;
+        [SerializeField] private GameObject NewMenu = null;
+        [SerializeField] private GameObject LoadMenu = null;
         [SerializeField] private GameObject OptionsMenu = null;
-        
-        public void StartClicked()
+
+        public void NewClicked()
         {
-            StartMenu.SetActive(true);
+            NewMenu.SetActive(true);
+            LoadMenu.SetActive(false);
+            OptionsMenu.SetActive(false);
+            gameObject.SetActive(false);
+        }
+        
+        public void LoadClicked()
+        {
+            NewMenu.SetActive(false);
+            LoadMenu.SetActive(true);
             OptionsMenu.SetActive(false);
             gameObject.SetActive(false);
         }
 
         public void OptionsClicked()
         {
-            StartMenu.SetActive(false);
+            NewMenu.SetActive(false);
+            LoadMenu.SetActive(false);
             OptionsMenu.SetActive(true);
             gameObject.SetActive(false);
         }

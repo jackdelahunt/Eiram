@@ -14,7 +14,6 @@ namespace Menus
         
         public void OnClick()
         {
-            Debug.Log("CLICKED");
             PlayerPrefs.SetString("save_name", eiramDirectory.Name());
             SceneManager.LoadScene("LoadingScreen");
         }
