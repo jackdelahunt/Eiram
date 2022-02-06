@@ -1444,6 +1444,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentTransform: {fileID: 1585249070}
+  levelSelectPrefab: {fileID: 5635856745648377966, guid: 07f01010a1359b96ebd8401b680a427d,
+    type: 3}
 --- !u!1 &1427181314
 GameObject:
   m_ObjectHideFlags: 0

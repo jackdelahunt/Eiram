@@ -2,10 +2,10 @@
 
 namespace IO
 {
-    public class EiarmFile
+    public class EiramFile
     {
         public string Path;
-        public EiarmFile(string path)
+        public EiramFile(string path)
         {
             this.Path = path;
         }

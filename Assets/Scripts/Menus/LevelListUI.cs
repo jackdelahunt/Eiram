@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using IO;
 using UnityEngine;
 
 namespace Menus
@@ -7,6 +8,7 @@ namespace Menus
     public class LevelListUI : MonoBehaviour
     {
         [SerializeField] private Transform contentTransform;
+        [SerializeField] private GameObject levelSelectPrefab;
         
         public void OnEnable()
         {
@@ -17,9 +19,13 @@ namespace Menus
             }
             
             childList.ForEach(t => Destroy(t.gameObject));
-            
-            Debug.Log("Enable");
-            // create new levelselect for each save
+
+            var saves = Filesystem.AllSaves();
+            saves.ForEach(save =>
+            {
+                var go = Instantiate(levelSelectPrefab, contentTransform);
+                go.GetComponent<LevelSelect>().Init(save);
+            });
         }
     }
 }
