@@ -127,11 +127,6 @@ namespace Worlds
             }
         }
 
-        public void SaveWorld()
-        {
-            EiramEvents.OnSaveToDiskRequestEvent();
-        }
-
         public void AddFatTile(Vector3Int worldPosition, SerialFatTileData serialFatTileData)
         {
             var chunkX = Utils.Utils.GetChunkXFromPosition(worldPosition);
