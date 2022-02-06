@@ -4383,6 +4383,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1321407158, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
+      propertyPath: EntityForceMultiplier.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321407158, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
+      propertyPath: EntityForceMultiplier.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1321407158, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
+      propertyPath: EntityRotationMultiplier
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 253499352068151, guid: 38f4efffdbd44e68fb822743850af90b, type: 3}
       propertyPath: m_Name
       value: World

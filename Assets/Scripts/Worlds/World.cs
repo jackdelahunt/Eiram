@@ -10,6 +10,7 @@ using Registers;
 using Tiles;
 using UnityEngine;
 using static Eiram.Handles;
+using Random = System.Random;
 
 namespace Worlds
 {
@@ -18,11 +19,14 @@ namespace Worlds
         public static World Current = null;
 
         [SerializeField] private GameObject itemEntityPrefab = null;
+        [SerializeField] private Vector2 EntityForceMultiplier;
+        [SerializeField] private float EntityRotationMultiplier;
         
         private GameObject playerObject;
         private Player player;
         private Dictionary<int, Chunk> activeChunks = new Dictionary<int, Chunk>();
         public Save Save;
+        private Random rand = new Random();
 
         private void Awake()
         {
@@ -277,7 +281,16 @@ namespace Worlds
 
             foreach (var itemId in dropsItemIds)
             {
-                var newItemEntity = Instantiate(itemEntityPrefab, worldPosition + spawnOffset, new Quaternion()).GetComponent<ItemEntity>();
+                float xForce = (float)rand.NextDouble() * EntityForceMultiplier.x;
+                float yForce = (float)rand.NextDouble() * EntityForceMultiplier.y;
+                float rotation = ((float)rand.NextDouble() - 0.5f) * 2 * EntityRotationMultiplier;
+
+                var go = Instantiate(itemEntityPrefab, worldPosition + spawnOffset, new Quaternion());
+                var newItemEntity = go.GetComponent<ItemEntity>();
+                var newRigidBody = go.GetComponent<Rigidbody2D>();
+                
+                newRigidBody.AddForce(new Vector3(xForce, yForce));
+                newRigidBody.AddTorque(rotation, ForceMode2D.Impulse);
                 newItemEntity.Init(itemId);
             }
         }
