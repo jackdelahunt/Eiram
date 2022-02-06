@@ -22,15 +22,17 @@ namespace Chunks
         // time = growthStages / delta / (RANDOM_TILE_UPDATE_COUNT / WIDTH * HEIGHT)
         private const int RANDOM_TILE_UPDATE_COUNT = 2000;
         public readonly BiomeId BiomeId;
+        public readonly int Seed;
         public readonly int ChunkX;
         private readonly SerialTileData[,] tileDataArray;
         public readonly TileId[,] backgroundTileData;
         private readonly List<SerialFatTileData> fatTileArray;
 
-        public Chunk(int chunkX)
+        public Chunk(int chunkX, int seed)
         {
             var rand = new Random();
             this.BiomeId = (BiomeId)Mathf.Round(Noise.TerrainNoise(chunkX, 0, 0) * (float)(Register.ActiveBiomes() - 1));
+            this.Seed = seed;
             this.ChunkX = chunkX;
             (tileDataArray, backgroundTileData) = TerrainGenerator.GenerateChunkData(this);
             fatTileArray = new List<SerialFatTileData>();
@@ -193,6 +195,7 @@ namespace Chunks
         {
             return new ChunkData
             {
+                Seed = this.Seed,
                 ChunkX = this.ChunkX,
                 TileDataArray = this.tileDataArray,
                 BackgroundTileData = this.backgroundTileData,
@@ -204,6 +207,7 @@ namespace Chunks
     [Serializable]
     public class ChunkData
     {
+        public int Seed;
         public int ChunkX;
         public SerialTileData[,] TileDataArray;
         public TileId[,] BackgroundTileData;

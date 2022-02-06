@@ -13,7 +13,7 @@ namespace Menus
         public void CreateClicked()
         {
             PlayerPrefs.SetString("save_name", NameInput.text);
-            PlayerPrefs.SetInt("seed", 234);
+            PlayerPrefs.SetInt("seed", SeedInput.text.GetHashCode() / SeedInput.text.Length);
             SceneManager.LoadScene("LoadingScreen");
         }
 

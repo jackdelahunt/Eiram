@@ -14,7 +14,7 @@ namespace IO
             {
                 Data = new EiramDirectory($"{savePath}/Data"),
                 Region = new EiramDirectory($"{savePath}/Region"),
-                World = null
+                World = new EiramFile($"{savePath}/world.data")
             };
         }
 
@@ -27,10 +27,20 @@ namespace IO
             return file;
         }
         
+        public static void SaveTo(object data, EiramFile file)
+        {
+            Serialize.Out(data,  file.Path);
+        }
+        
         public static Option<T> LoadFrom<T>(string fileName, EiramDirectory directory)
         {
             var filePath = $"{directory.Path}/{fileName}";
             return Serialize.In<T>(filePath);
+        }
+        
+        public static Option<T> LoadFrom<T>(EiramFile file)
+        {
+            return Serialize.In<T>(file.Path);
         }
 
         public static bool SaveExists(string saveName)
