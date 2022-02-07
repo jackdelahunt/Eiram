@@ -22,7 +22,10 @@ MonoBehaviour:
   BreakSound: {fileID: 8300000, guid: 3bb7838588cad67f3b43fc461bf1458c, type: 3}
   Drops:
   - ItemId: 17
-    Quantity: 1
+    Quantity: 2
+    Chance: 1
+  - ItemId: 16
+    Quantity: 2
     Chance: 1
   maxAge: 3
   tileBases:

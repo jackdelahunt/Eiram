@@ -115,23 +115,6 @@ namespace Notebook
                                                     new Achievement()
                                                     {
                                                         parent = null,
-                                                        thumbnail = Register.GetItemByItemId(ItemId.THORNS).Sprite(),
-                                                        title = "Getting Prickly",
-                                                        description = "Create a thorn bush with wood clumps and sticks to get renewable sticks. Use Organic mass to create tilled soil to plant on.",
-                                                        status = AchievementStatus.LOCKED,
-                                                        requirements = new [] {
-                                                            new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
-                                                        },
-                                                        rewards = new [] {
-                                                            new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 3},
-                                                            new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 10},
-                                                        },
-                                                        children = new Achievement[]
-                                                        {}
-                                                    },
-                                                    new Achievement()
-                                                    {
-                                                        parent = null,
                                                         thumbnail = Register.GetItemByItemId(ItemId.ORGANIC_MASS).Sprite(),
                                                         title = "Vegan Meal Deal",
                                                         description = "Gather some organic mass by harvesting natural items like dirt and grass, to start your first farm. Use more organic mass on tilled soil to keep your crops from turning tilled soil to dirt.",
@@ -145,7 +128,43 @@ namespace Notebook
                                                             new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
                                                         },
                                                         children = new Achievement[]
-                                                            {}
+                                                        {
+                                                            new Achievement()
+                                                            {
+                                                                parent = null,
+                                                                thumbnail = Register.GetItemByItemId(ItemId.THORNS).Sprite(),
+                                                                title = "Getting Prickly",
+                                                                description = "Create a thorn bush with wood clumps and sticks to get renewable sticks. Use Organic mass to create tilled soil to plant on.",
+                                                                status = AchievementStatus.LOCKED,
+                                                                requirements = new [] {
+                                                                    new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
+                                                                },
+                                                                rewards = new [] {
+                                                                    new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 3},
+                                                                    new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 10},
+                                                                },
+                                                                children = new Achievement[]
+                                                                {
+                                                                    new Achievement()
+                                                                    {
+                                                                        parent = null,
+                                                                        thumbnail = Register.GetItemByItemId(ItemId.MINI_TREE).Sprite(),
+                                                                        title = "I Am Groot",
+                                                                        description = "Combine the some organic mass you have collected and your thorn bush to create a small tree for farming.",
+                                                                        status = AchievementStatus.LOCKED,
+                                                                        requirements = new [] {
+                                                                            new ItemCountPair() { ItemId = ItemId.MINI_TREE, Amount = 1},
+                                                                        },
+                                                                        rewards = new [] {
+                                                                            new ItemCountPair() { ItemId = ItemId.STICK, Amount = 5},
+                                                                            new ItemCountPair() { ItemId = ItemId.WOOD, Amount = 5},
+                                                                        },
+                                                                        children = new Achievement[]
+                                                                            {}
+                                                                    },
+                                                                }
+                                                            },
+                                                        }
                                                     }
                                                 }
                                             }
