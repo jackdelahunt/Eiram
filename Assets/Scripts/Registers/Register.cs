@@ -114,6 +114,9 @@ namespace Registers
                 new CobblestoneItem(itemArray[15]),
                 new StoneItem(itemArray[16]),
                 new StoneSeedItem(itemArray[17]),
+                new StoneShovelItem(itemArray[18]),
+                new StonePickaxeItem(itemArray[19]),
+                new StoneAxeItem(itemArray[20]),
             };
             
             biomes = biomeArray;

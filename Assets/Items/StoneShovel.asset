@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4286a74653645a5a808088a4bd6d2c3, type: 3}
-  m_Name: WoodShovel
+  m_Name: StoneShovel
   m_EditorClassIdentifier: 
-  itemName: Wooden Shovel
-  itemId: 5
+  itemName: Stone Shovel
+  itemId: 18
   tileId: -1
   maxStack: 1
-  sprite: {fileID: 21300000, guid: 42005d77e3ad8027d9ba985fcbd1556c, type: 3}
-  durability: 32
+  sprite: {fileID: 21300000, guid: db49c36591ddfa6dda33958c01ce77f9, type: 3}
+  durability: 64
   toolType: 2
-  toolLevel: 0
-  attackMultiplier: 2
+  toolLevel: 1
+  attackMultiplier: 3

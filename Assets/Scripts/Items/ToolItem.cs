@@ -75,4 +75,19 @@ namespace Items
     {
         public WoodAxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
+    
+    public class StoneShovelItem : ToolItem
+    {
+        public StoneShovelItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class StonePickaxeItem : ToolItem
+    {
+        public StonePickaxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class StoneAxeItem : ToolItem
+    {
+        public StoneAxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
 }

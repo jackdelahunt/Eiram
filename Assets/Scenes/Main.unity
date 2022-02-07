@@ -7630,7 +7630,7 @@ PrefabInstance:
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: itemArray.Array.size
-      value: 18
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
@@ -7682,8 +7682,26 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: itemArray.Array.data[18]
+      value: 
+      objectReference: {fileID: 11400000, guid: ddf9b734b95086b9b8d6d8581199d348,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: itemArray.Array.data[19]
+      value: 
+      objectReference: {fileID: 11400000, guid: 68cd9aae55e3c78bfbadb6b218b67394,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: itemArray.Array.data[20]
+      value: 
+      objectReference: {fileID: 11400000, guid: 570cfe1537c1477cabf5bfebf05862e2,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: buildingRecipeArray.Array.size
-      value: 8
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
@@ -7735,6 +7753,24 @@ PrefabInstance:
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: buildingRecipeArray.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d0faff956f287e5c86eef68d9d8154c,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: buildingRecipeArray.Array.data[8]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b15694242b9083d38fc317c2e0ff21f,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: buildingRecipeArray.Array.data[9]
+      value: 
+      objectReference: {fileID: 11400000, guid: 20201f78d8610e889ba91c5d8fda07a1,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: buildingRecipeArray.Array.data[10]
       value: 
       objectReference: {fileID: 11400000, guid: 3d0faff956f287e5c86eef68d9d8154c,
         type: 2}

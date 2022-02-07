@@ -57,6 +57,9 @@ namespace Eiram
         COBBLESTONE = 15,
         STONE = 16,
         STONE_SEED = 17,
+        STONE_SHOVEL = 18,
+        STONE_PICKAXE = 19,
+        STONE_AXE = 20,
     }
     
     public enum BiomeId
