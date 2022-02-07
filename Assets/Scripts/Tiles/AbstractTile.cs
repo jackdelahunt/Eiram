@@ -157,6 +157,11 @@ namespace Tiles
         public Stone(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
     
+    public class Cobblestone : AbstractTile
+    {
+        public Cobblestone(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
+    
     public class Bedrock : AbstractTile
     {
         public Bedrock(ConcreteTileData concreteTileData) : base(concreteTileData){}
@@ -255,5 +260,10 @@ namespace Tiles
     public class MiniTree : CropTile
     {
         public MiniTree(ConcreteTileData concreteTileData) : base(concreteTileData) {}
+    }
+    
+    public class StonePlant : CropTile
+    {
+        public StonePlant(ConcreteTileData concreteTileData) : base(concreteTileData) {}
     }
 }

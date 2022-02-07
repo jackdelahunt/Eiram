@@ -33,6 +33,7 @@ namespace Eiram
         COPPER = 21,
         SCRAP = 22,
         MINI_TREE = 23,
+        STONE_PLANT = 24,
     }
     
     public enum ItemId
@@ -53,6 +54,9 @@ namespace Eiram
         PLANK = 12,
         ORGANIC_MASS = 13,
         MINI_TREE = 14,
+        COBBLESTONE = 15,
+        STONE = 16,
+        STONE_SEED = 17,
     }
     
     public enum BiomeId

@@ -7204,7 +7204,7 @@ PrefabInstance:
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: itemArray.Array.size
-      value: 15
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
@@ -7238,13 +7238,31 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: itemArray.Array.data[15]
+      value: 
+      objectReference: {fileID: 11400000, guid: a5fcae3963009aaeab04629903885810,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: itemArray.Array.data[16]
+      value: 
+      objectReference: {fileID: 11400000, guid: a16f48ac10bd695418f656c6bb58c2d2,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: itemArray.Array.data[17]
+      value: 
+      objectReference: {fileID: 11400000, guid: fd55427069a7749db950f001a2add6e1,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: buildingRecipeArray.Array.size
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: concreteTileDataArray.Array.size
-      value: 24
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
@@ -7296,9 +7314,21 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: concreteTileDataArray.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: b61cee5409b7d4f7f841ad4158dfc0c2,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: concreteTileDataArray.Array.data[23]
       value: 
       objectReference: {fileID: 11400000, guid: 0e1734a463e450320992d03c90a3142d,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: concreteTileDataArray.Array.data[24]
+      value: 
+      objectReference: {fileID: 11400000, guid: 778a00b1866ef98578d03c634184c9e2,
         type: 2}
     - target: {fileID: 8447453227687814862, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}

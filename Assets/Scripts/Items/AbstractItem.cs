@@ -143,4 +143,19 @@ namespace Items
     {
         public MiniTreeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
+    
+    public class CobblestoneItem : AbstractItem
+    {
+        public CobblestoneItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class StoneItem : AbstractItem
+    {
+        public StoneItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class StoneSeedItem : AbstractItem
+    {
+        public StoneSeedItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
 }

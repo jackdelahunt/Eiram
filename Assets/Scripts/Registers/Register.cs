@@ -73,7 +73,7 @@ namespace Registers
                 new Stone(concreteTileDataArray[3]),
                 null,
                 null,
-                null,
+                new Cobblestone(concreteTileDataArray[6]),
                 null,
                 new Bedrock(concreteTileDataArray[8]),
                 new Log(concreteTileDataArray[9]),
@@ -91,6 +91,7 @@ namespace Registers
                 new Copper(concreteTileDataArray[21]),
                 new Scrap(concreteTileDataArray[22]),
                 new MiniTree(concreteTileDataArray[23]),
+                new StonePlant(concreteTileDataArray[24]),
             };
 
             items = new AbstractItem[]
@@ -110,6 +111,9 @@ namespace Registers
                 new PlankItem(itemArray[12]),
                 new OrganicMassItem(itemArray[13]),
                 new MiniTreeItem(itemArray[14]),
+                new CobblestoneItem(itemArray[15]),
+                new StoneItem(itemArray[16]),
+                new StoneSeedItem(itemArray[17]),
             };
             
             biomes = biomeArray;
