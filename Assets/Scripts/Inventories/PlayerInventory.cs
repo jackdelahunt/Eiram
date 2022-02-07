@@ -13,7 +13,7 @@ namespace Inventories
     [Serializable]
     public class PlayerInventory : Inventory
     {
-        public static readonly int Slots = 70;
+        public static readonly int Slots = 60;
 
         public int SelectedSlot { get; private set; }
         private const int hotbarSlotsCount = 10;

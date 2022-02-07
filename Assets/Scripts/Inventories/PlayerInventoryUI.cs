@@ -30,15 +30,13 @@ namespace Inventories
 
         private void Start()
         {
-            activeInventory = Some(GameObject.FindGameObjectWithTag("Player").GetComponent<Player>()
-                .playerInventory as Inventory);
             transform.position = closePosition.position;
-            Invoke(nameof(LateStart), 0.05f); // TODO: fix this crap
+            Invoke(nameof(LateStart), 0.001f); // TODO: fix this crap
         }
 
         protected override void Update()
         {
-            if (playerInventory.IsDirty)
+            if (activeInventory.IsSome(out var _) && playerInventory.IsDirty)
             {
                 playerInventory.IsDirty = false;
                 Refresh();
@@ -65,6 +63,8 @@ namespace Inventories
         
         private void LateStart()
         {
+            activeInventory = Some(GameObject.FindGameObjectWithTag("Player").GetComponent<Player>()
+                .playerInventory as Inventory);
             MovePointer(playerInventory.SelectedSlot);
         }
 

@@ -58,7 +58,7 @@ namespace TerrainGeneration
                 {
                     var tile =
                         Noise.CaveNoise(firstTileWorldPos.x + xOffset,
-                            firstTileWorldPos.y + yOffset, 0.45f, 0, scale: 0.2f)
+                            firstTileWorldPos.y + yOffset, 0.45f, chunk.Seed, scale: 0.2f)
                             ? TileId.STONE
                             : TileId.AIR;
                     
@@ -67,7 +67,7 @@ namespace TerrainGeneration
                         if(firstTileWorldPos.y + yOffset < lode.MinHeight || firstTileWorldPos.y + yOffset > lode.MaxHeight) continue;
                         
                         if (Noise.CaveNoise(firstTileWorldPos.x + xOffset,
-                            firstTileWorldPos.y + yOffset, lode.Threshold, 0, lode.Scale))
+                            firstTileWorldPos.y + yOffset, lode.Threshold, chunk.Seed, lode.Scale))
                         {   
                             tile = lode.TileId;
                             break;
@@ -93,7 +93,7 @@ namespace TerrainGeneration
             
             while (xOffset < EiramTypes.CHUNK_WIDTH)
             {
-                var multiplier = Noise.TerrainNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y, 0, biome.scale);
+                var multiplier = Noise.TerrainNoise(firstTileWorldPos.x + xOffset, firstTileWorldPos.y, chunk.Seed, biome.scale);
                 int actualHeight = Mathf.RoundToInt(maxTerrainHeight * multiplier);
                 int highestPoint = (caveHeight + actualHeight) - 1;
 
@@ -108,7 +108,7 @@ namespace TerrainGeneration
                 }
                 
                 // plant some trees
-                if (Noise.CaveNoise(firstTileWorldPos.x + xOffset, highestPoint + 1, biome.treeThreshold, 0, biome.treeScale))
+                if (Noise.CaveNoise(firstTileWorldPos.x + xOffset, highestPoint + 1, biome.treeThreshold, chunk.Seed, biome.treeScale))
                 {
                     MakeTree(tileDataArray, biome, xOffset, highestPoint + 1);
                 }
@@ -116,7 +116,7 @@ namespace TerrainGeneration
                 {
                     foreach (var foliage in biome.foliageList)
                     {
-                        if (Noise.CaveNoise(firstTileWorldPos.x + xOffset, highestPoint + 1, foliage.threshold, 0,
+                        if (Noise.CaveNoise(firstTileWorldPos.x + xOffset, highestPoint + 1, foliage.threshold, chunk.Seed,
                             foliage.scale))
                         {
                             SetTile(xOffset, highestPoint + 1, foliage.tileID, tileDataArray);

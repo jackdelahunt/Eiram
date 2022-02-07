@@ -27,6 +27,7 @@ namespace Worlds
         private Dictionary<int, Chunk> activeChunks = new Dictionary<int, Chunk>();
         public Save Save;
         private Random rand = new Random();
+        private int seed;
 
         private void Awake()
         {
@@ -36,7 +37,10 @@ namespace Worlds
             Current = this;
             playerObject = GameObject.FindGameObjectWithTag("Player");
             player = playerObject.GetComponent<Player>();
-            Save = Filesystem.CreateSave("DEBUG_SAVE");
+            Save = Filesystem.CreateSave(PlayerPrefs.GetString("save_name"));
+            
+            // if not a current save create a new one
+            if(!TryApplyExistingSave()) ApplyNewSave();
         }
 
         void Start()
@@ -121,11 +125,6 @@ namespace Worlds
             {
                 chunk.RandomUpdateTileAt(worldPosition);
             }
-        }
-
-        public void SaveWorld()
-        {
-            EiramEvents.OnSaveToDiskRequestEvent();
         }
 
         public void AddFatTile(Vector3Int worldPosition, SerialFatTileData serialFatTileData)
@@ -222,6 +221,8 @@ namespace Worlds
                 var chunkData = chunk.SerializableData();
                 Filesystem.SaveTo(chunkData, $"{chunkData.ChunkX}.chunk", Save.Region);
             }
+
+            Filesystem.SaveTo(SerializableData(), Save.World);
         }
 
         private void RandomUpdateChunks()
@@ -248,7 +249,7 @@ namespace Worlds
                 }
             }
             
-            return new Chunk(chunkX);
+            return new Chunk(chunkX, seed);
         }
 
         private Option<Chunk> ChunkWithPosition(Vector3Int worldPosition)
@@ -294,6 +295,43 @@ namespace Worlds
                 newItemEntity.Init(itemId);
             }
         }
+        
+        private bool TryApplyExistingSave()
+        {
+            Debug.Assert(PlayerPrefs.HasKey("save_name"));
+            Save = Filesystem.CreateSave(PlayerPrefs.GetString("save_name"));
+            var loadResult = Filesystem.LoadFrom<WorldData>(Save.World);
+            if (loadResult.IsSome(out var worldData))
+            {
+                this.seed = worldData.seed;
+                return true;
+            }
+
+            return false;
+        }
+        
+        private void ApplyNewSave()
+        {
+            Debug.Assert(PlayerPrefs.HasKey("save_name"));
+            Save = Filesystem.CreateSave(PlayerPrefs.GetString("save_name"));
+            seed = PlayerPrefs.GetInt("seed");
+            
+            Filesystem.SaveTo(SerializableData(), Save.World);
+        }
+        
+        public WorldData SerializableData()
+        {
+            return new WorldData
+            {
+                seed = this.seed
+            };
+        }
+    }
+    
+    [Serializable]
+    public class WorldData
+    {
+        public int seed;
     }
 }
         

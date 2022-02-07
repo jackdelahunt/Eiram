@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Eiram;
 using Application = UnityEngine.Application;
 
@@ -11,37 +12,62 @@ namespace IO
             var savePath = $"{Application.persistentDataPath}/{saveName}";
             return new Save
             {
-                Data = new EiarmDirectory($"{savePath}/Data"),
-                Region = new EiarmDirectory($"{savePath}/Region"),
-                World = null
+                Data = new EiramDirectory($"{savePath}/Data"),
+                Region = new EiramDirectory($"{savePath}/Region"),
+                World = new EiramFile($"{savePath}/world.data")
             };
         }
 
-        public static EiarmFile SaveTo(object data, string fileName, EiarmDirectory directory)
+        public static EiramFile SaveTo(object data, string fileName, EiramDirectory directory)
         {
             var filePath = $"{directory.Path}/{fileName}";
             Serialize.Out(data,  filePath);
-            var file = new EiarmFile(filePath);
+            var file = new EiramFile(filePath);
             directory.SubFiles.Add(file);
             return file;
         }
         
-        public static Option<T> LoadFrom<T>(string fileName, EiarmDirectory directory)
+        public static void SaveTo(object data, EiramFile file)
+        {
+            Serialize.Out(data,  file.Path);
+        }
+        
+        public static Option<T> LoadFrom<T>(string fileName, EiramDirectory directory)
         {
             var filePath = $"{directory.Path}/{fileName}";
             return Serialize.In<T>(filePath);
+        }
+        
+        public static Option<T> LoadFrom<T>(EiramFile file)
+        {
+            return Serialize.In<T>(file.Path);
         }
 
         public static bool SaveExists(string saveName)
         {
             return Directory.Exists($"{Application.persistentDataPath}/{saveName}");
         }
+
+        public static List<EiramDirectory> AllSaves()
+        {
+            var saveDirectories = new List<EiramDirectory>();
+            var savesDirectory = new EiramDirectory(Application.persistentDataPath);
+            foreach (var save in savesDirectory.SubDirectories)
+            {
+                if (save.HasSubDirectory("Region") && save.HasSubDirectory("Data"))
+                {
+                    saveDirectories.Add(save);
+                }
+            }
+
+            return saveDirectories;
+        }
     }
     
     public class Save
     {
-        public EiarmDirectory Region;
-        public EiarmDirectory Data;
-        public EiarmFile World;
+        public EiramDirectory Region;
+        public EiramDirectory Data;
+        public EiramFile World;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Eiram;
@@ -6,17 +7,17 @@ using static Eiram.Handles;
 
 namespace IO
 {
-    public class EiarmDirectory
+    public class EiramDirectory
     {
         public readonly string Path;
-        public readonly List<EiarmDirectory> SubDirectories;
-        public readonly List<EiarmFile> SubFiles;
+        public readonly List<EiramDirectory> SubDirectories;
+        public readonly List<EiramFile> SubFiles;
 
-        public EiarmDirectory(string path)
+        public EiramDirectory(string path)
         {
             this.Path = path;
-            this.SubDirectories = new List<EiarmDirectory>();
-            this.SubFiles = new List<EiarmFile>();
+            this.SubDirectories = new List<EiramDirectory>();
+            this.SubFiles = new List<EiramFile>();
             
             if(!Directory.Exists(path))
             {
@@ -26,12 +27,12 @@ namespace IO
             
             foreach (var subDirPath in Directory.EnumerateDirectories(path))
             {
-                SubDirectories.Add(new EiarmDirectory(subDirPath));
+                SubDirectories.Add(new EiramDirectory(subDirPath));
             }
             
             foreach (var subFilePath in Directory.EnumerateFiles(path))
             {
-                SubFiles.Add(new EiarmFile(subFilePath));
+                SubFiles.Add(new EiramFile(subFilePath));
             }
         }
 
@@ -56,7 +57,7 @@ namespace IO
             {
                 if (GetSubDirectory(pathOnDisk).IsNone)
                 {
-                    SubDirectories.Add(new EiarmDirectory(pathOnDisk));
+                    SubDirectories.Add(new EiramDirectory(pathOnDisk));
                 }
             }
             
@@ -71,17 +72,17 @@ namespace IO
             {
                 if (GetSubDirectory(pathOnDisk).IsNone)
                 {
-                    SubFiles.Add(new EiarmFile(pathOnDisk));
+                    SubFiles.Add(new EiramFile(pathOnDisk));
                 }
             }
         }
         
-        public EiarmDirectory CreateSubDirectory(string name)
+        public EiramDirectory CreateSubDirectory(string name)
         {
-            return new EiarmDirectory(Directory.CreateDirectory($"{Path}/name").FullName);
+            return new EiramDirectory(Directory.CreateDirectory($"{Path}/name").FullName);
         }
 
-        public Option<EiarmDirectory> GetSubDirectory(string name)
+        public Option<EiramDirectory> GetSubDirectory(string name)
         {
             for (int i = 0; i < SubDirectories.Count; i++)
             {
@@ -89,10 +90,21 @@ namespace IO
                     return SubDirectories[i];
             }
 
-            return None<EiarmDirectory>();
+            return None<EiramDirectory>();
+        }
+
+        public bool HasSubDirectory(string name)
+        {
+            foreach (var subDirectory in SubDirectories)
+            {
+                if (subDirectory.Name().Equals(name))
+                    return true;
+            }
+
+            return false;
         }
         
-        public Option<EiarmFile> GetFile(string name)
+        public Option<EiramFile> GetFile(string name)
         {
             for (int i = 0; i < SubFiles.Count; i++)
             {
@@ -100,7 +112,12 @@ namespace IO
                     return SubFiles[i];
             }
 
-            return None<EiarmFile>();
+            return None<EiramFile>();
+        }
+
+        public DateTime LastWriteTime()
+        {
+            return Directory.GetLastWriteTime(Path);
         }
 
         public void Delete(bool recursive = true)
