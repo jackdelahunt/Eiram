@@ -26,4 +26,4 @@ MonoBehaviour:
     Chance: 1
   - ItemId: 17
     Quantity: 1
-    Chance: 1
+    Chance: 0.05
