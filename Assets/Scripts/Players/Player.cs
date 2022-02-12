@@ -48,16 +48,6 @@ namespace Players
         public void Start()
         {
             EiramEvents.OnPlayerChangedHungerEvent(hunger);
-            
-            // playerInventory.TryAddItem(ItemId.WOOD_SHOVEL, 1);
-            // playerInventory.TryAddItem(ItemId.CRANBERRIES, 5);
-            // playerInventory.TryAddItem(ItemId.ORGANIC_MASS, 5);
-            // playerInventory.TryAddItem(ItemId.STICK, 5);
-            // playerInventory.TryAddItem(ItemId.THORNS, 5);
-            // playerInventory.TryAddItem(ItemId.TRELLIS, 5);
-            // playerInventory.TryAddItem(ItemId.MINI_TREE, 5);
-
-            playerInventory.TryAddItem(ItemId.CHEST, 5);
             TryApplySave();
         }
 
@@ -146,8 +136,21 @@ namespace Players
         
         private void CheckForMouseInput()
         {
+            float scrollAmount = Input.GetAxisRaw("Scroll"); 
+            if (scrollAmount > 0)
+                playerInventory.SelectPrevious();
+            else if (scrollAmount < 0)
+                playerInventory.SelectNext();
+            
             var mousePos = GetMousePosition();
             var tileWorldPos = ConvertPositionToTile(mousePos);
+            var playerTilePos = ConvertPositionToTile(transform.position);
+
+            bool _playerOnTile()
+            {
+                return tileWorldPos.x == playerTilePos.x && (tileWorldPos.y == playerTilePos.y || tileWorldPos.y == playerTilePos.y - 1);
+            }
+
 
             if (World.Current.GetTileData(tileWorldPos).IsSome(out var tileDataAtMouse))
             {
@@ -172,11 +175,11 @@ namespace Players
                     World.Current.UseTileAt(tileWorldPos, this);
                     return;
                 }
-                
+
                 // if can place item then place
                 var item = Register.GetItemByItemId(inHandStack.ItemId);
                 var tileData = World.Current.GetTileData(tileWorldPos).Unwrap();
-                if (item.TileId() != TileId.UNKNOWN && tileData.TileId == TileId.AIR)
+                if (item.TileId() != TileId.UNKNOWN && tileData.TileId == TileId.AIR && !_playerOnTile())
                 {
                     World.Current.PlaceTileAt(tileWorldPos, Register.GetItemByItemId(playerInventory.PopSelectedItem().ItemId).TileId());
                     return;
@@ -189,12 +192,6 @@ namespace Players
                         playerInventory.PopSelectedItem();
                 }
             }
-
-            float scrollAmount = Input.GetAxisRaw("Scroll"); 
-            if (scrollAmount > 0)
-                playerInventory.SelectPrevious();
-            else if (scrollAmount < 0)
-                playerInventory.SelectNext();
         }
 
         /*
