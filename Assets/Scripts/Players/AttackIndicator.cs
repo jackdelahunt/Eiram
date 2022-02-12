@@ -17,7 +17,7 @@ namespace Players
         private SpriteRenderer spriteRenderer;
         private AudioSource audioSource;
         
-        public const float BASE_DAMAGE = 10.0f;
+        public const float BASE_DAMAGE = 500.0f;
 
         public void Awake()
         {
@@ -26,7 +26,7 @@ namespace Players
             audioSource = GetComponent<AudioSource>();
         }
 
-        public void LateUpdate()
+        public void Update()
         {
             // Debug.Log("INDICATOR:: checked last click");
             if (attackedThisFrame)
@@ -59,7 +59,7 @@ namespace Players
             // if we have an active attack and it is in the same position increase percentage else reset
             if (CurrentAttack.IsSome(out var status) && status.WorldPosition == worldPosition)
             {
-                float damage = BASE_DAMAGE * (1.0f / tile.Hardness());
+                float damage = Time.deltaTime * BASE_DAMAGE * (1.0f / tile.Hardness());
                 if (inHand.ItemId != ItemId.UNKNOWN)
                 {
                     var item = Register.GetItemByItemId(inHand.ItemId);
