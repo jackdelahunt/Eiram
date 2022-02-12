@@ -34,6 +34,7 @@ namespace Eiram
         SCRAP = 22,
         MINI_TREE = 23,
         STONE_PLANT = 24,
+        CRANBERRY_BUSH = 25,
     }
     
     public enum ItemId

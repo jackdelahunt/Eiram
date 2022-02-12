@@ -23,3 +23,4 @@ MonoBehaviour:
   treeScale: 0.6
   foliageList:
   - {fileID: 11400000, guid: 422d5c435d32d77e0943fb66a907bf83, type: 2}
+  - {fileID: 11400000, guid: 512a98a2e59620f6a8b46e8c08bcb405, type: 2}

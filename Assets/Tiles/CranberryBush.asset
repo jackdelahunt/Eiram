@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f122aa2cf3a50aaf0ae84ae9dd486c3b, type: 3}
+  m_Name: CranberryBush
+  m_EditorClassIdentifier: 
+  TileName: Cranberry Bush
+  TileId: 25
+  RequiredToolType: -1
+  RequiredToolLevel: -1
+  Hardness: 4
+  TileBase: {fileID: 11400000, guid: e1656060f0205ea9cbdad3bcd24bc235, type: 2}
+  BreakingSound: {fileID: 0}
+  BreakSound: {fileID: 8300000, guid: 3bb7838588cad67f3b43fc461bf1458c, type: 3}
+  Drops:
+  - ItemId: 8
+    Quantity: 1
+    Chance: 1

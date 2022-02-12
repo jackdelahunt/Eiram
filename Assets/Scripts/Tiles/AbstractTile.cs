@@ -266,4 +266,9 @@ namespace Tiles
     {
         public StonePlant(ConcreteTileData concreteTileData) : base(concreteTileData) {}
     }
+    
+    public class CranberryBush : AbstractTile
+    {
+        public CranberryBush(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
 }

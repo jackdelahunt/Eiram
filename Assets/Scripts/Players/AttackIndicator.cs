@@ -140,6 +140,7 @@ namespace Players
 
             spriteRenderer.sprite = frames[0];
             transform.position = worldPosition + new Vector3(0.5f, 0.5f, 0); // offset to tile grid
+            audioSource.loop = false;
         }
 
         private void StopAttack()
@@ -147,6 +148,7 @@ namespace Players
             spriteRenderer.sprite = frames[0];
             CurrentAttack = None<AttackStatus>();
             transform.position = new Vector3(0, -100, 0); // offset to tile grid
+            audioSource.loop = false;
         }
 
         class AttackStatus

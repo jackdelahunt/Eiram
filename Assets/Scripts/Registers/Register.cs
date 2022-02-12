@@ -92,6 +92,7 @@ namespace Registers
                 new Scrap(concreteTileDataArray[22]),
                 new MiniTree(concreteTileDataArray[23]),
                 new StonePlant(concreteTileDataArray[24]),
+                new CranberryBush(concreteTileDataArray[25]),
             };
 
             items = new AbstractItem[]
