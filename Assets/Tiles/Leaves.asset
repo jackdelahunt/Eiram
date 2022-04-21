@@ -24,3 +24,6 @@ MonoBehaviour:
   - ItemId: 9
     Quantity: 2
     Chance: 1
+  - ItemId: 13
+    Quantity: 1
+    Chance: 0.2

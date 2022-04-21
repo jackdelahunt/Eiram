@@ -115,33 +115,33 @@ namespace Notebook
                                                     new Achievement()
                                                     {
                                                         parent = null,
-                                                        thumbnail = Register.GetItemByItemId(ItemId.ORGANIC_MASS).Sprite(),
-                                                        title = "Vegan Meal Deal",
-                                                        description = "Gather some organic mass by harvesting natural items like dirt and grass, to start your first farm. Use more organic mass on tilled soil to keep your crops from uprooting",
+                                                        thumbnail = Register.GetItemByItemId(ItemId.THORNS).Sprite(),
+                                                        title = "Getting Prickly",
+                                                        description = "Create a thorn bush with wood clumps and sticks to get renewable sticks. Use Organic mass to create tilled soil to plant on. Continue to use organic mass to keep the farm alive",
                                                         status = AchievementStatus.LOCKED,
                                                         requirements = new [] {
-                                                            new ItemCountPair() { ItemId = ItemId.ORGANIC_MASS, Amount = 10},
+                                                            new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
                                                         },
                                                         rewards = new [] {
-                                                            new ItemCountPair() { ItemId = ItemId.STICK, Amount = 3},
-                                                            new ItemCountPair() { ItemId = ItemId.ORGANIC_MASS, Amount = 3},
-                                                            new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
+                                                            new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 3},
+                                                            new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 10},
                                                         },
                                                         children = new Achievement[]
                                                         {
                                                             new Achievement()
                                                             {
                                                                 parent = null,
-                                                                thumbnail = Register.GetItemByItemId(ItemId.THORNS).Sprite(),
-                                                                title = "Getting Prickly",
-                                                                description = "Create a thorn bush with wood clumps and sticks to get renewable sticks. Use Organic mass to create tilled soil to plant on. Continue to use organic mass to keep the farm alive",
+                                                                thumbnail = Register.GetItemByItemId(ItemId.ORGANIC_MASS).Sprite(),
+                                                                title = "Vegan Meal Deal",
+                                                                description = "Gather some organic mass by harvesting natural items like dirt and grass, to start your first farm. Use more organic mass on tilled soil to keep your crops from uprooting",
                                                                 status = AchievementStatus.LOCKED,
                                                                 requirements = new [] {
-                                                                    new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
+                                                                    new ItemCountPair() { ItemId = ItemId.ORGANIC_MASS, Amount = 10},
                                                                 },
                                                                 rewards = new [] {
-                                                                    new ItemCountPair() { ItemId = ItemId.WOOD_CLUMP, Amount = 3},
-                                                                    new ItemCountPair() { ItemId = ItemId.DIRT, Amount = 10},
+                                                                    new ItemCountPair() { ItemId = ItemId.STICK, Amount = 3},
+                                                                    new ItemCountPair() { ItemId = ItemId.ORGANIC_MASS, Amount = 3},
+                                                                    new ItemCountPair() { ItemId = ItemId.THORNS, Amount = 1},
                                                                 },
                                                                 children = new Achievement[]
                                                                 {
@@ -223,7 +223,145 @@ namespace Notebook
                                                                                                     new ItemCountPair() { ItemId = ItemId.STONE, Amount = 5},
                                                                                                 },
                                                                                                 children = new Achievement[]
-                                                                                                    {}
+                                                                                                    {
+                                                                                                        new Achievement()
+                                                                                                        {
+                                                                                                            parent = null,
+                                                                                                            thumbnail = Register.GetItemByItemId(ItemId.COPPER_SHOVEL).Sprite(),
+                                                                                                            title = "Copper Shovel",
+                                                                                                            description = "Use sticks and copper to make a shovel by going to your inventory",
+                                                                                                            status = AchievementStatus.LOCKED,
+                                                                                                            requirements = new [] {
+                                                                                                                new ItemCountPair() { ItemId = ItemId.COPPER_SHOVEL, Amount = 1},
+                                                                                                            },
+                                                                                                            rewards = new [] {
+                                                                                                                new ItemCountPair() { ItemId = ItemId.STICK, Amount = 1},
+                                                                                                                new ItemCountPair() { ItemId = ItemId.COPPER, Amount = 3},
+                                                                                                            },
+                                                                                                            children = new Achievement[]
+                                                                                                                {}
+                                                                                                        },
+                                                                                                        new Achievement()
+                                                                                                        {
+                                                                                                            parent = null,
+                                                                                                            thumbnail = Register.GetItemByItemId(ItemId.COPPER_PICKAXE).Sprite(),
+                                                                                                            title = "Copper Pickaxe",
+                                                                                                            description = "Use sticks and copper scrap to make a pickaxe by going to your inventory",
+                                                                                                            status = AchievementStatus.LOCKED,
+                                                                                                            requirements = new [] {
+                                                                                                                new ItemCountPair() { ItemId = ItemId.COPPER_PICKAXE, Amount = 1},
+                                                                                                            },
+                                                                                                            rewards = new [] {
+                                                                                                                new ItemCountPair() { ItemId = ItemId.STICK, Amount = 1},
+                                                                                                                new ItemCountPair() { ItemId = ItemId.COPPER, Amount = 3},
+                                                                                                            },
+                                                                                                            children = new Achievement[]
+                                                                                                            {
+                                                                                                                new Achievement()
+                                                                                                                {
+                                                                                                                    parent = null,
+                                                                                                                    thumbnail = Register.GetItemByItemId(ItemId.COPPER_SEED).Sprite(),
+                                                                                                                    title = "Auto Copper",
+                                                                                                                    description = "Craft copper seeds by using stone and copper",
+                                                                                                                    status = AchievementStatus.LOCKED,
+                                                                                                                    requirements = new [] {
+                                                                                                                        new ItemCountPair() { ItemId = ItemId.COPPER_SEED, Amount = 1},
+                                                                                                                    },
+                                                                                                                    rewards = new [] {
+                                                                                                                        new ItemCountPair() { ItemId = ItemId.COPPER, Amount = 5},
+                                                                                                                    },
+                                                                                                                    children = new Achievement[]
+                                                                                                                        {
+                                                                                                                            new Achievement()
+                                                                                                                            {
+                                                                                                                                parent = null,
+                                                                                                                                thumbnail = Register.GetItemByItemId(ItemId.COPPER_SHOVEL).Sprite(),
+                                                                                                                                title = "Gold Shovel",
+                                                                                                                                description = "Use sticks and gold to make a shovel by going to your inventory",
+                                                                                                                                status = AchievementStatus.LOCKED,
+                                                                                                                                requirements = new [] {
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.GOLD_SHOVEL, Amount = 1},
+                                                                                                                                },
+                                                                                                                                rewards = new [] {
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.STICK, Amount = 1},
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.GOLD, Amount = 3},
+                                                                                                                                },
+                                                                                                                                children = new Achievement[]
+                                                                                                                                    {}
+                                                                                                                            },
+                                                                                                                            new Achievement()
+                                                                                                                            {
+                                                                                                                                parent = null,
+                                                                                                                                thumbnail = Register.GetItemByItemId(ItemId.GOLD_PICKAXE).Sprite(),
+                                                                                                                                title = "Gold Pickaxe",
+                                                                                                                                description = "Use sticks and gold scrap to make a pickaxe by going to your inventory",
+                                                                                                                                status = AchievementStatus.LOCKED,
+                                                                                                                                requirements = new [] {
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.GOLD_PICKAXE, Amount = 1},
+                                                                                                                                },
+                                                                                                                                rewards = new [] {
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.STICK, Amount = 1},
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.GOLD, Amount = 3},
+                                                                                                                                },
+                                                                                                                                children = new Achievement[]
+                                                                                                                                {
+                                                                                                                                    new Achievement()
+                                                                                                                                    {
+                                                                                                                                        parent = null,
+                                                                                                                                        thumbnail = Register.GetItemByItemId(ItemId.GOLD_SEED).Sprite(),
+                                                                                                                                        title = "Auto Gold",
+                                                                                                                                        description = "Craft gold seeds by using stone and gold",
+                                                                                                                                        status = AchievementStatus.LOCKED,
+                                                                                                                                        requirements = new [] {
+                                                                                                                                            new ItemCountPair() { ItemId = ItemId.GOLD_SEED, Amount = 1},
+                                                                                                                                        },
+                                                                                                                                        rewards = new [] {
+                                                                                                                                            new ItemCountPair() { ItemId = ItemId.GOLD, Amount = 5},
+                                                                                                                                        },
+                                                                                                                                        children = new Achievement[]
+                                                                                                                                            {}
+                                                                                                                                    },
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            new Achievement()
+                                                                                                                            {
+                                                                                                                                parent = null,
+                                                                                                                                thumbnail = Register.GetItemByItemId(ItemId.GOLD_AXE).Sprite(),
+                                                                                                                                title = "Gold Axe",
+                                                                                                                                description = "Use sticks and gold scrap to make an axe by going to your inventory",
+                                                                                                                                status = AchievementStatus.LOCKED,
+                                                                                                                                requirements = new [] {
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.GOLD_AXE, Amount = 1},
+                                                                                                                                },
+                                                                                                                                rewards = new [] {
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.STICK, Amount = 1},
+                                                                                                                                    new ItemCountPair() { ItemId = ItemId.GOLD, Amount = 3},
+                                                                                                                                },
+                                                                                                                                children = new Achievement[]
+                                                                                                                                    {}
+                                                                                                                            },
+                                                                                                                        }
+                                                                                                                },
+                                                                                                            }
+                                                                                                        },
+                                                                                                        new Achievement()
+                                                                                                        {
+                                                                                                            parent = null,
+                                                                                                            thumbnail = Register.GetItemByItemId(ItemId.COPPER_AXE).Sprite(),
+                                                                                                            title = "Copper Axe",
+                                                                                                            description = "Use sticks and copper scrap to make an axe by going to your inventory",
+                                                                                                            status = AchievementStatus.LOCKED,
+                                                                                                            requirements = new [] {
+                                                                                                                new ItemCountPair() { ItemId = ItemId.COPPER_AXE, Amount = 1},
+                                                                                                            },
+                                                                                                            rewards = new [] {
+                                                                                                                new ItemCountPair() { ItemId = ItemId.STICK, Amount = 1},
+                                                                                                                new ItemCountPair() { ItemId = ItemId.COPPER, Amount = 3},
+                                                                                                            },
+                                                                                                            children = new Achievement[]
+                                                                                                                {}
+                                                                                                        },
+                                                                                                    }
                                                                                             },
                                                                                         }
                                                                                     },
