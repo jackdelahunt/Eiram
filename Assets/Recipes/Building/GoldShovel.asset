@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f876e77d4f6422a9b92ba4bc7343ed5, type: 3}
-  m_Name: Copper
+  m_Script: {fileID: 11500000, guid: 363c24c6c47447cb8b1b3a134429dfe8, type: 3}
+  m_Name: GoldShovel
   m_EditorClassIdentifier: 
-  TileId: 21
-  MinHeight: 11
-  MaxHeight: 150
-  Scale: 0.1
-  Threshold: 0.8
+  FinalItem:
+    ItemId: 28
+    Amount: 1
+  Ingredients:
+  - ItemId: 26
+    Amount: 5
+  - ItemId: 9
+    Amount: 2

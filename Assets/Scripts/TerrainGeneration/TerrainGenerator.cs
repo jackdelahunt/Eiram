@@ -70,7 +70,7 @@ namespace TerrainGeneration
                             firstTileWorldPos.y + yOffset, lode.Threshold, chunk.Seed, lode.Scale))
                         {   
                             tile = lode.TileId;
-                            break;
+                            // break;
                         }    
                     }
 

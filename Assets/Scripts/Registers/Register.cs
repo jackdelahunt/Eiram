@@ -93,6 +93,7 @@ namespace Registers
                 new MiniTree(concreteTileDataArray[23]),
                 new StonePlant(concreteTileDataArray[24]),
                 new CranberryBush(concreteTileDataArray[25]),
+                new Gold(concreteTileDataArray[26]),
             };
 
             items = new AbstractItem[]
@@ -118,6 +119,16 @@ namespace Registers
                 new StoneShovelItem(itemArray[18]),
                 new StonePickaxeItem(itemArray[19]),
                 new StoneAxeItem(itemArray[20]),
+                new CopperItem(itemArray[21]),
+                new CopperSeedItem(itemArray[22]),
+                new CopperShovelItem(itemArray[23]),
+                new CopperPickaxeItem(itemArray[24]),
+                new CopperAxeItem(itemArray[25]),
+                new GoldItem(itemArray[26]),
+                new GoldSeedItem(itemArray[27]),
+                new GoldShovelItem(itemArray[28]),
+                new GoldPickaxeItem(itemArray[29]),
+                new GoldAxeItem(itemArray[30]),
             };
             
             biomes = biomeArray;

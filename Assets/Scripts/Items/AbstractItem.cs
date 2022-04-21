@@ -158,4 +158,24 @@ namespace Items
     {
         public StoneSeedItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
+
+    public class CopperItem : AbstractItem
+    {
+        public CopperItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class CopperSeedItem : AbstractItem
+    {
+        public CopperSeedItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+
+    public class GoldItem : AbstractItem
+    {
+        public GoldItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class GoldSeedItem : AbstractItem
+    {
+        public GoldSeedItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
 }

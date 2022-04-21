@@ -67,12 +67,12 @@ namespace Players
 
                     if (item.IsToolItem(out var toolItem, out var _) &&
                         tile.RequiredToolType() == toolItem.ToolType &&
-                        tile.RequiredToolLevel() >= toolItem.ToolLevel)
+                        tile.RequiredToolLevel() <= toolItem.ToolLevel)
                     {
                         damage *= toolItem.AttackMultipler;
+                        Debug.Log($"Tool atack multiplier is {toolItem.AttackMultipler} and damage is this {damage}");
                     }
                 }
-
                 status.Percentage += damage;
                 TryChangeFrame(status.Percentage);
                 PlayBreakingSound();

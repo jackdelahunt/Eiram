@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f876e77d4f6422a9b92ba4bc7343ed5, type: 3}
-  m_Name: Copper
+  m_Name: Gold
   m_EditorClassIdentifier: 
-  TileId: 21
-  MinHeight: 11
-  MaxHeight: 150
+  TileId: 26
+  MinHeight: 0
+  MaxHeight: 10
   Scale: 0.1
   Threshold: 0.8

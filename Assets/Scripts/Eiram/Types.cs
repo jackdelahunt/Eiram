@@ -35,6 +35,7 @@ namespace Eiram
         MINI_TREE = 23,
         STONE_PLANT = 24,
         CRANBERRY_BUSH = 25,
+        GOLD = 26,
     }
     
     public enum ItemId
@@ -61,6 +62,16 @@ namespace Eiram
         STONE_SHOVEL = 18,
         STONE_PICKAXE = 19,
         STONE_AXE = 20,
+        COPPER = 21,
+        COPPER_SEED = 22,
+        COPPER_SHOVEL = 23,
+        COPPER_PICKAXE = 24,
+        COPPER_AXE = 25,
+        GOLD = 26,
+        GOLD_SEED = 27,
+        GOLD_SHOVEL = 28,
+        GOLD_PICKAXE = 29,
+        GOLD_AXE = 30 ,
     }
     
     public enum BiomeId
@@ -83,5 +94,7 @@ namespace Eiram
         NONE = -1,
         WOOD = 0,
         STONE = 1,
+        COPPER = 2,
+        GOLD = 3,
     }
 }

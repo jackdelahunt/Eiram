@@ -90,4 +90,34 @@ namespace Items
     {
         public StoneAxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
     }
+
+    public class CopperShovelItem : ToolItem
+    {
+        public CopperShovelItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class CopperPickaxeItem : ToolItem
+    {
+        public CopperPickaxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class CopperAxeItem : ToolItem
+    {
+        public CopperAxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+
+    public class GoldShovelItem : ToolItem
+    {
+        public GoldShovelItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class GoldPickaxeItem : ToolItem
+    {
+        public GoldPickaxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
+    
+    public class GoldAxeItem : ToolItem
+    {
+        public GoldAxeItem(ConcreteItemData concreteItemData) : base(concreteItemData) {}
+    }
 }

@@ -271,4 +271,9 @@ namespace Tiles
     {
         public CranberryBush(ConcreteTileData concreteTileData) : base(concreteTileData){}
     }
+
+    public class Gold : AbstractTile
+    {
+        public Gold(ConcreteTileData concreteTileData) : base(concreteTileData){}
+    }
 }
