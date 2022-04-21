@@ -9902,12 +9902,12 @@ PrefabInstance:
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: buildingRecipeArray.Array.size
-      value: 17
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
       propertyPath: concreteTileDataArray.Array.size
-      value: 27
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
@@ -10013,6 +10013,24 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}
+      propertyPath: buildingRecipeArray.Array.data[17]
+      value: 
+      objectReference: {fileID: 11400000, guid: 17dc054629ff0654fb3afaa2b94c0f87,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: buildingRecipeArray.Array.data[18]
+      value: 
+      objectReference: {fileID: 11400000, guid: e1d44fb682fb27b489ade75011d724bb,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: buildingRecipeArray.Array.data[19]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d8ad92730717c24fa32587001388264,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
       propertyPath: concreteTileDataArray.Array.data[6]
       value: 
       objectReference: {fileID: 11400000, guid: b61cee5409b7d4f7f841ad4158dfc0c2,
@@ -10040,6 +10058,18 @@ PrefabInstance:
       propertyPath: concreteTileDataArray.Array.data[26]
       value: 
       objectReference: {fileID: 11400000, guid: 0bbe3e5997a1aaf42aa8f4f07dc13a27,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: concreteTileDataArray.Array.data[27]
+      value: 
+      objectReference: {fileID: 11400000, guid: b17cd713559c0e744bb4a0776d403dfa,
+        type: 2}
+    - target: {fileID: 8447453227687814857, guid: 65cf1287898711e2495d0a8c2646f9ba,
+        type: 3}
+      propertyPath: concreteTileDataArray.Array.data[28]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ba446a4e83f38a4cbf49197c2a2e76d,
         type: 2}
     - target: {fileID: 8447453227687814862, guid: 65cf1287898711e2495d0a8c2646f9ba,
         type: 3}

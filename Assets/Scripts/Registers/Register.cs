@@ -94,6 +94,8 @@ namespace Registers
                 new StonePlant(concreteTileDataArray[24]),
                 new CranberryBush(concreteTileDataArray[25]),
                 new Gold(concreteTileDataArray[26]),
+                new CopperPlant(concreteTileDataArray[27]),
+                new GoldPlant(concreteTileDataArray[28]),
             };
 
             items = new AbstractItem[]

@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a018140fa9764cbea773bbc0916ffdb5, type: 3}
-  m_Name: CopperSeed
+  m_Script: {fileID: 11500000, guid: 363c24c6c47447cb8b1b3a134429dfe8, type: 3}
+  m_Name: CopperSeeds
   m_EditorClassIdentifier: 
-  itemName: Copper seed
-  itemId: 22
-  tileId: 27
-  maxStack: 64
-  sprite: {fileID: 21300000, guid: e4e3f0e7f3f6a67408564c28c7eb32cd, type: 3}
+  FinalItem:
+    ItemId: 22
+    Amount: 1
+  Ingredients:
+  - ItemId: 16
+    Amount: 2
+  - ItemId: 21
+    Amount: 2

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb387c67cd0840fc8bf6d42a2abb3eda, type: 3}
+  m_Name: CopperPlant
+  m_EditorClassIdentifier: 
+  TileName: Copper plant
+  TileId: 27
+  RequiredToolType: -1
+  RequiredToolLevel: -1
+  Hardness: 10
+  TileBase: {fileID: 11400000, guid: cd48e32fdc4fe70479f2744c86b8afda, type: 2}
+  BreakingSound: {fileID: 8300000, guid: 0dc985b9b75dda85e9a4fcfcc01e1047, type: 3}
+  BreakSound: {fileID: 8300000, guid: 3bb7838588cad67f3b43fc461bf1458c, type: 3}
+  Drops:
+  - ItemId: 22
+    Quantity: 2
+    Chance: 1
+  - ItemId: 21
+    Quantity: 2
+    Chance: 1
+  maxAge: 3
+  tileBases:
+  - {fileID: 11400000, guid: cd48e32fdc4fe70479f2744c86b8afda, type: 2}
+  - {fileID: 11400000, guid: 12751f5ee8d9d67419949e64ddc10eb2, type: 2}
+  - {fileID: 11400000, guid: e4978c3d5c844d14b837e6c33fed3eaf, type: 2}
+  - {fileID: 11400000, guid: 922afe7fe015fd94688b66b7b11c1ad9, type: 2}
+  SeedItemId: 22

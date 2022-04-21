@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb387c67cd0840fc8bf6d42a2abb3eda, type: 3}
+  m_Name: GoldPlant
+  m_EditorClassIdentifier: 
+  TileName: Gold plant
+  TileId: 28
+  RequiredToolType: -1
+  RequiredToolLevel: -1
+  Hardness: 10
+  TileBase: {fileID: 11400000, guid: b9fdf27e44fa21047bea274c42615122, type: 2}
+  BreakingSound: {fileID: 8300000, guid: 0dc985b9b75dda85e9a4fcfcc01e1047, type: 3}
+  BreakSound: {fileID: 8300000, guid: 3bb7838588cad67f3b43fc461bf1458c, type: 3}
+  Drops:
+  - ItemId: 27
+    Quantity: 2
+    Chance: 1
+  - ItemId: 26
+    Quantity: 2
+    Chance: 1
+  maxAge: 3
+  tileBases:
+  - {fileID: 11400000, guid: b9fdf27e44fa21047bea274c42615122, type: 2}
+  - {fileID: 11400000, guid: a03badaca2bc53e40bb1d49ca728ab13, type: 2}
+  - {fileID: 11400000, guid: b6857cb5dd9cdb84792fed29b610325d, type: 2}
+  - {fileID: 11400000, guid: 4d8c9908b49f6044dbf858ac4ebbb61b, type: 2}
+  SeedItemId: 27

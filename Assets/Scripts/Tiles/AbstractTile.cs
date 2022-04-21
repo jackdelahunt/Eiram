@@ -266,6 +266,16 @@ namespace Tiles
     {
         public StonePlant(ConcreteTileData concreteTileData) : base(concreteTileData) {}
     }
+
+    public class CopperPlant : CropTile
+    {
+        public CopperPlant(ConcreteTileData concreteTileData) : base(concreteTileData) {}
+    }
+
+    public class GoldPlant : CropTile
+    {
+        public GoldPlant(ConcreteTileData concreteTileData) : base(concreteTileData) {}
+    }
     
     public class CranberryBush : AbstractTile
     {

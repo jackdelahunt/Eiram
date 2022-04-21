@@ -36,6 +36,8 @@ namespace Eiram
         STONE_PLANT = 24,
         CRANBERRY_BUSH = 25,
         GOLD = 26,
+        COPPER_PLANT = 27,
+        GOLD_PLANT = 28,
     }
     
     public enum ItemId

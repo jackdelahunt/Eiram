@@ -16,4 +16,4 @@ MonoBehaviour:
   itemId: 17
   tileId: 24
   maxStack: 64
-  sprite: {fileID: 21300000, guid: db1795957e7737a618381ae2a98fcf80, type: 3}
+  sprite: {fileID: 21300000, guid: e50be42a7c22790478e7a7715b880a92, type: 3}
